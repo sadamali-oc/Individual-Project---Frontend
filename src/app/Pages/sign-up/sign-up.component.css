@@ -1,0 +1,138 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full height of the viewport */
+    background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d9') no-repeat center center/cover;
+  }
+  
+  .container {
+    display: flex; /* Flexbox layout */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    width: 70%; /* Container width */
+    max-width: 1000px; /* Prevents stretching on large screens */
+    padding: 40px; /* Adds padding around the content */
+    background-color: #333; /* Dark background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adds shadow effect */
+    color: #fff;
+    margin-top: 5%; /* Adds space from the top of the page */
+    margin-bottom: 5%; /* Adds space at the bottom */
+    margin-left: auto; /* Centers the container horizontally */
+    margin-right: auto; /* Centers the container horizontally */
+  }
+  
+  .image-container {
+    flex: 1; /* Image takes up half the space */
+    padding-right: 20px; /* Space between image and form */
+  }
+  
+  .image-container img {
+    width: 100%; /* Image takes full width of its container */
+    height: auto;
+    border-radius: 10px; /* Rounded corners for the image */
+  }
+  
+  .signup-box {
+    flex: 1; /* Form takes up the other half of the space */
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px; /* Adds space to the left of the form */
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 36px;
+    color: #FDB813;
+  }
+  
+  .ele {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #FDB813;
+    border-radius: 5px;
+    width: 100%; /* Full width */
+    box-sizing: border-box;
+  }
+  
+  .clkbtn {
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #FDB813;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .clkbtn:hover {
+    background-color: #F8A700;
+  }
+  
+  select.ele {
+    appearance: none;
+    background-color: #f9f9f9;
+    cursor: pointer;
+  }
+  
+  select.ele:focus {
+    outline: none;
+    border-color: #4CAF50;
+  }
+  
+  /* Two-column layout for form fields */
+  .form-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 equal columns */
+    gap: 20px; /* Adds space between columns */
+  }
+  
+  .form-fields .ele {
+    width: 100%; /* Make sure each input takes full width of its column */
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column; /* Stack image and form in column on smaller screens */
+      padding: 20px;
+    }
+    .image-container, .signup-box {
+      flex: none; /* Allow both to take full width in small screens */
+      padding-right: 0;
+      padding-left: 0;
+    }
+    .form-fields {
+      grid-template-columns: 1fr; /* Single column on small screens */
+    }
+  }
+  .form-section{} 
+ 
+.name{} 
+ 
+.username{} 
+ 
+.email{} 
+ 
+.nic{} 
+ 
+.contact{} 
+ 
+.address{} 
+ 
+.city{} 
+ 
+.password{} 
+ 
+.password{} 
+ 
+.role{} 
+ 
