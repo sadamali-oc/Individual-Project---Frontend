@@ -1,0 +1,58 @@
+User List Header
+.user-list-header {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Table Styling */
+.user-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+/* Header Cell Styling */
+.user-list-table th.mat-header-cell {
+    background-color: #333;
+    font-weight: bold;
+    color: #f0eeee;
+    text-align: left;
+    padding: 12px 16px;
+}
+
+/* Data Cell Styling */
+.user-list-table td.mat-cell {
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Status Button Styling */
+.status-button {
+    background-color: #FDB813;
+    color: rgb(154, 7, 7);
+    padding: 6px 12px;
+    border: none;
+    cursor: pointer;
+}
+
+.status-button:hover {
+    background-color: #F8A700;
+}
+
+.status-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Row Hover Effect */
+.user-list-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Table Border */
+.user-list-table,
+.user-list-table th,
+.user-list-table td {
+    border: 1px solid #ddd;
+}

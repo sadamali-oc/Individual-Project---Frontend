@@ -1,18 +1,56 @@
-<div class="form-section">
-  <div class="container">
-    <!-- Image Container -->
-    <div class="image-container">
-      <img src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/business-man-with-social-media-flat-illustration-design_26486-8-removebg-preview.png?alt=media&token=a612eddb-0334-471f-a9e2-7632f37f4065" alt="Image description" />
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidenav -->
+  <mat-sidenav #sidenav mode="side" opened>
+    <mat-toolbar></mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item href="#">Dashboard</a>
+      <a mat-list-item href="#">Users</a>
+      <a mat-list-item href="#">Settings</a>
+      <a mat-list-item href="#">Reports</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main Content Area -->
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Admin Dashboard</span>
+
+      <!-- Avatar for the profile -->
+      <mat-icon mat-list-icon>account_circle</mat-icon>
+      <!-- <mat-avatar class="user-avatar" src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/login-logo.png?alt=media&token=7e30e06e-f414-44e0-bdf3-93de5838b6e8" alt="User Avatar"></mat-avatar> -->
+    </mat-toolbar>
+
+    <!-- Dashboard Cards -->
+    <div class="dashboard-cards">
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Total Users</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>1200</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Active Sessions</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>45</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Pending Orders</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>10</p>
+        </mat-card-content>
+      </mat-card>
     </div>
-    
-    <!-- Signup Form -->
-    <div class="signup-box">
-      <h2>Dashboard</h2>
-      
-      <!-- Form Fields -->
-      
-      
-      <button class="clkbtn">Signup</button>
-    </div>
-  </div>
-</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

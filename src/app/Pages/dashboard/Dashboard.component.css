@@ -1,118 +1,104 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f8ff;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100vh; /* Full height of the viewport */
-  background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d9') no-repeat center center/cover;
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.container {
-  display: flex; /* Flexbox layout */
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
-  width: 70%; /* Container width */
-  max-width: 1000px; /* Prevents stretching on large screens */
-  padding: 40px; /* Adds padding around the content */
-  background-color: #333; /* Dark background */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adds shadow effect */
-  color: #fff;
-  margin-top: 5%; /* Adds space from the top of the page */
-  margin-bottom: 5%; /* Adds space at the bottom */
-  margin-left: auto; /* Centers the container horizontally */
-  margin-right: auto; /* Centers the container horizontally */
-}
-
-.image-container {
-  flex: 1; /* Image takes up half the space */
-  padding-right: 20px; /* Space between image and form */
-}
-
-.image-container img {
-  width: 100%; /* Image takes full width of its container */
-  height: auto;
-  border-radius: 10px; /* Rounded corners for the image */
-}
-
-.signup-box {
-  flex: 1; /* Form takes up the other half of the space */
-  display: flex;
-  flex-direction: column;
-  padding-left: 20px; /* Adds space to the left of the form */
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 36px;
-  color: #FDB813;
-}
-
-.ele {
-  margin: 10px 0;
+table th {
+  background-color: #003366; /* UoM Blue */
+  color: white;
   padding: 10px;
-  font-size: 16px;
-  border: 1px solid #FDB813;
-  border-radius: 5px;
-  width: 100%; /* Full width */
-  box-sizing: border-box;
 }
 
-.clkbtn {
-  margin-top: 20px;
-  padding: 12px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #FDB813;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+  background-color: #f5f5f5; /* Light gray for alternating rows */
+}
+
+table tr:hover {
+  background-color: #fff9c4; /* Light yellow on hover */
+}
+
+/* Avatar Style */
+.user-avatar {
+  margin-left: auto; /* Align the avatar to the right */
+  width: 40px; /* Set the width of the avatar */
+  height: 40px; /* Set the height of the avatar */
+  border-radius: 50%; /* Make the avatar round */
+}
+
+
+/* Dashboard Tiles */
+.mat-grid-tile {
+  background-color: #003366; /* UoM Blue */
+  border-radius: 8px;
+  padding: 20px;
   transition: background-color 0.3s;
 }
 
-.clkbtn:hover {
-  background-color: #F8A700;
+.mat-grid-tile:hover {
+  background-color: #FFD700; /* UoM Gold on hover */
 }
 
-select.ele {
-  appearance: none;
-  background-color: #f9f9f9;
-  cursor: pointer;
+/* Dashboard Cards */
+.dashboard-cards {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  justify-content: space-around; /* Space between cards */
 }
 
-select.ele:focus {
-  outline: none;
-  border-color: #4CAF50;
+.card {
+  width: 300px;
+  background-color: #fff8e1; /* Light yellow for cards */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
 }
 
-/* Two-column layout for form fields */
-.form-fields {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 equal columns */
-  gap: 20px; /* Adds space between columns */
+.card:hover {
+  background-color: #FFD700; /* UoM Gold on hover */
 }
 
-.form-fields .ele {
-  width: 100%; /* Make sure each input takes full width of its column */
+.card .mat-card-header {
+  background-color: #FFD700; /* UoM Gold for header */
+  color: #003366; /* UoM Blue for the title */
 }
 
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column; /* Stack image and form in column on smaller screens */
-    padding: 20px;
-  }
-  .image-container, .signup-box {
-    flex: none; /* Allow both to take full width in small screens */
-    padding-right: 0;
-    padding-left: 0;
-  }
-  .form-fields {
-    grid-template-columns: 1fr; /* Single column on small screens */
-  }
+.card .mat-card-content {
+  padding: 15px;
+  color: #616161; /* Dark gray for content */
 }
-.form-section{} 
- 
+
+/* Sidenav Styles */
+.sidenav-container {
+  height: 100vh;
+  
+  /* width: 40%;  */
+  /* Width of the sidenav */
+  background-color:rgb(255, 255, 255); /* Light yellow for the sidenav */
+}
+
+mat-toolbar {
+  background-color: #987107; /* UoM Gold background for toolbar */
+  color: rgb(255, 255, 255); /* White text */
+}
+
+.mat-sidenav {
+  background-color:rgb(255, 255, 255);
+  border-color: #003366;
+  width: 250px; /* Width of the sidenav */
+
+}
+
+.mat-list-item {
+  color: #003366; /* UoM Blue color for list items */
+}
+
+.mat-list-item:hover {
+  background-color: #fff9c4; /* Light yellow on hover */
+}
