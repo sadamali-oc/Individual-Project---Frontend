@@ -1,3 +1,7 @@
 {
-    "workbench.editor.splitOnDragAndDrop": false
+    "workbench.editor.splitOnDragAndDrop": false,
+    "cSpell.words": [
+        "deeppurple",
+        "Openpopup"
+    ]
 }

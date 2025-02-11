@@ -7,6 +7,8 @@ import { DashboardComponent } from './Pages/dashboard/Dashboard.component';
 import { LandingComponent } from './Pages/Website/landing/landing.component';
 import { UserComponent } from './Pages/user/user.component';
 
+
+
 export const routes: Routes = [
   { path: '', component: LandingComponent }, // Default route
   { path: 'events', component: EventListComponent },
@@ -16,6 +18,6 @@ export const routes: Routes = [
   { path: 'signup', component: SignUpComponent }, // Default route
   { path: 'dashboard', component: DashboardComponent }, // Default route
 
-  { path: 'admin/users', component: UserComponent }, // Default route
+  { path: 'users', component: UserComponent }, // Default route
 
 ];
