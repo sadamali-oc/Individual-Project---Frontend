@@ -3,11 +3,11 @@ header {
   padding: 0rem 10rem;
   top: 0;
   left: 0;
-  height: 7rem;
+  height: 5rem;
   width: 100%;
   min-width: fit-content;
   z-index: var(--z-fixed);
-  background-color: var(--white-color);
+background-color: #FDB813;
   box-shadow: var(--box-shadow);
 }
 
