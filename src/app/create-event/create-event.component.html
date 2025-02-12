@@ -1,0 +1,51 @@
+<mat-form-field>
+  <mat-label>Event date</mat-label>
+  <input matInput [matDatepicker]="datepicker" [(ngModel)]="value">
+  <mat-datepicker #datepicker/>
+  <mat-datepicker-toggle [for]="datepicker" matSuffix/>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Event time</mat-label>
+  <input matInput
+    [matTimepicker]="timepicker"
+    [(ngModel)]="value"
+    [ngModelOptions]="{updateOn: 'blur'}">
+  <mat-timepicker #timepicker/>
+  <mat-timepicker-toggle [for]="timepicker" matSuffix/>
+</mat-form-field>
+
+<p>Value: {{value}}</p>
+
+
+<div class="example-container">
+  <mat-form-field>
+    <mat-label>Enter your email</mat-label>
+    <input
+      matInput
+      placeholder="pat@example.com"
+      [formControl]="email"
+      (blur)="updateErrorMessage()"
+      required
+    />
+    @if (email.invalid) {
+      <mat-error>{{errorMessage()}}</mat-error>
+    }
+  </mat-form-field>
+</div>
+<mat-form-field>
+  <mat-label>Input</mat-label>
+  <input matInput>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Select</mat-label>
+  <mat-select>
+    <mat-option value="one">First option</mat-option>
+    <mat-option value="two">Second option</mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Textarea</mat-label>
+  <textarea matInput></textarea>
+</mat-form-field>
+
