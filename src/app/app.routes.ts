@@ -6,8 +6,7 @@ import { EventFormComponent } from './Components/event-form/event-form.component
 import { DashboardComponent } from './Pages/dashboard/Dashboard.component';
 import { LandingComponent } from './Pages/Website/landing/landing.component';
 import { UserComponent } from './Pages/user/user.component';
-
-
+import { CreateEventComponent } from './create-event/create-event.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent }, // Default route
@@ -17,7 +16,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent }, // Default route
   { path: 'signup', component: SignUpComponent }, // Default route
   { path: 'dashboard', component: DashboardComponent }, // Default route
-
   { path: 'users', component: UserComponent }, // Default route
-
+  { path: 'organizer/create-event', component:  CreateEventComponent },
 ];
