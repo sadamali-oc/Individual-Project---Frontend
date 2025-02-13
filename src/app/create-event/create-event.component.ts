@@ -12,6 +12,8 @@ import {MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/c
 import {merge} from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
@@ -25,7 +27,8 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     MatNativeDateModule,  // Add this line
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonModule, MatDividerModule, MatIconModule
 
    ],
   templateUrl: './create-event.component.html',

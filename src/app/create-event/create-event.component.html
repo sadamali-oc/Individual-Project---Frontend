@@ -1,4 +1,14 @@
 <mat-form-field>
+  <mat-label>Name of the event</mat-label>
+  <input matInput>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Input</mat-label>
+  <input matInput>
+</mat-form-field>
+
+<mat-form-field>
   <mat-label>Event date</mat-label>
   <input matInput [matDatepicker]="datepicker" [(ngModel)]="value">
   <mat-datepicker #datepicker/>
@@ -49,3 +59,11 @@
   <textarea matInput></textarea>
 </mat-form-field>
 
+<section>
+  <div class="example-label">Raised</div>
+  <div class="example-button-row">
+    <button mat-raised-button>Basic</button>
+    <button mat-raised-button disabled>Disabled</button>
+    <!-- <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a> -->
+  </div>
+</section>

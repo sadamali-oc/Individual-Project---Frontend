@@ -6,7 +6,7 @@
   
   .parent{
     font-family: 'Open Sans', sans-serif;
-    background-color: #222;
+    /* background-color: #222; */
     background: url("https://uom.lk/sites/default/files/Faculty/Business/slideshow/batch17.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -70,6 +70,17 @@
   button:hover {
     background-color: #F8A700;
   }
+
+  .signup:hover {
+    background-color: #ffffff;
+  }
+
+  .signup{
+    background-color: #333;
+    color:  #F8A700;
+
+
+  }
   
   a {
     text-decoration: none;
@@ -98,4 +109,23 @@
     width: 200px; /* Adjust the width as needed */
     height: auto; /* Maintain aspect ratio */
   }
+
+
+  .msg.error {
+    color: red;
+    font-size: 0.7em;
+    margin-top: 1px;
+    padding-top: 0;
+    padding-bottom: 10px;
+  }
+  
+  .msg-light {
+    color: orange;
+    margin-top: 10px;
+  }
+  
+  /* button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  } */
   

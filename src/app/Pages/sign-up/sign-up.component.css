@@ -44,6 +44,12 @@ body {
     flex-direction: column;
     padding-left: 20px; /* Adds space to the left of the form */
   }
+
+  .error{
+
+    color: red;
+
+  }
   
   h2 {
     text-align: center;
