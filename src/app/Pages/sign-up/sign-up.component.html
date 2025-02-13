@@ -39,7 +39,21 @@
             class="username ele"
             placeholder="Username"
             required
+            formControlName="username"
+
           />
+
+
+          <div class="msg error"  *ngIf="f['username'].invalid &&  (f['username'].touched)">
+            <span   *ngIf = "f['username'].errors?.['required']"  class="error">
+ 
+              
+           UserName is required
+           
+ 
+            </span>
+           
+           </div>
           <!-- <input type="text" class="nic ele" placeholder="NIC" required> -->
           <!-- <input type="text" class="contact ele" placeholder="Contact number" required > -->
           <!-- <input type="text" class="address ele" placeholder="Address" required> -->
@@ -51,6 +65,22 @@
             required
             formControlName="password"
           />
+
+
+
+          
+          <div class="msg error"  *ngIf="f['password'].invalid &&  (f['password'].touched)">
+            <span   *ngIf = "f['password'].errors?.['required']"  class="error">
+ 
+              
+           Password  is required
+           
+ 
+            </span>
+           
+           </div>
+
+
           <input
             type="password"
             class="password ele"
@@ -58,6 +88,20 @@
             required
             formControlName="confirmPassword"
           />
+
+
+          
+          <div class="msg error"  *ngIf="f['confirmPassword'].invalid &&  (f['confirmPassword'].touched)">
+            <span   *ngIf = "f['confirmPassword'].errors?.['required']"  class="error">
+ 
+              
+          Confirm your password is required
+           
+ 
+            </span>
+           
+           </div>
+
           <!-- <select class="role ele" required>
             <option value="" disabled selected>Select your role</option>
             <option value="user">User</option>
