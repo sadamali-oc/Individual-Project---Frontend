@@ -1,35 +1,75 @@
 <div class="form-section">
-    <div class="container">
-      <!-- Image Container -->
-      <div class="image-container">
-        <img src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/business-man-with-social-media-flat-illustration-design_26486-8-removebg-preview.png?alt=media&token=a612eddb-0334-471f-a9e2-7632f37f4065" alt="Image description" />
-      </div>
-      
+  <div class="container">
+    <!-- Image Container -->
+    <div class="image-container">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/audience-segmentation-concept-woman-with-magnifying-glass_1324816-41706-removebg-preview.png?alt=media&token=b3591080-a827-4941-88b4-c686d4f36334"
+        alt="Image description"
+      />
+    </div>
+
+    <form [formGroup]="frm" (ngSubmit)="onPost()">
       <!-- Signup Form -->
       <div class="signup-box">
         <h2>Signup</h2>
-        
+
         <!-- Form Fields -->
         <div class="form-fields">
-          <input type="text" class="name ele" placeholder="Enter your name" required>
-          <input type="text" class="username ele" placeholder="Username" required>
-          <input type="email" class="email ele" placeholder="youremail@uom.lk" required>
-          <input type="text" class="nic ele" placeholder="NIC" required>
-          <input type="text" class="contact ele" placeholder="Contact number" required>
-          <input type="text" class="address ele" placeholder="Address" required>
-          <input type="text" class="city ele" placeholder="City" required>
-          <input type="password" class="password ele" placeholder="Password" required>
-          <input type="password" class="password ele" placeholder="Confirm password" required>
-          <select class="role ele" required>
+          <input
+            type="text"
+            class="name ele"
+            placeholder="Enter your name"
+            required
+            formControlName="name"
+          />
+
+          <div class="msg error"  *ngIf="f['name'].invalid &&  (f['name'].touched)">
+           <span   *ngIf = "f['name'].errors?.['required']"  class="error">
+
+             
+            Name is required
+          
+
+           </span>
+          
+          </div>
+
+          <input
+            type="text"
+            class="username ele"
+            placeholder="Username"
+            required
+          />
+          <!-- <input type="text" class="nic ele" placeholder="NIC" required> -->
+          <!-- <input type="text" class="contact ele" placeholder="Contact number" required > -->
+          <!-- <input type="text" class="address ele" placeholder="Address" required> -->
+          <!-- <input type="text" class="city ele" placeholder="City" required> -->
+          <input
+            type="password"
+            class="password ele"
+            placeholder="Password"
+            required
+            formControlName="password"
+          />
+          <input
+            type="password"
+            class="password ele"
+            placeholder="Confirm password"
+            required
+            formControlName="confirmPassword"
+          />
+          <!-- <select class="role ele" required>
             <option value="" disabled selected>Select your role</option>
             <option value="user">User</option>
             <option value="admin">Admin</option>
             <option value="moderator">Organizer</option>
-          </select>
+          </select> -->
         </div>
-        
-        <button class="clkbtn">Signup</button>
+
+        <button type="submit" class="clkbtn" [disabled]="frm.invalid">
+          Signup
+        </button>
       </div>
-    </div>
+    </form>
   </div>
-  
+</div>

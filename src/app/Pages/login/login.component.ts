@@ -1,13 +1,27 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+// Import FormsModule
+import { FormsModule } from '@angular/forms'; 
 import { Router } from '@angular/router';
 
+
+
 @Component({
+
+
+  //pass object to component
+
   selector: 'app-login',
+  standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   imports: [FormsModule],
+
 })
+
+
+
+
+
 export class LoginComponent {
   loginObj: any = {
     username: '',
@@ -15,6 +29,9 @@ export class LoginComponent {
   };
 
   router = inject(Router);
+
+  loginError: string = '';
+
 
   onLogin() {
     console.log('Login Attempt:', this.loginObj);
@@ -26,4 +43,14 @@ export class LoginComponent {
       alert('Login Failed: Invalid credentials');
     }
   }
+
+
+
+  gotoSignUp() {
+    this.router.navigate(['/signup']);
+  }
+  
+
+
+  
 }
