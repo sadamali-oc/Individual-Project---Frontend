@@ -1,50 +1,52 @@
 <div class="parent">
-    <div class="container">
-      <!-- Login Form Container -->
-      <div class="form-container" id="login-form">
-        <!-- Logo Above the Form -->
-        <div class="logo">
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/login-logo.png?alt=media&token=7e30e06e-f414-44e0-bdf3-93de5838b6e8"
-            alt="Logo"
-            id="logo"
-          />
-        </div>
-  
-        <h1>Mora Fusion</h1>
-        <form>
-          <label for="username">Username</label>
-          <input type="text" id="username"  [(ngModel)]="loginObj.username" name="username" required />
-
-
-          <div class="msg error" >
-           
-                Username is required  
-         
-         </div>
-
-
-
-          <label for="password">Password</label>
-          <input type="password" id="password"  [(ngModel)]="loginObj.password" name="password" required />
-         
-          <div class="msg error" >
-                Password is required  
-          </div>
-
-         
-         
-          <button type="submit" (click)="onLogin()">Login</button>
-
-        <!-- <div class="msg-light">
-          error
-        </div> -->
-
-        </form>
-        <p>Don't have an account? <button type="button" (click)="gotoSignUp()" class="signup" >Sign up</button></p>
+  <div class="container">
+    <!-- Login Form Container -->
+    <div class="form-container" id="login-form">
+      <!-- Logo Above the Form -->
+      <div class="logo">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/login-logo.png?alt=media&token=7e30e06e-f414-44e0-bdf3-93de5838b6e8"
+          alt="Logo"
+          id="logo"
+        />
       </div>
-  
-    
+
+      <h1>Mora Fusion</h1>
+      <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="loginObj.username"
+          name="username"
+          required
+          #username="ngModel"
+        />
+
+        <!-- Show error if username is touched and invalid -->
+        <div class="msg error" *ngIf="username.touched && username.invalid">
+          Username is required
+        </div>
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="loginObj.password"
+          name="password"
+          required
+          #password="ngModel"
+        />
+
+        <!-- Show error if password is touched and invalid -->
+        <div class="msg error" *ngIf="password.touched && password.invalid">
+          Password is required
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid">Login</button>
+      </form>
+
+      <p>Don't have an account? <button type="button" (click)="gotoSignUp()" class="signup">Sign up</button></p>
     </div>
   </div>
-  
+</div>
