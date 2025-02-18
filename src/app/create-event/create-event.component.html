@@ -1,69 +1,68 @@
-<mat-form-field>
-  <mat-label>Name of the event</mat-label>
-  <input matInput>
-</mat-form-field>
-
-<mat-form-field>
-  <mat-label>Input</mat-label>
-  <input matInput>
-</mat-form-field>
-
-<mat-form-field>
-  <mat-label>Event date</mat-label>
-  <input matInput [matDatepicker]="datepicker" [(ngModel)]="value">
-  <mat-datepicker #datepicker/>
-  <mat-datepicker-toggle [for]="datepicker" matSuffix/>
-</mat-form-field>
-
-<mat-form-field>
-  <mat-label>Event time</mat-label>
-  <input matInput
-    [matTimepicker]="timepicker"
-    [(ngModel)]="value"
-    [ngModelOptions]="{updateOn: 'blur'}">
-  <mat-timepicker #timepicker/>
-  <mat-timepicker-toggle [for]="timepicker" matSuffix/>
-</mat-form-field>
-
-<p>Value: {{value}}</p>
-
-
-<div class="example-container">
-  <mat-form-field>
-    <mat-label>Enter your email</mat-label>
-    <input
-      matInput
-      placeholder="pat@example.com"
-      [formControl]="email"
-      (blur)="updateErrorMessage()"
-      required
-    />
-    @if (email.invalid) {
-      <mat-error>{{errorMessage()}}</mat-error>
-    }
+<div class="form-section">
+  <h2>Create an Event</h2>
+  
+  <mat-form-field appearance="fill">
+    <mat-label>Name of the Event</mat-label>
+    <input matInput [(ngModel)]="eventName" required>
   </mat-form-field>
-</div>
-<mat-form-field>
-  <mat-label>Input</mat-label>
-  <input matInput>
-</mat-form-field>
-<mat-form-field>
-  <mat-label>Select</mat-label>
-  <mat-select>
-    <mat-option value="one">First option</mat-option>
-    <mat-option value="two">Second option</mat-option>
-  </mat-select>
-</mat-form-field>
-<mat-form-field>
-  <mat-label>Textarea</mat-label>
-  <textarea matInput></textarea>
-</mat-form-field>
+  
+  <mat-form-field appearance="fill">
+    <mat-label>Event Description</mat-label>
+    <input matInput [(ngModel)]="eventDescription">
+  </mat-form-field>
 
-<section>
-  <div class="example-label">Raised</div>
-  <div class="example-button-row">
-    <button mat-raised-button>Basic</button>
-    <button mat-raised-button disabled>Disabled</button>
-    <!-- <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a> -->
+  <mat-form-field appearance="fill">
+    <mat-label>Event Date</mat-label>
+    <input matInput [matDatepicker]="datepicker" [(ngModel)]="eventDate" required>
+    <mat-datepicker #datepicker></mat-datepicker>
+    <mat-datepicker-toggle [for]="datepicker" matSuffix></mat-datepicker-toggle>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Event Time</mat-label>
+    <input matInput [matTimepicker]="timepicker" [(ngModel)]="eventTime" required>
+    <mat-timepicker #timepicker></mat-timepicker>
+    <mat-timepicker-toggle [for]="timepicker" matSuffix></mat-timepicker-toggle>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your Email</mat-label>
+    <input matInput placeholder="your@example.com" [(ngModel)]="eventEmail" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Event Category</mat-label>
+    <mat-select [(ngModel)]="eventCategory" required>
+      <mat-option value="conference">Conference</mat-option>
+      <mat-option value="workshop">Workshop</mat-option>
+      <mat-option value="webinar">Webinar</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Additional Notes</mat-label>
+    <textarea matInput [(ngModel)]="eventNotes"></textarea>
+  </mat-form-field>
+
+
+
+
+  <div class="custom-file-upload">
+    <label for="fileInput" class="upload-label">
+      <i class="material-icons">cloud_upload</i> Choose File
+    </label>
+    <input type="file" id="fileInput" class="file-upload" onchange="console.log(event.target.files)">
+    <span class="file-name">No file chosen</span>
   </div>
-</section>
+  
+
+
+  
+  <div class="form-actions">
+    <button mat-raised-button color="primary" (click)="submitForm()"  class="buttonSubmit">Submit Event</button>
+    <button mat-raised-button color="warn" (click)="resetForm()"  class="buttonReset">Reset</button>
+  </div>
+
+
+
+</div>

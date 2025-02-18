@@ -5,3 +5,4 @@ import { LoginComponent } from './app/Pages/login/login.component';
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
+
