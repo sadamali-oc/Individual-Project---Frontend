@@ -1,0 +1,36 @@
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 250px;
+}
+
+.sidebar-header {
+  font-size: 20px;
+  text-align: center;
+  color: white;
+}
+
+.active-link {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #1976d2;
+}
+
+.main-content {
+  background-color: #f4f5f7;
+  padding: 20px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.content {
+  padding: 20px;
+}
