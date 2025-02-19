@@ -1,25 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { SignupService } from '../../services/signup.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';  // <-- Import Router
 import { validPattern } from '../../helpers/pattern-mact.validator';
 import { MustMatch } from '../../helpers/must-match.validator';
 import { Status } from '../../models/status';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sign-up',
-  standalone: true,
-  imports: [HttpClientModule, ReactiveFormsModule, CommonModule],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
+  imports:[  CommonModule,  ReactiveFormsModule, // Add ReactiveFormsModule here
+  ]
 })
 export class SignUpComponent implements OnInit {
   frm!: FormGroup;
   status!: Status;
 
-  constructor(private signupService: SignupService, private fb: FormBuilder) {}
+  constructor(
+    private signupService: SignupService,
+    private fb: FormBuilder,
+    private router: Router  // <-- Inject Router
+  ) {}
 
   get f() {
     return this.frm.controls;
@@ -34,6 +37,9 @@ export class SignUpComponent implements OnInit {
         console.log(res); // Log the response
         this.status = res;
         this.frm.reset(); // Reset form on successful submission
+        
+        // Navigate to login page after successful signup
+        this.router.navigate(['/login']);  // <-- Navigate to login page
       },
       error: (err) => {
         console.error(err); // Log the error

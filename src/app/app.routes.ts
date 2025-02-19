@@ -13,6 +13,8 @@ import { NavigationBarComponent } from './Components/navigation-bar/navigation-b
 import { ReportComponent } from './Pages/report/report.component';
 import { OrganizerDashboardComponent } from './Pages/organizer-dashboard/organizer-dashboard.component';
 import { NormalUserDashboardComponent } from './Pages/normal-user-dashboard/normal-user-dashboard.component';
+import { ProfileComponent } from './Components/profile/profile.component';
+import { UserProfileComponent } from './Pages/user-profile/user-profile.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent }, // Default route
@@ -25,10 +27,12 @@ export const routes: Routes = [
   { path: 'users', component: UserComponent }, // Default route
   { path: 'organizer/create-event', component: CreateEventComponent },
   { path: 'admin-page', component: AdminComponent },
-  { path: 'new-user-page', component: NewuserComponent  },
-  {path:'navigation',component: NavigationBarComponent},
-  { path:'report', component:ReportComponent},
-  {path:'organizer/dashboard',component:OrganizerDashboardComponent},
-{path:'user/dashboard',component:NormalUserDashboardComponent}
+  { path: 'new-user-page', component: NewuserComponent },
+  { path: 'navigation', component: NavigationBarComponent },
+  { path: 'report', component: ReportComponent },
+  { path: 'organizer/dashboard', component: OrganizerDashboardComponent },
+  { path: 'user/dashboard', component: NormalUserDashboardComponent },
+  { path: 'user/id/profile', component: UserProfileComponent },
+  { path: '', redirectTo: '/signup', pathMatch: 'full' }
 
 ];
