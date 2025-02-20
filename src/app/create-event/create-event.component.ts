@@ -1,41 +1,30 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTimepickerModule } from '@angular/material/timepicker';
-import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
-import { merge } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatIconModule } from '@angular/material/icon';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
+import { HttpClient } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
-import { NgForm } from '@angular/forms';
-import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
-
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-create-event',
   imports: [
     MatFormFieldModule,
     MatInputModule,
-    MatTimepickerModule,
     MatDatepickerModule,
     FormsModule,
-    MatNativeDateModule,
     ReactiveFormsModule,
     MatSelectModule,
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
-    MatInputModule,
-    NgxMatTimepickerModule
-
-
+    NgxMatTimepickerModule,
+    MatNativeDateModule,
   ],
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.css'],
@@ -44,83 +33,72 @@ import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 export class CreateEventComponent {
   eventName: string = '';
   eventDescription: string = '';
-  eventDate: string = '';
-  eventTime: string = '';
-  eventEmail: string = '';
-  eventCategory: string = '';
+  eventDate: string = ''; // Ensure this is bound correctly in the template
+  startTime: string = ''; // Bind this in the template
+  endTime: string = ''; // Bind this in the template
+  eventCategory: string | undefined;
   eventNotes: string = '';
+  fileName: string = '';
+  eventFile: File | null = null;
+  status: string = 'upcoming'; // Default status set to "upcoming"
 
+  constructor(private http: HttpClient) {}
 
-  
-  eventForm!: FormGroup;
-  selectedFiles: File[] = [];
-  previews: string[] = [];
-  message: string[] = [];
-
-
-  readonly email = new FormControl('', [Validators.required, Validators.email]);
-
-  errorMessage = signal('');
-
-  constructor() {
-    // Observing changes in email FormControl to update error message
-    merge(this.email.statusChanges, this.email.valueChanges)
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateErrorMessage());
-  }
-
-  // Function to update error message based on the validation state of the email field
-  updateErrorMessage() {
-    if (this.email.hasError('required')) {
-      this.errorMessage.set('You must enter a value');
-    } else if (this.email.hasError('email')) {
-      this.errorMessage.set('Not a valid email');
-    } else {
-      this.errorMessage.set('');
+  // Handle file selection
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input?.files?.length) {
+      this.eventFile = input.files[0];
+      this.fileName = this.eventFile.name;
     }
   }
 
-  // Submit form data (you can extend this to call an API to submit the form)
-  submitForm() {
-    if (this.email.valid) {
-      // Example of handling the submitted data
-      console.log({
-        eventName: this.eventName,
-        eventDescription: this.eventDescription,
-        eventDate: this.eventDate,
-        eventTime: this.eventTime,
-        eventEmail: this.eventEmail,
-        eventCategory: this.eventCategory,
-        eventNotes: this.eventNotes,
-      });
-      // You can reset the form or display a success message after submission.
+  // Handle form submission and send data to backend
+  submitForm(): void {
+    if (!this.eventName || !this.eventCategory || !this.startTime || !this.endTime) {
+      alert('Please fill in all required fields');
+      return;
     }
+
+    const formData = new FormData();
+    formData.append('event_name', this.eventName);
+    formData.append('description', this.eventDescription);
+    formData.append('event_date', this.eventDate);  // Include the event date
+    formData.append('start_time', this.startTime);  // Include the start time
+    formData.append('end_time', this.endTime);      // Include the end time
+    formData.append('event_category', this.eventCategory);
+    formData.append('additional_notes', this.eventNotes);
+    formData.append('status', this.status);    // Include the status field with value "upcoming"
+
+    if (this.eventFile) {
+      formData.append('flyer_image', this.eventFile, this.eventFile.name);
+    }
+
+    // Perform HTTP request to the backend API
+    this.http.post('http://localhost:3000/add/event', formData).subscribe(
+      (response) => {
+        console.log('Event created successfully', response);
+        alert('Event created successfully!');
+        this.resetForm();
+      },
+      (error) => {
+        console.error('Error creating event', error);
+        alert('An error occurred while creating the event');
+      }
+    );
   }
 
-  // Optional: Reset form
-  resetForm() {
+  // Reset the form
+  resetForm(): void {
     this.eventName = '';
     this.eventDescription = '';
     this.eventDate = '';
-    this.eventTime = '';
-    this.eventEmail = '';
+    this.startTime = '';
+    this.endTime = '';
     this.eventCategory = '';
     this.eventNotes = '';
+    this.status = 'upcoming'; // Reset status to "upcoming"
+    this.fileName = '';
+    this.eventFile = null;
   }
-
-handleFileInputChange() {
-  const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-  const fileNameDisplay = document.querySelector('.file-name') as HTMLElement;
-
-  fileInput?.addEventListener('change', () => {
-    if (fileInput.files && fileInput.files.length > 0) {
-      fileNameDisplay.textContent = fileInput.files[0].name;
-    } else {
-      fileNameDisplay.textContent = 'No file chosen';
-    }
-  });
-}
-
-
-  
 }

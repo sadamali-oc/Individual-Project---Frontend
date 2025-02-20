@@ -1,0 +1,58 @@
+.sidenav-container {
+    height: 100vh;
+    display: flex;  /* Enable flexbox for proper alignment */
+    flex-direction: row;  /* Arrange top bar and sidebar side by side */
+    position: relative;
+}
+
+.sidenav {
+    width: 250px;
+    background-color: #F8A700;
+    height: 100%;  /* Ensure the sidebar takes full height */
+    position: fixed;  /* Keeps sidebar fixed while scrolling */
+    top: 0;
+    left: 0;
+}
+
+.sidebar-header {
+    font-size: 20px;
+    text-align: center;
+    background-color: #333;
+    color: #F8A700;
+}
+
+    .active-link {
+        background-color: rgba(237, 94, 94, 0.1);
+        border-left: 4px solid #1976d2;  /* Change the color to the desired shade */
+    }
+    
+
+
+.main-content {
+    background-color: #f4f5f7;
+    padding: 20px;
+    margin-left: 250px;  
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.topbar {
+    justify-content: flex-end;
+    background-color: #F8A700;
+    padding: 10px 20px;
+    width: 100%;
+    position: fixed;  
+    top: 0;
+    left: 0;
+    z-index: 10; 
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.content {
+    padding: 20px;
+    margin-top: 60px;
+    background-color: #1976d2;  /* Offset the content to avoid overlap with the fixed top bar */
+}
