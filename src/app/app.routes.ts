@@ -17,7 +17,7 @@ import { ProfileComponent } from './Components/profile/profile.component';
 import { UserProfileComponent } from './Pages/user-profile/user-profile.component';
 
 export const routes: Routes = [
-  { path: 'landing', component: LandingComponent }, // Default route
+  { path: '', component: LandingComponent }, // Default route
   { path: 'events', component: EventListComponent },
   { path: 'event/new', component: EventFormComponent },
   { path: 'event/edit/:id', component: EventFormComponent },
@@ -30,7 +30,7 @@ export const routes: Routes = [
   { path: 'new-user-page', component: NewuserComponent },
   { path: 'navigation', component: NavigationBarComponent },
   { path: 'report', component: ReportComponent },
-  { path: '', component: OrganizerDashboardComponent },
+  { path: 'dashboard', component: OrganizerDashboardComponent },
   { path: 'user/dashboard', component: NormalUserDashboardComponent },
   { path: 'user/id/profile', component: UserProfileComponent },
   { path: 'signup', redirectTo: '/signup', pathMatch: 'full' }
