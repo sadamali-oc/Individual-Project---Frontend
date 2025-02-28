@@ -17,6 +17,7 @@ import { ProfileComponent } from './Components/profile/profile.component';
 import { UserProfileComponent } from './Pages/user-profile/user-profile.component';
 import { GalleryComponent } from './Components/gallery/gallery.component';
 
+
 export const routes: Routes = [
   { path: '', component: LandingComponent }, // Default route
   { path: 'events', component: EventListComponent },
@@ -24,15 +25,15 @@ export const routes: Routes = [
   { path: 'event/edit/:id', component: EventFormComponent },
   { path: 'login', component: LoginComponent }, // Default route
   { path: 'signup', component: SignUpComponent }, // Default route
-  { path: 'admin/dashboard', component: DashboardComponent }, // Default route
+  { path: 'admin/dashboard/:userId', component: DashboardComponent }, // Default route
   { path: 'users', component: UserComponent }, // Default route
   { path: 'organizer/create-event', component: CreateEventComponent },
   { path: 'admin-page', component: AdminComponent },
   { path: 'new-user-page', component: NewuserComponent },
   { path: 'navigation', component: NavigationBarComponent },
   { path: 'report', component: ReportComponent },
-  { path: 'dashboard', component: OrganizerDashboardComponent },
-  { path: 'user/dashboard', component: NormalUserDashboardComponent },
+  { path: 'organizer/dashboard/:userId', component: OrganizerDashboardComponent },
+  { path: 'user/dashboard:/userId', component: NormalUserDashboardComponent },
   { path: 'user/id/profile', component: UserProfileComponent },
   { path: 'signup', redirectTo: '/signup', pathMatch: 'full' },
   {path:'gallery', component:GalleryComponent}
