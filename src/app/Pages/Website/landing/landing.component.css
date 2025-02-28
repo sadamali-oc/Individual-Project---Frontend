@@ -289,91 +289,8 @@ header {
   border-radius: 3rem;
 }
 
-/********************** Features Section **********************/
 
-/********************** Features Section **********************/
 
-.heading {
-  text-align: center;
-  padding: 2rem 0;
-  padding-bottom: 3rem;
-  font-size: 3.5rem;
-  color: #3a5a40;
-  /* Dark Green for main heading */
-}
-
-.heading span {
-  background-color: #FDB813;
-  /* Orange background for highlight */
-  color: #3a5a40;
-  /* Dark Green text */
-  padding: 0.5rem 3rem;
-  /* clip-path: polygon(100% 0, 93% 50%, 100% 99%, 0% 100%, 7% 50%, 0% 0%); */
-  text-align: center;
-}
-
-.box-container .box img {
-  height: 15rem;
-  padding-bottom: 1rem;
-}
-
-.box-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-  gap: 2rem;
-}
-
-.box-container .box {
-  padding: 2.5rem 3rem;
-  background-color: #e1f7d5;
-  /* Soft Green Background for boxes */
-  outline: var(--outline);
-  outline-offset: -1rem;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* Soft shadow */
-  border-radius: 8px;
-  /* Rounded corners */
-}
-
-.box-container .box:hover {
-  outline: none;
-  transform: scale(1.06);
-  background-color: #b5f7c2;
-  /* Lighter Green on hover */
-}
-
-.box-container .box h3 {
-  font-size: 2.2rem;
-  color: #3a5a40;
-  /* Dark Green for heading */
-}
-
-.box-container .box p {
-  color: #4a4a4a;
-  /* Medium Gray for description */
-  font-size: 1.3rem;
-  padding: 1rem 0;
-}
-
-.box-container .box .btn {
-  width: 14rem;
-  font-size: var(--small-font);
-  padding: 0.8rem;
-  background-color: #FDB813;
-  /* Button color: Orange */
-  color: #fff;
-  /* White text on button */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.box-container .box .btn:hover {
-  background-color: #FF9C00;
-  /* Darker Orange on hover */
-}
 
 
 
@@ -415,14 +332,6 @@ header {
   padding: 0.5rem 0;
 }
 
-.swiper .box .price .old-price {
-  color: var(--text-color-light);
-  text-decoration: line-through;
-}
-
-.swiper .box .price .new-price {
-  color: var(--orange-color);
-}
 
 .swiper .box .stars {
   color: var(--orange-color);
@@ -440,71 +349,8 @@ header {
   padding-right: 0.5rem;
 }
 
-/********************** Review Section **********************/
 
-.review-slider .box img {
-  border-radius: 50%;
-}
 
-.review-slider .box p {
-  color: var(--text-color-light);
-  font-size: 1.3rem;
-  padding: 1rem 0;
-}
-
-.review-slider .box h4 {
-  font-size: 1.4rem;
-  font-weight: 400;
-}
-
-/********************** Blogs Section **********************/
-
-.blogs-section .box-container .box {
-  border-radius: 0.5rem;
-  padding: 0;
-  outline: none;
-}
-
-.blogs-section .box-container .box img {
-  width: 100%;
-  height: 25rem;
-}
-
-.blogs-section .box-container .box .content {
-  display: flex;
-  justify-content: space-between;
-  color: var(--orange-color);
-  padding: 0 2rem;
-  border-bottom: var(--border);
-}
-
-.blogs-section .box-container .box .content p i {
-  color: var(--orange-color);
-}
-
-.blogs-section .box-container .box .content p {
-  color: var(--text-color-light);
-  cursor: pointer;
-}
-
-.blogs-section .box-container .box .content p:hover {
-  color: black;
-}
-
-.blogs-section .box-container .box h3 {
-  font-size: 2rem;
-  padding: 1rem 0.5rem;
-}
-
-.blogs-section .box-container .box p {
-  padding: 0.5rem;
-}
-
-.blogs-section .box-container .box .btn {
-  margin-bottom: 2.2rem;
-}
-
-/********************** Footer Section **********************/
 
 .footer-section {
   padding: 0 9% 1.8rem 9%;
@@ -717,9 +563,7 @@ header {
     right: -2rem;
   }
 
-  .nav-bar .shopping-cart {
-    right: -2rem;
-  }
+ 
 
   .nav-bar .login-form {
     right: -2rem;
