@@ -15,6 +15,7 @@ import { OrganizerDashboardComponent } from './Pages/organizer-dashboard/organiz
 import { NormalUserDashboardComponent } from './Pages/normal-user-dashboard/normal-user-dashboard.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { UserProfileComponent } from './Pages/user-profile/user-profile.component';
+import { GalleryComponent } from './Components/gallery/gallery.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent }, // Default route
@@ -33,6 +34,7 @@ export const routes: Routes = [
   { path: 'dashboard', component: OrganizerDashboardComponent },
   { path: 'user/dashboard', component: NormalUserDashboardComponent },
   { path: 'user/id/profile', component: UserProfileComponent },
-  { path: 'signup', redirectTo: '/signup', pathMatch: 'full' }
+  { path: 'signup', redirectTo: '/signup', pathMatch: 'full' },
+  {path:'gallery', component:GalleryComponent}
 
 ];

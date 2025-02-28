@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterOutlet } from '@angular/router';
 import { FullCalendarModule } from '@fullcalendar/angular';  // Import FullCalendarModule
+import { GalleryComponent } from './Components/gallery/gallery.component';
 
 
 
@@ -12,7 +13,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';  // Import FullCalen
   imports: [
     RouterOutlet,
     MatButtonModule,
-    FullCalendarModule
+    FullCalendarModule,
     
   ],
   templateUrl: './app.component.html',
