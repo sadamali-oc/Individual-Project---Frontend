@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
 })
 export class LoginComponent {
   loginObj: any = {
@@ -22,28 +22,31 @@ export class LoginComponent {
   loginError: string = '';
 
   constructor(private httpClient: HttpClient) {}
+
+  // Handle the login process
   onLogin() {
     console.log('Login Attempt:', this.loginObj);
-  
+
     // Send POST request to the backend for login
     this.httpClient.post<any>('http://localhost:3000/user/login', this.loginObj).subscribe(
       (response) => {
-        console.log('Login successful:', response);  // Check the response from backend
-  
-        // Make sure the message is 'Login successful' and role exists
+        console.log('Login successful:', response);
+
+        // Check if login was successful
         if (response.message === 'Login successful') {
-          // Access role from response.user
+          // Access role and user_id from response
           const role = response.user?.role ? response.user.role.toLowerCase() : null;
-  
-          if (role) {
-            // Log the role to ensure it’s being retrieved correctly
-            console.log('User Role:', role); 
-  
-            // Now, perform the redirection
-            this.redirectBasedOnRole(role);
+          const userId = response.user?.user_id;
+
+          if (role && userId) {
+            console.log('User Role:', role);
+            console.log('User ID:', userId);
+            
+            // Now, make another API call to get additional user details, if necessary
+            this.getUserDetails(userId, role);  // Pass the userId and role
           } else {
-            console.log('Role missing in the response');
-            alert('Role is missing in the response');
+            console.log('Role or User ID missing in the response');
+            alert('Role or User ID is missing in the response');
           }
         } else {
           console.log('Login failed');
@@ -56,24 +59,42 @@ export class LoginComponent {
       }
     );
   }
-  
-  redirectBasedOnRole(role: string) {
+
+  // Fetch user details based on userId (optional, if you need additional user details)
+  getUserDetails(userId: string, role: string) {
+    console.log('Fetching user details for user ID:', userId);
+
+    // Make an API call to fetch user details based on userId
+    this.httpClient.get<any>(`http://localhost:3000/user/${userId}`).subscribe(
+      (response) => {
+        console.log('User Details:', response);
+        // Once user details are fetched, redirect based on the role
+        this.redirectBasedOnRole(role, userId);  // Pass the userId for redirection
+      },
+      (error) => {
+        console.error('Error fetching user details:', error);
+        alert('An error occurred while fetching user details');
+      }
+    );
+  }
+
+  // Redirect based on the user role
+  redirectBasedOnRole(role: string, userId: string) {
     console.log('Redirecting based on role:', role);
-    
-    // Check the role and navigate accordingly
+
     if (role === 'admin') {
-      this.router.navigate(['admin/dashboard']);
+      // Redirect to the admin dashboard with userId in the URL
+      this.router.navigate([`admin/dashboard/${userId}`]);
     } else if (role === 'user') {
-      this.router.navigate(['user/dashboard']);
+      // Redirect to the user dashboard with userId in the URL
+      this.router.navigate([`user/dashboard/${userId}`]);
     } else if (role === 'organizer') {
-      this.router.navigate(['organizer/dashboard']);
+      // Redirect to the organizer dashboard with userId in the URL
+      this.router.navigate([`organizer/dashboard/${userId}`]);
     } else {
       alert('Role not recognized');
     }
   }
-  
-
- 
 
   // Navigate to SignUp page
   gotoSignUp() {
