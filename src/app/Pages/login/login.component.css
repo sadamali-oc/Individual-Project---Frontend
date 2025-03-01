@@ -1,131 +1,140 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .parent{
-    font-family: 'Open Sans', sans-serif;
-    /* background-color: #222; */
-    background: url("https://uom.lk/sites/default/files/Faculty/Business/slideshow/batch17.jpg");
+/* * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+} */
+
+.parent {
+  font-family: 'Open Sans', sans-serif;
+  /* background-color: #222; */
+  background: url("https://uom.lk/sites/default/files/Faculty/Business/slideshow/batch17.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  }
-  
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .form-container {
-    width: 600px;
-    margin: 0 auto;
-    padding: 50px;
-    background-color: #333;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    color: #fff;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 36px;
-    color: #FDB813;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    margin-bottom: 10px;
-    font-size: 18px;
-  }
-  
-  input {
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #555;
-  }
-  
-  button {
-    padding: 10px;
-    background-color:#FDB813;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  button:hover {
-    background-color: #F8A700;
-  }
+}
 
-  .signup:hover {
-    background-color: #ffffff;
-  }
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-  .signup{
-    background-color: #333;
-    color:  #F8A700;
+.form-container {
+  width: 600px;
+  margin: 0 auto;
+  padding: 50px;
+  background-color: #333;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-weight: 00;
 
+}
 
-  }
-  
-  a {
-    text-decoration: none;
-    color: #FDB813;
-    font-size: 18px;
-    transition: color 0.2s ease-in-out;
-  }
-  
-  a:hover {
-    color:  #F8A700;
-  }
-  
-  p {
-    text-align: center;
-    margin: 8px;
-  }
-  
-  /* Style for the logo */
-  .logo {
-    text-align: center;
-    margin-bottom: 20px;
-    
-  }
-  
-  #logo {
-    width: 200px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
-  }
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 36px;
+  color: #FDB813;
+  font-weight: 400;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+input {
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #555;
+  font-weight: 400;
+
+}
+
+button {
+  padding: 10px;
+  background-color: #FDB813;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: 400;
+
+}
+
+button:hover {
+  background-color: #F8A700;
+}
+
+.signup:hover {
+  background-color: #ffffff;
+}
+
+.signup {
+  background-color: #333;
+  color: #F8A700;
 
 
-  .msg.error {
-    color: red;
-    font-size: 0.7em;
-    margin-top: 1px;
-    padding-top: 0;
-    padding-bottom: 10px;
-  }
-  
-  .msg-light {
-    color: orange;
-    margin-top: 10px;
-  }
-  
-  /* button:disabled {
+}
+
+a {
+  text-decoration: none;
+  color: #FDB813;
+  font-size: 18px;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: #F8A700;
+}
+
+p {
+  text-align: center;
+  margin: 8px;
+}
+
+/* Style for the logo */
+.logo {
+  text-align: center;
+  margin-bottom: 20px;
+
+}
+
+#logo {
+  width: 200px;
+  /* Adjust the width as needed */
+  height: auto;
+  /* Maintain aspect ratio */
+}
+
+
+.msg.error {
+  color: #ff4444;
+  font-size: 1em;
+  margin-top: 1px;
+  padding-top: 0;
+  padding-bottom: 10px;
+  font-weight: 400;
+}
+
+.msg-light {
+  color: orange;
+  margin-top: 10px;
+}
+
+/* button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   } */
-  
