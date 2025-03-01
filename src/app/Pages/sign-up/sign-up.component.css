@@ -28,7 +28,7 @@ body::after {
   justify-content: center;
   align-items: center;
   width: 90%;
-  padding: 30px;
+  padding: 10px;
   background-color: #333;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -39,6 +39,11 @@ body::after {
   margin-right: auto;
   font-family: Arial, sans-serif;
 
+}
+
+.name{
+
+  color: #080808;
 }
 
 /* .image-container {
@@ -101,6 +106,20 @@ label {
   background-color: #F8A700;
 }
 
+
+input{
+  visibility: visible;
+  opacity: 1;
+  z-index: 10;
+  color: #7c7b7b;
+  font-size: 12px !important; 
+  height: 36px;
+  border-radius: 5px;
+  border: 1px solid #FDB813;
+  background-color: #fff;
+  color: #080808;
+}
+
 select {
   visibility: visible;
   opacity: 1;
@@ -111,6 +130,7 @@ select {
   border-radius: 5px;
   border: 1px solid #FDB813;
   background-color: #fff;
+  color: #080808;
 }
 
 input::placeholder,
