@@ -1,146 +1,66 @@
-<header>
-  <div class="nav-bar">
-    <!-- Updated logo -->
-    <a href="#" class="logo"><i class="bx bxs-graduation"></i>Mora Fusion</a>
 
-    <!-- Navigation links -->
-    <div class="nav-content" id="nav-element">
-      <a href="#home" class="home">Home</a>
-      <a href="events" class="events">Events</a>
-      <a href="#gallery" class="gallery">Gallery</a>
-      <a href="#about-us" class="about-us">About Us</a>
-      <a href="login" class="login">Login</a>
-      <a href="signup" class="signup">Sign Up</a>
-    </div>
-
-    <!-- Action icons -->
-    <div class="icons">
-      <div class="menu-icon" id="menu-btn"><i class="bx bx-menu"></i></div>
-    </div>
-
-    <!-- Search bar -->
-    <div class="search-form" id="search-box">
-      <input type="search" placeholder="Search events, tickets, or venues..." />
-      <label for="search-box"><i class="bx bx-search"></i></label>
-    </div>
-
-    <!-- Event Tickets (Cart) -->
-    <div class="shopping-cart" id="cart-box">
-      <div class="box">
-        <i class="bx bxs-trash trash-icon"></i>
-        <img src="Images/hackathon.png" alt="hackathon" />
-        <div class="content">
-          <h3>Hackathon 2024 Pass</h3>
-          <span class="price">Rs 1000.00</span>
-          <span class="quantity">Qty: 1</span>
-        </div>
-      </div>
-
-      <div class="box">
-        <i class="bx bxs-trash trash-icon"></i>
-        <img src="Images/cultural-fest.png" alt="cultural fest" />
-        <div class="content">
-          <h3>Cultural Fest Ticket</h3>
-          <span class="price">Rs 500.00</span>
-          <span class="quantity">Qty: 2</span>
-        </div>
-      </div>
-
-      <div class="box">
-        <i class="bx bxs-trash trash-icon"></i>
-        <img src="Images/tech-talk.png" alt="tech talk" />
-        <div class="content">
-          <h3>Tech Talk - AI Trends</h3>
-          <span class="price">Rs 300.00</span>
-          <span class="quantity">Qty: 1</span>
-        </div>
-      </div>
-
-      <div class="total">Total: Rs 2300.00</div>
-      <button class="btn">Checkout</button>
-    </div>
-  </div>
-</header>
-
-<!---------------------- Home Section ---------------------->
-
-<section class="section home-section" id="home">
-  <div class="home-content">
-    <h1 class="organic">Mora <span>Fusion </span></h1>
-    <h1><span>All </span> EVENTS ARE HERE</h1>
-    <p>Events, Activities & Experience</p>
-    <button class="btn"><a href="login">Get Started</a></button>
-  </div>
-</section>
-
-<!---------------------- Event Gallery Section ---------------------->
-
-<app-gallery />
-
-<section class="footer-section">
-  <div class="box-container">
-    <!-- Brand & Description -->
-    <div class="box">
-      <h3>UniEvent <mat-icon>school</mat-icon></h3>
-      <p>
-        "Connecting students, faculty, and alumni through exciting events and
-        unforgettable experiences. Plan, participate, and celebrate with us!"
-      </p>
-
-      <div class="share">
-        <a href="https://www.facebook.com" mat-icon-button>
-          <mat-icon>facebook</mat-icon>
-        </a>
-        <a href="https://www.twitter.com" mat-icon-button>
-          <mat-icon>twitter</mat-icon>
-        </a>
-        <a href="https://www.instagram.com" mat-icon-button>
-          <mat-icon>camera_alt</mat-icon>
-        </a>
-        <a href="https://www.linkedin.com" mat-icon-button>
-          <mat-icon>linkedin</mat-icon>
-        </a>
-      </div>
-    </div>
-
-    <!-- Contact Info -->
-    <div class="box">
-      <h3>Contact Info</h3>
-      <div class="contact">
-        <a>Email: contact&#64;gmil.com</a>
-        <a href="#" class="links"><mat-icon>phone</mat-icon> +1 123 456 7890</a>
-        <a href="#" class="links"
-          ><mat-icon>place</mat-icon> 456 University Ave, Campus City</a
+    <header>
+      <div class="nav-bar">
+        <div class="logo"
+          ><i class="bx bxs-graduation"></i> Mora Fusion</div
         >
-      </div>
-    </div>
 
-    <!-- Quick Links -->
-    <div class="box">
-      <h3>Quick Links</h3>
-      <div class="quick">
-        <a href="#home" class="links"><mat-icon>arrow_right</mat-icon> Home </a>
-        <a href="#upcoming-events" class="links"
-          ><mat-icon>arrow_right</mat-icon> Upcoming Events
-        </a>
-        <a href="#clubs" class="links"
-          ><mat-icon>arrow_right</mat-icon> Clubs & Societies
-        </a>
-        <a href="#gallery" class="links"
-          ><mat-icon>arrow_right</mat-icon> Event Gallery
-        </a>
-        <a href="#about-us" class="links"
-          ><mat-icon>arrow_right</mat-icon> About Us
-        </a>
-        <a href="#contact" class="links"
-          ><mat-icon>arrow_right</mat-icon> Contact Us
-        </a>
-      </div>
-    </div>
-  </div>
+        <!-- Navigation links -->
+        <div class="nav-content" id="nav-element">
+          <a href="#home" class="home">Home</a>
+          <a href="#gallery" class="gallery">Gallery</a>
+          <a href="/login" class="login">Login</a>
+          <a href="/signup" class="signup">Sign Up</a>
+        </div>
 
-  <!-- Copyright -->
-  <div class="footer-bottom">
-    <p>© 2024 UniEvent. All rights reserved. | Designed for Campus Life</p>
-  </div>
-</section>
+        <div class="icons">
+          <div class="menu-icon" id="menu-btn"><i class="bx bx-menu"></i></div>
+        </div>
+
+      
+      </div>
+    </header>
+
+    <section class="section home-section" id="home">
+      <div class="home-content">
+        <h1 class="organic">Mora <span>Fusion</span></h1>
+        <h1><span>All</span> EVENTS ARE HERE</h1>
+        <p>Events, Activities & Experience</p>
+        <a href="/login" class="btn" id="get-start">Get Started</a>
+      </div>
+    </section>
+
+    <!-- Event Gallery Section -->
+    <app-gallery></app-gallery>
+
+    <!-- Footer Section
+    <footer class="footer-section">
+      <div class="container">
+        <div class="footer-content">
+          Brand & Description
+          <div class="footer-box">
+            <h3><i class="bx bxs-school"></i> UniEvent</h3>
+            <p>
+              "Connecting students, faculty, and alumni through exciting events
+              and unforgettable experiences. Plan, participate, and celebrate
+              with us!"
+            </p>
+          </div> 
+
+         
+
+          <!-- Contact Info -->
+          <!-- <div class="footer-box">
+            <h3>Contact Info</h3>
+            <ul class="contact-info"> -->
+              <!-- <li><i class="bx bx-envelope"></i> Email: sadamalioc.21&#64;uom.lk</li> -->
+              <!-- <li><i class="bx bx-phone"></i> Phone: +1 123 456 7890</li>
+              <li>
+                <i class="bx bx-map"></i> Address: 456 University Ave, Campus
+                City -->
+              <!-- </li>
+            </ul>
+          </div> -->
+
+      
+    <!-- </footer> -->
