@@ -35,7 +35,7 @@ export const routes: Routes = [
   { path: 'organizer/dashboard/:userId', component: OrganizerDashboardComponent },
   { path: 'user/dashboard:/userId', component: NormalUserDashboardComponent },
   { path: 'user/id/profile', component: UserProfileComponent },
-  { path: 'signup', redirectTo: '/signup', pathMatch: 'full' },
+  // { path: 'signup', redirectTo: '/signup', pathMatch: 'full' },
   {path:'gallery', component:GalleryComponent}
 
 ];
