@@ -28,7 +28,7 @@ export class LoginComponent {
     console.log('Login Attempt:', this.loginObj);
 
     // Send POST request to the backend for login
-    this.httpClient.post<any>('http://localhost:3000/user/login', this.loginObj).subscribe(
+    this.httpClient.post<any>('http://localhost:3000/user/auth/login', this.loginObj).subscribe(
       (response) => {
         console.log('Login successful:', response);
 
@@ -42,6 +42,9 @@ export class LoginComponent {
             console.log('User Role:', role);
             console.log('User ID:', userId);
             
+            // Store the user_id in localStorage (or any other preferred storage)
+            localStorage.setItem('user_id', userId);  // Storing user_id in localStorage
+
             // Now, make another API call to get additional user details, if necessary
             this.getUserDetails(userId, role);  // Pass the userId and role
           } else {
@@ -65,7 +68,7 @@ export class LoginComponent {
     console.log('Fetching user details for user ID:', userId);
 
     // Make an API call to fetch user details based on userId
-    this.httpClient.get<any>(`http://localhost:3000/user/${userId}`).subscribe(
+    this.httpClient.get<any>(`http://localhost:3000/user/profile/${userId}`).subscribe(
       (response) => {
         console.log('User Details:', response);
         // Once user details are fetched, redirect based on the role
@@ -84,13 +87,13 @@ export class LoginComponent {
 
     if (role === 'admin') {
       // Redirect to the admin dashboard with userId in the URL
-      this.router.navigate([`admin/dashboard/${userId}`]);
+      this.router.navigate([`/admin/dashboard/${userId}`]);
     } else if (role === 'user') {
       // Redirect to the user dashboard with userId in the URL
-      this.router.navigate([`user/dashboard/${userId}`]);
+      this.router.navigate([`/user/dashboard/${userId}`]);
     } else if (role === 'organizer') {
       // Redirect to the organizer dashboard with userId in the URL
-      this.router.navigate([`organizer/dashboard/${userId}`]);
+      this.router.navigate([`/organizer/dashboard/${userId}`]);
     } else {
       alert('Role not recognized');
     }

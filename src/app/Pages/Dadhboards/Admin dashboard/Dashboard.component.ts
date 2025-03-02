@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { WidgetComponent } from "../../Components/widget/widget.component";
+import { WidgetComponent } from '../../../Components/widget/widget.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 
@@ -19,16 +19,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatToolbarModule,
     MatListModule,
     MatCardModule,
-    MatIconModule
-],
+    MatIconModule,
+  ],
 
   templateUrl: './Dashboard.component.html',
   styleUrls: ['./Dashboard.component.css'],
-
-
 })
-export class DashboardComponent {
-
-  
-  
-}
+export class DashboardComponent {}

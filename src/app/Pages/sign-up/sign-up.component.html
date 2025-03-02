@@ -5,6 +5,7 @@
       <img
         src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/audience-segmentation-concept-woman-with-magnifying-glass_1324816-41706-removebg-preview.png?alt=media&token=b3591080-a827-4941-88b4-c686d4f36334"
         alt="Image description"
+        class="responsive-image"
       />
     </div>
 
@@ -15,118 +16,141 @@
 
         <!-- Form Fields -->
         <div class="form-fields">
-          <input
-            type="text"
-            class="name ele"
-            placeholder="Enter your name"
-            required
-            formControlName="name"
-          />
-          <div class="msg error" *ngIf="f['name'].invalid && f['name'].touched">
-            <span *ngIf="f['name'].errors?.['required']" class="error">
-              Name is required
-            </span>
+          <!-- Name Field -->
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              class="name ele"
+              placeholder="Enter your name"
+              required
+              formControlName="name"
+            />
+            <!-- Error Message -->
+            <div class="msg error" *ngIf="f['name'].invalid && f['name'].touched">
+              <span *ngIf="f['name'].errors?.['required']" class="error">
+                Name is required
+              </span>
+            </div>
           </div>
 
-          <input
-            type="email"
-            class="email ele"
-            placeholder="Email"
-            required
-            formControlName="email"
-          />
-          <div
-            class="msg error"
-            *ngIf="f['email'].invalid && f['email'].touched"
-          >
-            <span *ngIf="f['email'].errors?.['required']" class="error">
-              Email is required
-            </span>
-            <span *ngIf="f['email'].errors?.['email']" class="error">
-              Please enter a valid email
-            </span>
+          <!-- Email Field -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="email ele"
+              placeholder="Email"
+              required
+              formControlName="email"
+            />
+            <!-- Error Message -->
+            <div class="msg error" *ngIf="f['email'].invalid && f['email'].touched">
+              <span *ngIf="f['email'].errors?.['required']" class="error">
+                Email is required
+              </span>
+              <span *ngIf="f['email'].errors?.['email']" class="error">
+                Please enter a valid email
+              </span>
+            </div>
           </div>
 
           <!-- Gender Dropdown -->
-          <select class="gender ele" formControlName="gender" required>
-            <option value="" disabled selected>Select your gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-
-          <input
-            type="text"
-            class="phone_number ele"
-            placeholder="Phone number"
-            required
-            formControlName="phone_number"
-          />
-          <div
-            class="msg error"
-            *ngIf="f['phone_number'].invalid && f['phone_number'].touched"
-          >
-            <span *ngIf="f['phone_number'].errors?.['required']" class="error">
-              Phone number is required
-            </span>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" class="gender ele" formControlName="gender" required>
+              <option value="" disabled selected>Select your gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
           </div>
 
-          <input
-            type="password"
-            class="password ele"
-            placeholder="Password"
-            required
-            formControlName="password"
-          />
-          <div
-            class="msg error"
-            *ngIf="f['password'].invalid && f['password'].touched"
-          >
-            <span *ngIf="f['password'].errors?.['required']" class="error">
-              Password is required
-            </span>
-            <span *ngIf="f['password'].errors?.['invalidPattern']">
-              At least 6 characters long, must contain 1 uppercase, 1 lowercase,
-              1 digit, and 1 special character
-            </span>
+          <!-- Phone Number Field -->
+          <div class="form-group">
+            <label for="phone_number">Phone Number</label>
+            <input
+              type="text"
+              id="phone_number"
+              class="phone_number ele"
+              placeholder="Phone number"
+              required
+              formControlName="phone_number"
+            />
+            <!-- Error Message -->
+            <div class="msg error" *ngIf="f['phone_number'].invalid && f['phone_number'].touched">
+              <span *ngIf="f['phone_number'].errors?.['required']" class="error">
+                Phone number is required
+              </span>
+            </div>
           </div>
 
-          <input
-            type="password"
-            class="password ele"
-            placeholder="Confirm password"
-            required
-            formControlName="confirmPassword"
-          />
-          <div
-            class="msg error"
-            *ngIf="
-              f['confirmPassword'].invalid &&
-              (f['confirmPassword'].dirty || f['confirmPassword'].touched)
-            "
-          >
-            <span *ngIf="f['confirmPassword'].errors?.['required']">
-              ConfirmPassword is required
-            </span>
-            <span *ngIf="f['confirmPassword'].errors?.['mustMatch']">
-              Password and confirm password should be matched
-            </span>
+          <!-- Password Field -->
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              class="password ele"
+              placeholder="Password"
+              required
+              formControlName="password"
+            />
+            <!-- Error Message -->
+            <div class="msg error" *ngIf="f['password'].invalid && f['password'].touched">
+              <span *ngIf="f['password'].errors?.['required']" class="error">
+                Password is required
+              </span>
+              <span *ngIf="f['password'].errors?.['invalidPattern']" class="error">
+                At least 6 characters long, must contain 1 uppercase, 1 lowercase, 1 digit, and 1 special character
+              </span>
+            </div>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              class="password ele"
+              placeholder="Confirm password"
+              required
+              formControlName="confirmPassword"
+            />
+            <!-- Error Message -->
+            <div class="msg error" *ngIf="f['confirmPassword'].invalid && (f['confirmPassword'].dirty || f['confirmPassword'].touched)">
+              <span *ngIf="f['confirmPassword'].errors?.['required']" class="error">
+                Confirm Password is required
+              </span>
+              <span *ngIf="f['confirmPassword'].errors?.['mustMatch']" class="error">
+                Password and confirm password should match
+              </span>
+            </div>
           </div>
 
           <!-- Role Dropdown -->
-          <select class="role ele" formControlName="role" required>
-            <option value="" disabled selected>Select your role</option>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-            <option value="organizer">Organizer</option>
-          </select>
+          <div class="form-group">
+            <label for="role">Role</label>
+            <select id="role" class="role ele" formControlName="role" required>
+              <option value="" disabled selected>Select your role</option>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+              <option value="organizer">Organizer</option>
+            </select>
+          </div>
 
-          <select class="status ele" formControlName="status" required>
-
-            <option value="" disabled selected>Select your status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
+          <!-- Status Dropdown -->
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" class="status ele" formControlName="status" required>
+              <option value="" disabled selected>Select your status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
         </div>
 
         <button type="submit" class="clkbtn" [disabled]="frm.invalid">
@@ -137,7 +161,7 @@
           {{ status.message }}
         </div>
 
-        <a routerLink="/login" class="link">Already a member? Login here</a>
+        <a href="/login" class="link">Already a member? Login here</a>
       </div>
     </form>
   </div>

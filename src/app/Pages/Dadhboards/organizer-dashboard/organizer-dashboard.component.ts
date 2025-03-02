@@ -33,6 +33,10 @@ import { MatChipsModule } from '@angular/material/chips';
   styleUrl: './organizer-dashboard.component.css'
 })
 export class OrganizerDashboardComponent {
+userId: any|string;
+upcomingEventsCount: any;
+completedEventsCount: any;
+participantsCount: any;
 goToProfile() {
 throw new Error('Method not implemented.');
 }
