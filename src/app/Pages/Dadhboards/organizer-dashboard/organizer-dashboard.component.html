@@ -6,6 +6,11 @@
       <a mat-list-item routerLink="/organizer/dashboard">
         <mat-icon>dashboard</mat-icon> Dashboard
       </a>
+      <a mat-list-item [routerLink]="['/user/profile', userId]">
+        <mat-icon>account_circle</mat-icon> Profile
+      </a>
+      
+
       <a mat-list-item routerLink="/organizer/create-event">
         <mat-icon>event</mat-icon> Create Event
       </a>
