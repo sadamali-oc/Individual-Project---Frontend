@@ -88,6 +88,7 @@ export class UserProfileComponent implements OnInit {
     this.httpClient.put(`http://localhost:3000/user/profile/${this.userId}`, this.frm.value).subscribe({
       next: (res) => {
         console.log('Profile updated:', res);
+        console.log(this.userId);
         this.status = { statusCode: 200, message: 'Profile updated successfully!' };
         this.snackBar.open('Profile updated successfully!', 'Close', { duration: 3000 });
       },

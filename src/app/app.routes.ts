@@ -22,11 +22,11 @@ export const routes: Routes = [
   { path: 'events', component: EventListComponent },
   { path: 'event/new', component: EventFormComponent },
   { path: 'event/edit/:id', component: EventFormComponent },
-  { path: 'login', component: LoginComponent }, // Default route
-  { path: 'signup', component: SignUpComponent }, // Default route
+  { path: 'auth/login', component: LoginComponent }, // Default route
+  { path: 'auth/signup', component: SignUpComponent }, // Default route
   { path: 'admin/dashboard/:userId', component: DashboardComponent }, // Default route
   { path: 'users', component: UserComponent }, // Default route
-  { path: 'organizer/create-event', component: CreateEventComponent },
+  { path: 'organizer/create-event/:userId', component: CreateEventComponent },
   { path: 'admin-page', component: AdminComponent },
   { path: 'new-user-page', component: NewuserComponent },
   { path: 'navigation', component: NavigationBarComponent },

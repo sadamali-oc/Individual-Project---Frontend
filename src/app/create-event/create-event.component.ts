@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-event',
@@ -31,20 +32,28 @@ import { MatNativeDateModule } from '@angular/material/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateEventComponent {
+  userId: string | null = null;
+
   eventName: string = '';
   eventDescription: string = '';
-  eventDate: string = ''; // Ensure this is bound correctly in the template
-  startTime: string = ''; // Bind this in the template
-  endTime: string = ''; // Bind this in the template
+  eventDate: string = '';
+  startTime: string = '';
+  endTime: string = '';
   eventCategory: string | undefined;
   eventNotes: string = '';
   fileName: string = '';
   eventFile: File | null = null;
-  status: string = 'upcoming'; // Default status set to "upcoming"
+  status: string = 'upcoming';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
-  // Handle file selection
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.userId = params.get('userId');
+      console.log('User ID:', this.userId);
+    });
+  }
+
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input?.files?.length) {
@@ -53,9 +62,11 @@ export class CreateEventComponent {
     }
   }
 
-  // Handle form submission and send data to backend
   submitForm(): void {
+    console.log('Form submission started');
+
     if (!this.eventName || !this.eventCategory || !this.startTime || !this.endTime) {
+      console.log('Missing required fields');
       alert('Please fill in all required fields');
       return;
     }
@@ -63,32 +74,38 @@ export class CreateEventComponent {
     const formData = new FormData();
     formData.append('event_name', this.eventName);
     formData.append('description', this.eventDescription);
-    formData.append('event_date', this.eventDate);  // Include the event date
-    formData.append('start_time', this.startTime);  // Include the start time
-    formData.append('end_time', this.endTime);      // Include the end time
+    formData.append('event_date', this.eventDate);
+    formData.append('start_time', this.startTime);
+    formData.append('end_time', this.endTime);
     formData.append('event_category', this.eventCategory);
     formData.append('additional_notes', this.eventNotes);
-    formData.append('status', this.status);    // Include the status field with value "upcoming"
+    formData.append('status', this.status);
+    formData.append('user_id', this.userId || '');
 
     if (this.eventFile) {
       formData.append('flyer_image', this.eventFile, this.eventFile.name);
     }
 
-    // Perform HTTP request to the backend API
-    this.http.post('http://localhost:3000/add/event', formData).subscribe(
-      (response) => {
-        console.log('Event created successfully', response);
-        alert('Event created successfully!');
-        this.resetForm();
-      },
-      (error) => {
-        console.error('Error creating event', error);
-        alert('An error occurred while creating the event');
-      }
-    );
+    console.log('Form data prepared', formData);
+
+    if (this.userId) {
+      console.log('Sending data to backend for userId:', this.userId);
+      this.http.post(`http://localhost:3000/event/add/events/${this.userId}`, formData).subscribe(
+        (response) => {
+          console.log('Event created successfully', response);
+          alert('Event created successfully!');
+          this.resetForm();
+        },
+        (error) => {
+          console.error('Error creating event', error);
+          alert('An error occurred while creating the event');
+        }
+      );
+    } else {
+      alert('User ID is missing');
+    }
   }
 
-  // Reset the form
   resetForm(): void {
     this.eventName = '';
     this.eventDescription = '';
@@ -97,7 +114,7 @@ export class CreateEventComponent {
     this.endTime = '';
     this.eventCategory = '';
     this.eventNotes = '';
-    this.status = 'upcoming'; // Reset status to "upcoming"
+    this.status = 'upcoming';
     this.fileName = '';
     this.eventFile = null;
   }

@@ -11,6 +11,8 @@ import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-organizer-dashboard',
@@ -37,7 +39,10 @@ userId: any|string;
 upcomingEventsCount: any;
 completedEventsCount: any;
 participantsCount: any;
+
+
 goToProfile() {
+
 throw new Error('Method not implemented.');
 }
 logout() {
@@ -50,6 +55,14 @@ throw new Error('Method not implemented.');
     { name: 'Hackathon', date: '2024-08-10', location: 'Moratuwa', status: 'Upcoming' },
     { name: 'Music Fest', date: '2024-06-30', location: 'Kandy', status: 'Completed' }
   ];
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    // Get the userId from the URL
+    this.userId = this.route.snapshot.paramMap.get('userId') || '';
+    console.log('User ID in Dashboard:', this.userId);
+  }
+  
 userProfile: any;
 
 
