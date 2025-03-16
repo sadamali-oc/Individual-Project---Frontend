@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { SignupService } from '../../services/signup.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';  // <-- Import Router
+
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router'; // <-- Import Router
 import { validPattern } from '../../helpers/pattern-mact.validator';
 import { MustMatch } from '../../helpers/must-match.validator';
 import { Status } from '../../models/status';
@@ -11,17 +17,19 @@ import { CommonModule } from '@angular/common';
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
-  imports:[  CommonModule,  ReactiveFormsModule, // Add ReactiveFormsModule here
-  ]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule, // Add ReactiveFormsModule here
+  ],
 })
 export class SignUpComponent implements OnInit {
   frm!: FormGroup;
   status!: Status;
 
   constructor(
-    private signupService: SignupService,
+    @Inject(SignupService) private signupService: SignupService,
     private fb: FormBuilder,
-    private router: Router  
+    private router: Router
   ) {}
 
   get f() {
@@ -30,18 +38,18 @@ export class SignUpComponent implements OnInit {
 
   onPost() {
     this.status = { statusCode: 0, message: 'Wait..' };
-    
+
     // Submit the form data to the backend via the signup service
     this.signupService.signup(this.frm.value).subscribe({
       next: (res) => {
         console.log(res); // Log the response
         this.status = res;
         this.frm.reset(); // Reset form on successful submission
-        
+
         // Navigate to login page after successful signup
-        this.router.navigate(['/login']);  // <-- Navigate to login page
+        this.router.navigate(['/login']); // <-- Navigate to login page
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error(err); // Log the error
         this.status.message = 'Some error on server side'; // Set error message
       },
@@ -74,7 +82,11 @@ export class SignUpComponent implements OnInit {
       },
       {
         // Custom validator for matching passwords
-        validator: MustMatch('password', 'confirmPassword', 'Passwords must match'),
+        validator: MustMatch(
+          'password',
+          'confirmPassword',
+          'Passwords must match'
+        ),
       }
     );
   }
