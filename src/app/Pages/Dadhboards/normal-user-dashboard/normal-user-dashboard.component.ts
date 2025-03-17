@@ -48,6 +48,7 @@ interface Event {
 export class NormalUserDashboardComponent implements OnInit {
   userId: string | null = ''; 
   name: string = 'Guest';  
+  // flyer_image = ''
  
   events: Event[] = []; 
   private subscriptions: Subscription = new Subscription();

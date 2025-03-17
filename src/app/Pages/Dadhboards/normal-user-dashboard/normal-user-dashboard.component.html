@@ -7,9 +7,20 @@
         <a mat-list-item routerLink="/user/dashboard">
           <mat-icon>dashboard</mat-icon> Dashboard
         </a>
+
         <a mat-list-item [routerLink]="['/user/profile', userId]">
           <mat-icon>account_circle</mat-icon> Profile
         </a>
+       
+      
+
+        <a mat-list-item [routerLink]="['/organizer/create-event', userId]">
+          <mat-icon>event</mat-icon>Enrolled Events
+        </a>
+
+
+        <a mat-list-item [routerLink]="'/'">
+          <mat-icon>logout</mat-icon>Log out </a>
        
        
        
@@ -23,6 +34,8 @@
           <mat-icon>menu</mat-icon>
         </button>
         <span>Welcome, {{ name}}</span>
+
+      <!-- {{flyer_image}} -->
       </mat-toolbar>
   
     <app-event-button/>

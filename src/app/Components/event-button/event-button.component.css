@@ -72,9 +72,10 @@
 }
 
 .box .btn {
-    width: 12rem;
-    font-size: 1rem;
-    padding: 0.6rem;
+    width: 25rem;
+    height: 6rem;
+    font-size: 2rem;
+    padding: 1rem;
     background-color: #FDB813;
     color: #fff;
     border: none;
@@ -82,11 +83,17 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-top: 0.5rem;
-}
+    margin-bottom: 0.5rem; 
+      border-width: 1px;
+    border-color: #f0f1ee;}
+ 
+
 
 .box .btn:hover {
     background-color: #FF9C00;
-}
+    border: none;
+    border-width: 1px;
+border-color: #f0f1ee;}
 
 /* Media Queries */
 @media (max-width: 768px) {
