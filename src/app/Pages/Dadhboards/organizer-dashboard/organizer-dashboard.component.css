@@ -14,9 +14,9 @@ mat-sidenav {
     color: white;
     height: 100vh;
     position: fixed;
-    top: 0;
+    /* top: 0;
     left: 0;
-    transition: width 0.3s ease;
+    transition: width 0.3s ease; */
     /* Smooth transition for resizing */
 }
 
@@ -51,7 +51,6 @@ mat-nav-list a {
     padding: 10px 15px;
     display: flex;
     align-items: center;
-    /* Aligns the icon and text */
 }
 
 mat-nav-list a:hover {

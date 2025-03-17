@@ -6,7 +6,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class NormalUserService {
   getUserData(userId: string) {
     throw new Error('Method not implemented.');
   }
