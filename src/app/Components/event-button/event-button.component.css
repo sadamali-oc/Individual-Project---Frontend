@@ -7,6 +7,14 @@
     /* Dark Green for main heading */
 }
 
+.event-image {
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+  }
+  
+
 .heading span {
 
     /* Orange background for highlight */

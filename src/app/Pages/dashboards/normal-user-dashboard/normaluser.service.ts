@@ -7,10 +7,6 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class NormalUserService {
-  getUserData(userId: string) {
-    throw new Error('Method not implemented.');
-  }
-
   private apiUrl = 'http://localhost:3000'; // Base API URL
 
   constructor(private http: HttpClient) { }
@@ -18,6 +14,13 @@ export class NormalUserService {
   // Fetch user profile by userId
   getUserProfile(userId: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/user/profile/${userId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Fetch all events
+  getAllEvent(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/event/all/events`).pipe(
       catchError(this.handleError)
     );
   }

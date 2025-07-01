@@ -41,7 +41,7 @@ interface Event {
     MatGridListModule,
     MatToolbarModule,
     MatSidenavModule,
-    GalleryComponent,
+ 
     RouterModule
 ]
 

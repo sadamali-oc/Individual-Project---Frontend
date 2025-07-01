@@ -1,4 +1,228 @@
-mat-grid-tile {
-    background: lightblue;
+.event-list-card {
+  margin: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.event-list-card .mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: #004D7A;
+  color: white;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.event-list-card .mat-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  padding-right: 15px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 8px;
+  justify-content: space-between;
+}
+
+/* Smaller search input */
+.event-filter-input {
+  flex-grow: 0;
+  min-width: 180px;
+  max-width: 220px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 5px 10px;
+  color: white;
+}
+
+.event-filter-input .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.event-filter-input .mat-form-field-infix {
+  border-top: none;
+}
+
+.event-filter-input .mat-form-field-label {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.event-filter-input .mat-input-element {
+  color: white !important;
+}
+
+.event-filter-input .mat-icon {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 20px;
+}
+
+.event-filter-input .mat-form-field-underline {
+  display: none;
+}
+
+.event-filter-input.mat-focused .mat-form-field-outline-thick {
+  color: white !important;
+}
+
+.event-table-container {
+  overflow-x: auto;
+  width: 100%;
+  margin-top: 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+table th {
+  background-color: #e0e6ec;
+  color: #333;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid #c0c0c0;
+}
+
+table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+  color: #555;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f0f5fa;
+}
+
+/* Action buttons and icons */
+.actions-cell button mat-icon {
+  font-size: 28px;
+  height: 28px;
+  width: 28px;
+}
+
+.actions-cell button {
+  width: 48px;
+  height: 48px;
+  padding: 10px;
+}
+
+/* Status badges */
+.status-approved {
+  background-color: #D4EDDA;
+  color: #155724;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-pending {
+  background-color: #FFF3CD;
+  color: #856404;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-rejected {
+  background-color: #F8D7DA;
+  color: #721C24;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.mat-no-data-row {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #777;
+}
+
+.mat-paginator {
+  background-color: #ffffff;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 10px 0;
+}
+
+/* Add New Event Button */
+button.mat-raised-button.mat-primary {
+  background-color: #007BBF;
+  color: white;
+  font-weight: 500;
+  border-radius: 25px;
+}
+
+button.mat-raised-button.mat-primary:hover {
+  background-color: #006095;
+}
+
+@media (max-width: 768px) {
+  .event-list-card .mat-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
-  
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .event-filter-input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .mat-card-title {
+    font-size: 1.3rem;
+  }
+
+  .event-table-container {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  .hide-on-mobile {
+    display: none;
+  }
+}
+
+
+/* Snackbar styles */
+.snackbar-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.snackbar-info {
+  background-color: #2196f3;
+  color: white;
+}
+
+/* Add other styles you've already applied here (table, card, header-actions, etc.) */
+/* Keep your previous styles such as .event-list-card, .actions-cell, .status-tag, etc. */
+

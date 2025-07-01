@@ -87,7 +87,7 @@ export class LoginComponent {
 
     if (role === 'admin') {
       // Redirect to the admin dashboard with userId in the URL
-      this.router.navigate([`/admin/dashboard/${userId}`]);
+      this.router.navigate([`/admin/${userId}/dashboard`]);
     } else if (role === 'user') {
       // Redirect to the user dashboard with userId in the URL
       this.router.navigate([`/user/dashboard/${userId}`]);

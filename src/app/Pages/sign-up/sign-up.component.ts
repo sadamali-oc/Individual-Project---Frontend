@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router'; // <-- Import Router
+import { Router } from '@angular/router';
 import { validPattern } from '../../helpers/pattern-mact.validator';
 import { MustMatch } from '../../helpers/must-match.validator';
 import { Status } from '../../models/status';
@@ -47,7 +47,7 @@ export class SignUpComponent implements OnInit {
         this.frm.reset(); // Reset form on successful submission
 
         // Navigate to login page after successful signup
-        this.router.navigate(['/login']); // <-- Navigate to login page
+        this.router.navigate(['/auth/login']); // <-- Navigate to login page
       },
       error: (err: any) => {
         console.error(err); // Log the error

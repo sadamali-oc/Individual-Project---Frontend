@@ -14,14 +14,9 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { NormalUserService } from './normaluser.service';
 import { Subscription } from 'rxjs';
-import { EventButtonComponent } from "../../../Components/event-button/event-button.component";
+import { EventButtonComponent } from '../../../components/event-button/event-button.component';
 
-interface Event {
-  name: string;
-  date: string;
-  location: string;
-  status: string;
-}
+
 
 @Component({
   selector: 'app-normal-user-dashboard',
@@ -41,6 +36,7 @@ interface Event {
     MatChipsModule,
     MatDividerModule,
     EventButtonComponent
+    
 ],
   templateUrl: './normal-user-dashboard.component.html',
   styleUrls: ['./normal-user-dashboard.component.css'] // Fix: Correct array syntax

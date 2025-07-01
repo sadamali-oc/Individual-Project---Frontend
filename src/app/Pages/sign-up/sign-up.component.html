@@ -1,6 +1,5 @@
 <div class="form-section">
   <div class="container">
-    <!-- Image Container -->
     <div class="image-container">
       <img
         src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/audience-segmentation-concept-woman-with-magnifying-glass_1324816-41706-removebg-preview.png?alt=media&token=b3591080-a827-4941-88b4-c686d4f36334"
@@ -10,13 +9,11 @@
     </div>
 
     <form [formGroup]="frm" (ngSubmit)="onPost()">
-      <!-- Signup Form -->
       <div class="signup-box">
         <h2>Signup</h2>
 
-        <!-- Form Fields -->
         <div class="form-fields">
-          <!-- Name Field -->
+          <!-- Name -->
           <div class="form-group">
             <label for="name">Name</label>
             <input
@@ -24,18 +21,15 @@
               id="name"
               class="name ele"
               placeholder="Enter your name"
-              required
               formControlName="name"
+              required
             />
-            <!-- Error Message -->
             <div class="msg error" *ngIf="f['name'].invalid && f['name'].touched">
-              <span *ngIf="f['name'].errors?.['required']" class="error">
-                Name is required
-              </span>
+              <span *ngIf="f['name'].errors?.['required']">Name is required</span>
             </div>
           </div>
 
-          <!-- Email Field -->
+          <!-- Email -->
           <div class="form-group">
             <label for="email">Email</label>
             <input
@@ -43,21 +37,16 @@
               id="email"
               class="email ele"
               placeholder="Email"
-              required
               formControlName="email"
+              required
             />
-            <!-- Error Message -->
             <div class="msg error" *ngIf="f['email'].invalid && f['email'].touched">
-              <span *ngIf="f['email'].errors?.['required']" class="error">
-                Email is required
-              </span>
-              <span *ngIf="f['email'].errors?.['email']" class="error">
-                Please enter a valid email
-              </span>
+              <span *ngIf="f['email'].errors?.['required']">Email is required</span>
+              <span *ngIf="f['email'].errors?.['email']">Please enter a valid email</span>
             </div>
           </div>
 
-          <!-- Gender Dropdown -->
+          <!-- Gender -->
           <div class="form-group">
             <label for="gender">Gender</label>
             <select id="gender" class="gender ele" formControlName="gender" required>
@@ -68,7 +57,7 @@
             </select>
           </div>
 
-          <!-- Phone Number Field -->
+          <!-- Phone Number -->
           <div class="form-group">
             <label for="phone_number">Phone Number</label>
             <input
@@ -76,18 +65,15 @@
               id="phone_number"
               class="phone_number ele"
               placeholder="Phone number"
-              required
               formControlName="phone_number"
+              required
             />
-            <!-- Error Message -->
             <div class="msg error" *ngIf="f['phone_number'].invalid && f['phone_number'].touched">
-              <span *ngIf="f['phone_number'].errors?.['required']" class="error">
-                Phone number is required
-              </span>
+              <span *ngIf="f['phone_number'].errors?.['required']">Phone number is required</span>
             </div>
           </div>
 
-          <!-- Password Field -->
+          <!-- Password -->
           <div class="form-group">
             <label for="password">Password</label>
             <input
@@ -95,21 +81,18 @@
               id="password"
               class="password ele"
               placeholder="Password"
-              required
               formControlName="password"
+              required
             />
-            <!-- Error Message -->
             <div class="msg error" *ngIf="f['password'].invalid && f['password'].touched">
-              <span *ngIf="f['password'].errors?.['required']" class="error">
-                Password is required
-              </span>
-              <span *ngIf="f['password'].errors?.['invalidPattern']" class="error">
+              <span *ngIf="f['password'].errors?.['required']">Password is required</span>
+              <span *ngIf="f['password'].errors?.['invalidPattern']">
                 At least 6 characters long, must contain 1 uppercase, 1 lowercase, 1 digit, and 1 special character
               </span>
             </div>
           </div>
 
-          <!-- Confirm Password Field -->
+          <!-- Confirm Password -->
           <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
             <input
@@ -117,21 +100,16 @@
               id="confirmPassword"
               class="password ele"
               placeholder="Confirm password"
-              required
               formControlName="confirmPassword"
+              required
             />
-            <!-- Error Message -->
             <div class="msg error" *ngIf="f['confirmPassword'].invalid && (f['confirmPassword'].dirty || f['confirmPassword'].touched)">
-              <span *ngIf="f['confirmPassword'].errors?.['required']" class="error">
-                Confirm Password is required
-              </span>
-              <span *ngIf="f['confirmPassword'].errors?.['mustMatch']" class="error">
-                Password and confirm password should match
-              </span>
+              <span *ngIf="f['confirmPassword'].errors?.['required']">Confirm Password is required</span>
+              <span *ngIf="f['confirmPassword'].errors?.['mustMatch']">Password and confirm password should match</span>
             </div>
           </div>
 
-          <!-- Role Dropdown -->
+          <!-- Role -->
           <div class="form-group">
             <label for="role">Role</label>
             <select id="role" class="role ele" formControlName="role" required>
@@ -142,7 +120,7 @@
             </select>
           </div>
 
-          <!-- Status Dropdown -->
+          <!-- Status -->
           <div class="form-group">
             <label for="status">Status</label>
             <select id="status" class="status ele" formControlName="status" required>
@@ -153,9 +131,7 @@
           </div>
         </div>
 
-        <button type="submit" class="clkbtn" [disabled]="frm.invalid">
-          Signup
-        </button>
+        <button type="submit" class="clkbtn" [disabled]="frm.invalid">Signup</button>
 
         <div class="msg-light" *ngIf="status">
           {{ status.message }}
