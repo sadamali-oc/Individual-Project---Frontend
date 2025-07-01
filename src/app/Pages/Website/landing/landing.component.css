@@ -1,433 +1,247 @@
-header {
-  position: fixed;
-  padding: 0rem 1rem;
-  top: 0;
-  left: 0;
-  height: 5rem;
-  width: 100%;
-  min-width: fit-content;
-  z-index: var(--z-fixed);
-  background-color: #625536;
-  box-shadow: var(--box-shadow);
+:root {
+  --z-fixed: 100;
+  --box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+  --font-semi-bold: 600;
+  --white-color: #ffffff;
+  --text-color-light: #777;
+  --normal-font: 1.6rem;
+  --smaller-font: 1.4rem;
+  --orange-color: #f0a500;
+  --tran-0-3: all 0.3s ease;
 }
 
-.nav-bar {
-  display: flex;
-  position: relative;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.nav-bar .nav-content a {
-  color: #ffffff;
-  /* White text color */
-  margin: 0 1.2rem;
-  /* Horizontal spacing between links */
-  font-size: 1.8rem;
-  /* Larger text for better visibility */
-  text-decoration: none;
-  /* Remove underline */
-  transition: color 0.3s;
-  /* Smooth transition for color change on hover */
-}
-
-.nav-bar .nav-content a:hover {
-  color: #f0a500;
-}
-
-.nav-bar .logo {
-  font-size: 3.4rem;
-  color: #ffffff;
-  font-weight: var(--font-semi-bold);
-
-}
-
-/* .nav-bar .logo i {
-  font-size: 2.6rem;
-  color: #ffffff;
-  margin-right: 0rem;
-} */
-
-.nav-bar .icons {
-  display: flex;
-}
-
-.nav-bar .icons div {
-  font-size: 2.2rem;
-  height: 3.8rem;
-  width: 3.8rem;
-  line-height: 4.5rem;
-  background-color: #eee;
-  border-radius: 0.5rem;
-  margin-right: 0.2rem;
-  text-align: center;
-  cursor: pointer;
-  text-decoration: none
-}
-
-.nav-bar .icons div:hover {
-  background-color: #ffffff;
-  color: var(--white-color);
-
-}
-
-.nav-bar .menu-icon {
-  display: none;
-}
-
-.nav-bar .nav-content.active {
-  display: block;
-  transition: var(--tran-0-3);
-}
-
-
-
-
-
-.btn {
-  width: 100%;
-  font-size: var(--normal-font);
-  color: var(--text-color-light);
-  padding: 0.8rem 3rem;
-  margin-top: 1rem;
-  border: 0.2rem solid var(--text-color);
-  background-color: var(--white-color);
-  border-radius: 0.5rem;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.btn:hover {
-  background-color: var(--orange-color);
-  color: var(--white-color);
-  text-decoration: none;
-}
-
-
-
-.nav-bar .login-form {
-  position: absolute;
-  top: 110%;
-  right: -10rem;
-  opacity: 0;
-  width: 32rem;
-  padding: 2rem;
-  text-align: center;
-  background-color: var(--white-color);
-  box-shadow: var(--box-shadow);
-  border-radius: 0.5rem;
-}
-
-.nav-bar .login-form .input-box {
-  width: 100%;
-  font-size: var(--normal-font);
-  background-color: #eee;
-  padding: 1rem;
-  margin: 0.7rem 0;
-  border-radius: 0.5rem;
-}
-
-.nav-bar .login-form p {
-  font-size: var(--smaller-font);
-  color: var(--text-color-light);
-  padding: 0.5rem 0;
-}
-
-.nav-bar .login-form p a {
-  color: var(--orange-color);
-  text-decoration: none;
-  margin-left: 0;
-}
-
-.nav-bar .login-form.active {
-  opacity: 1;
-  transition: var(--tran-0-3);
-}
-
-
-
-
+/* Section Padding */
 .section {
   padding: 1.8rem 9%;
 }
 
+/* --- Hero Section --- */
 .home-section {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("https://www.eventbookings.com/wp-content/uploads/2023/12/Causes-that-inspire-to-host-a-community-event--1024x643.webp");
+  background-image: url("../../../assets/1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   height: 100vh;
   width: 100%;
+  color: #ffffff;
 }
 
 .home-content {
   text-align: center;
-  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
   padding-top: 4rem;
-  color: #ffffff;
+  width: 100%;
 }
 
 .home-content h1 {
   font-size: 3.8rem;
-}
-
-.home-content span {
-  color: #ffffff;
+  margin-bottom: 10px;
 }
 
 .home-content .organic {
   font-size: 5rem;
   margin-bottom: 1rem;
+  font-family: 'Georgia', serif;
+  font-weight: normal;
 }
 
-.home-content .organic span {
+.home-content .organic span,
+.home-content h1 span {
   color: #FDB813;
 }
 
 .home-content p {
-  color: #ffffff;
   font-size: 1.8rem;
   padding: 1rem 0;
+  margin: 20px 0 40px;
   line-height: 3rem;
+  color: #ffffff;
 }
 
 .home-content .btn {
   width: 15rem;
   background-color: #FDB813;
   border-radius: 3rem;
+  display: inline-block;
+  color: #ffffff;
+  padding: 0.8rem 3rem;
+  font-size: var(--normal-font);
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
+.home-content .btn:hover {
+  background-color: #e0a500;
+}
 
+/* --- Features Section --- */
+.features-section {
+  padding: 80px 20px;
+  background-color: #f8f9fa;
+  text-align: center;
+}
 
+.features-section h2 {
+  font-size: 2.5em;
+  margin-bottom: 50px;
+  color: #333;
+}
 
-/* .footer-section {
-  background-color: #625536;
-  padding: 2rem 0;
-  
-  height: 2px;
-} */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
+.feature-item {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
 
+.feature-item i {
+  font-size: 3em;
+  color: #007bff;
+  margin-bottom: 20px;
+}
 
+.feature-item h3 {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+  color: #333;
+}
 
-/* Extra Small - Phones */
+.feature-item p {
+  color: #666;
+}
+
+/* --- CTA Section --- */
+.cta-section {
+  padding: 80px 20px;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+}
+
+.cta-section h2 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.cta-section p {
+  font-size: 1.3em;
+  margin-bottom: 40px;
+}
+
+.cta-section .btn {
+  background-color: #28a745;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 5px;
+  font-size: 1.1em;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.cta-section .btn:hover {
+  background-color: #218838;
+}
+
+/* --- Responsive --- */
 @media (max-width: 575px) {
   html {
     font-size: 50%;
   }
 
-  header {
-    padding: 0 3rem;
-  }
-
-  .nav-bar .menu-icon {
-    display: inline-block;
-  }
-
-  .nav-bar .nav-content {
-    position: absolute;
-    z-index: var(--z-fixed);
-    top: 110%;
-    right: 0;
-    display: none;
-    width: 25rem;
-    background-color: #fff;
-    box-shadow: var(--box-shadow);
-    border-radius: 0.5rem;
-  }
-
-  .nav-bar .nav-content a {
-    display: block;
-    margin: 2rem 2.5rem;
-  }
-
-
-  .get-start a {
-  text-decoration: none;
-  color: #ffffff;
-  }
-
-
-
-  .nav-bar .login-form {
-    width: 30rem;
-    right: -1rem;
-  }
-
   .section {
     padding: 2rem;
   }
 
-  .heading {
-    font-size: 2.5rem;
+  .home-content h1 {
+    font-size: 2.2rem;
   }
 
-  .footer-section .box-container .box .share a {
-    height: 2rem;
-    width: 4rem;
-    font-size: 1.5rem;
-    margin-right: 0.5rem;
+  .home-content .organic {
+    font-size: 3.5rem;
+  }
+
+  .home-content p {
+    font-size: 1.4rem;
+  }
+
+  .home-content .btn {
+    width: auto;
+    padding: 1rem 2rem;
+  }
+
+  .features-section h2,
+  .cta-section h2 {
+    font-size: 2rem;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
   }
 }
 
-/* Small - Tablets */
 @media (min-width: 576px) and (max-width: 767px) {
   html {
     font-size: 52%;
   }
 
-  header {
-    padding: 0 4rem;
-  }
-
-  .nav-bar .menu-icon {
-    display: inline-block;
-  }
-
-  .nav-bar .nav-content {
-    position: absolute;
-    z-index: var(--z-fixed);
-    top: 110%;
-    right: 0;
-    display: none;
-    width: 25rem;
-    background-color: #fff;
-    box-shadow: var(--box-shadow);
-    border-radius: 0.5rem;
-  }
-
-  .nav-bar .nav-content a {
-    display: block;
-    margin: 2rem 2.5rem;
-  }
-
   .section {
     padding: 2rem;
   }
 
-
-
-  .nav-bar .login-form {
-    right: -2rem;
+  .home-content h1 {
+    font-size: 2.8rem;
   }
 
-  .footer-section .box-container .box .share a {
-    height: 2rem;
-    width: 2.2rem;
-    font-size: 1.5rem;
-    margin-right: 0.2rem;
+  .home-content .organic {
+    font-size: 4rem;
+  }
+
+  .home-content p {
+    font-size: 1.6rem;
   }
 }
 
-/* Medium - Laptops */
 @media (min-width: 768px) and (max-width: 991px) {
   html {
     font-size: 55%;
   }
 
-  header {
-    padding: 0 7rem;
-  }
-
-  .nav-bar .nav-content a {
-    margin: 0 0.5rem;
-  }
-
-
-
-  .nav-bar .login-form {
-    right: -5rem;
+  .section {
+    padding: 1.8rem 5%;
   }
 }
 
-/* Large - Desktops */
 @media (min-width: 992px) and (max-width: 1199px) {
   html {
     font-size: 60%;
   }
 
-  header {
-    padding: 0 10rem;
+  .section {
+    padding: 1.8rem 7%;
   }
-
-  .nav-bar .nav-content a {
-    margin: 0 0.8rem;
-  }
-
-  .nav-bar .search-form {
-    right: -8rem;
-  }
-
-
 }
 
-/* Extra Large - Large Screens */
 @media (min-width: 1200px) {
   html {
     font-size: 65%;
   }
 
-  header {
-    padding: 0 12rem;
+  .section {
+    padding: 1.8rem 9%;
   }
-
-  .nav-bar .nav-content a {
-    margin: 0 1rem;
-  }
-}
-
-
-
-
-
-
-
-.event-management-container {
-  margin: 20px;
-}
-
-mat-card {
-  margin-bottom: 20px;
-}
-
-
-.container {
-  padding: 2px;
-}
-
-.landing {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.landing-card {
-  width: 100%;
-}
-
-.gallery {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.about {
-  margin-top: 30px;
-  text-align: center;
-}
-
-mat-card {
-  margin-bottom: 20px;
-}
-
-mat-grid-list {
-  margin-top: 20px;
-}
-
-.spacer {
-  flex: 1 1 auto;
 }

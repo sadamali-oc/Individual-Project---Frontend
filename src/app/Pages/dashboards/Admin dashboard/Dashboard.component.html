@@ -1,0 +1,132 @@
+<!-- Summary Cards -->
+<div class="dashboard-cards">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Total Events</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ totalEvents }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Upcoming Events</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ upcomingEventsCount }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Registered Attendees</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ totalRegistrations }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="dashboard-cards">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Organizers</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ totalOrganizers }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Volunteers</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ totalVolunteers }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Tickets Issued</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ totalTicketsIssued }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Upcoming Events Table -->
+<div class="dashboard-section">
+  <mat-card class="card full-width-card">
+    <mat-card-header>
+      <mat-card-title>Upcoming Events</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Registrations</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let event of upcomingEvents">
+            <td>{{ event.name }}</td>
+            <td>{{ event.date | date: 'yyyy-MM-dd' }}</td>
+            <td>{{ event.time }}</td>
+            <td>{{ event.location }}</td>
+            <td>{{ event.registrations }}</td>
+            <td>
+              <button mat-button (click)="viewEventDetails(event.id)">View Details</button>
+            </td>
+          </tr>
+          <tr *ngIf="!upcomingEvents?.length">
+            <td colspan="6">No upcoming events found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Recent Activities Table -->
+<div class="dashboard-section recent-activity-section">
+  <mat-card class="card full-width-card">
+    <mat-card-header>
+      <mat-card-title>Recent Activities</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table>
+        <thead>
+          <tr>
+            <th>Activity</th>
+            <th>By</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let activity of recentActivities">
+            <td>{{ activity.description }}</td>
+            <td>{{ activity.by }}</td>
+            <td>{{ activity.date | date: 'yyyy-MM-dd HH:mm' }}</td>
+            <td>
+              <span [ngClass]="activity.status === 'Completed' ? 'status-confirmed' : 'status-pending'">
+                {{ activity.status }}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="!recentActivities?.length">
+            <td colspan="4">No recent activities found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

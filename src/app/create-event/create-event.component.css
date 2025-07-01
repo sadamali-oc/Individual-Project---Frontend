@@ -1,247 +1,270 @@
+
+
 /* Container to center the form */
 .form-section {
-    max-width: 600px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: #333; /* Dark background */
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #333;
+  /* Dark background */
 
-    /* background-color: #f9f9f9; */
-    border-radius: 8px;
-    box-shadow: 0 4px 12px #f9f9f9;   
-     color: #FDB813;
-
-  }
-  
-  /* Styling for form fields */
-  mat-form-field {
-    width: 100%;
-    margin-bottom: 16px;
-  }
-  
-  /* Label styling */
-  mat-label {
-    font-size: 0.8rem;
-    /* font-weight: bold; */
-    color: #333;
-  }
-  
-  /* Input field styling */
-  mat-input {
-    padding: 10px;
-    font-size: 1rem;
-  }
-  
-  /* Mat-error message styling */
-  mat-error {
-    font-size: 0.9rem;
-    color: #f44336;
-  }
+  /* background-color: #f9f9f9; */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px #423f3f;
+  color: #FDB813;
   
 
-  button.buttonSubmit {
 
-    /* margin-top: 20px; */
-    /* padding: 12px; */
-    font-size: 16px;
-    color: #fff;
-    background-color: #FDB813;
-    /* border: none; */
-    /* border-radius: 5px; */
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 20px;
+}
 
 
 
-  }
-
-
-  button.buttonReset{
-
-    font-size: 16px;
-    color: #fff;
-    background-color: #e00303;
-    /* border: none; */
-    /* border-radius: 5px; */
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 20px;
- margin-left: 5px;
-
-  }
-
+/* Styling for form fields */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
 
   
-  button.buttonSubmit:hover{
+}
 
-    background-color: #4caf50;
-
-  }
-
-
-  button.buttonReset:hover{
-
-
-    background-color: #ffffff;
-    color: #333;
-
-
-  }
-
-
-
-
-  /* Section for the buttons */
-  .example-button-row {
-    display: flex;
-    gap: 16px;
-    justify-content: flex-start;
-  }
+/* Label styling */
+mat-label {
+  font-size: 0.8rem;
+  /* font-weight: bold; */
+  color: #333;
   
-  /* Button styling */
+
+}
+
+/* Input field styling */
+mat-input {
+  padding: 10px;
+  font-size: 1rem;
+  
+}
+
+/* Mat-error message styling */
+mat-error {
+  font-size: 0.9rem;
+  color: #f44336;
+}
+
+
+.form-actions {
+
+  display: flex;
+  justify-content: flex-end;
+  /* Moves buttons to the right */
+  gap: 10px;
+  /* margin-left: 40%; */
+  /* Adds spacing between buttons */
+}
+
+button.buttonSubmit {
+
+  /* margin-top: 20px; */
+  /* padding: 12px; */
+  font-size: 16px;
+  color: #fff;
+  background-color: #FDB813;
+  /* border: none; */
+  /* border-radius: 5px; */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+
+  /* margin-left: 0%; */
+
+
+}
+
+
+button.buttonReset {
+
+  font-size: 16px;
+  color: #fff;
+  background-color: #c30a0a;
+  /* border: none; */
+  /* border-radius: 5px; */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  /* margin-left: 50%; */
+
+
+}
+
+
+
+button.buttonSubmit:hover {
+
+  background-color: #4caf50;
+
+}
+
+
+button.buttonReset:hover {
+
+
+  background-color: #ffffff;
+  color: #333;
+
+
+}
+
+
+
+
+/* Section for the buttons */
+.example-button-row {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-start;
+}
+
+/* Button styling */
+button.mat-raised-button {
+  background-color: #4caf50;
+  color: white;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+button.mat-raised-button:hover {
+  background-color: #45a049;
+}
+
+button.mat-raised-button:disabled {
+  background-color: #c1c1c1;
+  cursor: not-allowed;
+}
+
+/* Spacer for the form */
+.spacer {
+  margin-bottom: 30px;
+}
+
+/* Adjustments for Datepicker and Timepicker */
+mat-datepicker-toggle,
+mat-timepicker-toggle {
+  margin-top: 10px;
+}
+
+mat-datepicker,
+mat-timepicker {
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .form-section {
+    width: 90%;
+  }
+
   button.mat-raised-button {
-    background-color: #4caf50;
-    color: white;
-    font-size: 1rem;
-    padding: 10px 20px;
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-  }
-  
-  button.mat-raised-button:hover {
-    background-color: #45a049;
-  }
-  
-  button.mat-raised-button:disabled {
-    background-color: #c1c1c1;
-    cursor: not-allowed;
-  }
-  
-  /* Spacer for the form */
-  .spacer {
-    margin-bottom: 30px;
-  }
-  
-  /* Adjustments for Datepicker and Timepicker */
-  mat-datepicker-toggle,
-  mat-timepicker-toggle {
-    margin-top: 10px;
-  }
-  
-  mat-datepicker,
-  mat-timepicker {
-    font-size: 1rem;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 600px) {
-    .form-section {
-      width: 90%;
-    }
-  
-    button.mat-raised-button {
-      width: 100%;
-    }
-  }
-
-  
-
-  .progress-bar {
-    padding: 0;
-  }
-  
-  .progress {
-    width: 50px;
-  }
-  
-  .mat-input-element {
-    font-size: medium;
-    font-weight: 200;
-  }
-  
-  #fileInput {
-    position: absolute;
-    cursor: pointer;
-    z-index: 10;
-    opacity: 0;
-    height: 100%;
-    left: 0px;
-    top: 0px;
-  }
-  
-  .mat-toolbar-single-row {
-    height: auto !important;
-    background: transparent;
-    padding: 0;
-  }
-  
-  .mat-toolbar-single-row button {
-    width: 100px;
-  }
-  
-  .mat-form-field {
     width: 100%;
   }
-  
-  .message {
-    background-color: #ddd;
-    padding: 15px;
-    color: #333;
-    border: #aaa solid 1px;
-    border-radius: 4px;
-    margin: 15px 0;
-  }
-  
-  .preview {
-    max-width: 200px;
-    vertical-align: middle;
-  }
-  
-  .list-card {
-    margin-top: 20px;
-  }
-  
-  .list-item {
-    margin-bottom: 20px;
-  }
-  
+}
 
 
-  .custom-file-upload {
-    position: relative;
-    display: inline-block;
-    font-family: Arial, sans-serif;
-  }
-  
-  .upload-label {
-    display: inline-block;
-    padding: 10px 20px;
-    color: white;
-    background-color: #f4cb6c;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s;
-  }
-  
-  .upload-label:hover {
-    background-color: #FDB813;
-  }
-  
-  .upload-label i {
-    vertical-align: middle;
-    margin-right: 5px;
-  }
-  
-  .file-upload {
-    display: none;
-  }
-  
-  .file-name {
-    margin-left: 10px;
-    font-size: 14px;
-    color: #666;
-    vertical-align: middle;
-  }
-  
+
+.progress-bar {
+  padding: 0;
+}
+
+.progress {
+  width: 50px;
+}
+
+.mat-input-element {
+  font-size: medium;
+  font-weight: 200;
+}
+
+#fileInput {
+  position: absolute;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+}
+
+.mat-toolbar-single-row {
+  height: auto !important;
+  background: transparent;
+  padding: 0;
+}
+
+.mat-toolbar-single-row button {
+  width: 100px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.message {
+  background-color: #d42323;
+  padding: 15px;
+  color: #333;
+  border: #aaa solid 1px;
+  border-radius: 4px;
+  margin: 15px 0;
+}
+
+.preview {
+  max-width: 200px;
+  vertical-align: middle;
+}
+
+.list-card {
+  margin-top: 20px;
+}
+
+.list-item {
+  margin-bottom: 20px;
+}
+
+
+
+.custom-file-upload {
+  position: relative;
+  display: inline-block;
+  font-family: Arial, sans-serif;
+}
+
+.upload-label {
+  display: inline-block;
+  padding: 10px 20px;
+  color: white;
+  background-color: #f4cb6c;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.upload-label:hover {
+  background-color: #FDB813;
+}
+
+.upload-label i {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.file-upload {
+  display: none;
+}
+
+.file-name {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #666;
+  vertical-align: middle;
+}

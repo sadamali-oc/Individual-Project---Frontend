@@ -58,7 +58,7 @@ throw new Error('Method not implemented.');
     this.isLoading = true; // Start loading
 
     this.http
-      .get<PeriodicElement[]>('http://localhost:3000/api/v1/users')
+      .get<PeriodicElement[]>('http://localhost:3000/all/users')
       .subscribe(
         (data) => {
           this.dataSource.data = data;
