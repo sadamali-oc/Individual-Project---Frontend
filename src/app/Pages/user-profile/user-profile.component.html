@@ -2,154 +2,113 @@
   <div class="container">
     <form [formGroup]="frm" (ngSubmit)="onPost()">
       <div class="signup-box">
-        <h2>MyProfile</h2>
+        <h2>My Profile</h2>
 
-        <!-- Form Fields -->
         <div class="form-fields">
+
+          <!-- Name -->
           <div class="form-group">
             <label for="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              class="name ele"
-              placeholder="Enter your name"
-              required
-              formControlName="name"
-            />
-            <div class="msg error" *ngIf="f['name'].invalid && f['name'].touched">
-              <span *ngIf="f['name'].errors?.['required']" class="error">
-                Name is required
-              </span>
-            </div>
+            <input id="name" type="text" formControlName="name" placeholder="Enter your name" />
+            <div *ngIf="f['name'].invalid && f['name'].touched" class="error">Name is required</div>
           </div>
 
+          <!-- Email -->
           <div class="form-group">
             <label for="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              class="email ele"
-              placeholder="Email"
-              required
-              formControlName="email"
-            />
-            <div class="msg error" *ngIf="f['email'].invalid && f['email'].touched">
-              <span *ngIf="f['email'].errors?.['required']" class="error">
-                Email is required
-              </span>
-              <span *ngIf="f['email'].errors?.['email']" class="error">
-                Please enter a valid email
-              </span>
+            <input id="email" type="email" formControlName="email" placeholder="Enter your email" />
+            <div *ngIf="f['email'].invalid && f['email'].touched" class="error">
+              <span *ngIf="f['email'].errors?.['required']">Email is required</span>
+              <span *ngIf="f['email'].errors?.['email']">Invalid email</span>
             </div>
           </div>
 
+          <!-- Gender -->
           <div class="form-group">
             <label for="gender">Gender</label>
-            <select
-              id="gender"
-              class="gender ele"
-              formControlName="gender"
-              required
-            >
-              <option value="" disabled selected>Select your gender</option>
+            <select id="gender" formControlName="gender">
+              <option value="" disabled>Select your gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
             </select>
           </div>
 
+          <!-- Phone Number -->
           <div class="form-group">
             <label for="phone_number">Phone Number</label>
-            <input
-              type="text"
-              id="phone_number"
-              class="phone_number ele"
-              placeholder="Phone number"
-              required
-              formControlName="phone_number"
-            />
-            <div class="msg error" *ngIf="f['phone_number'].invalid && f['phone_number'].touched">
-              <span *ngIf="f['phone_number'].errors?.['required']" class="error">
-                Phone number is required
-              </span>
-            </div>
+            <input id="phone_number" type="text" formControlName="phone_number" placeholder="Phone number" />
+            <div *ngIf="f['phone_number'].invalid && f['phone_number'].touched" class="error">Phone number is required</div>
           </div>
 
+          <!-- Password -->
           <div class="form-group">
             <label for="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              class="password ele"
-              placeholder="Password"
-              required
-              formControlName="password"
-            />
-            <div class="msg error" *ngIf="f['password'].invalid && f['password'].touched">
-              <span *ngIf="f['password'].errors?.['required']" class="error">
-                Password is required
-              </span>
-              <span *ngIf="f['password'].errors?.['invalidPattern']" class="error">
-                At least 6 characters long, must contain 1 uppercase, 1 lowercase, 1 digit, and 1 special character
+            <div class="password-input-wrapper">
+              <input
+                [type]="hidePassword ? 'password' : 'text'"
+                id="password"
+                formControlName="password"
+                placeholder="Password"
+              />
+              <button type="button" class="toggle-btn" (click)="togglePasswordVisibility()">
+                <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            </div>
+            <div *ngIf="f['password'].invalid && f['password'].touched" class="error">
+              <span *ngIf="f['password'].errors?.['required']">Password is required</span>
+              <span *ngIf="f['password'].errors?.['pattern']">
+                Must be 6+ chars with uppercase, lowercase, number & special char
               </span>
             </div>
           </div>
 
+          <!-- Confirm Password -->
           <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              class="password ele"
-              placeholder="Confirm password"
-              required
-              formControlName="confirmPassword"
-            />
-            <div class="msg error" *ngIf="f['confirmPassword'].invalid && (f['confirmPassword'].dirty || f['confirmPassword'].touched)">
-              <span *ngIf="f['confirmPassword'].errors?.['required']" class="error">
-                Confirm Password is required
-              </span>
-              <span *ngIf="f['confirmPassword'].errors?.['mustMatch']" class="error">
-                Password and confirm password should match
-              </span>
+            <div class="password-input-wrapper">
+              <input
+                [type]="hideConfirmPassword ? 'password' : 'text'"
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                placeholder="Confirm password"
+              />
+              <button type="button" class="toggle-btn" (click)="toggleConfirmPasswordVisibility()">
+                <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            </div>
+            <div *ngIf="f['confirmPassword'].invalid && (f['confirmPassword'].dirty || f['confirmPassword'].touched)" class="error">
+              <span *ngIf="f['confirmPassword'].errors?.['required']">Confirm Password is required</span>
+              <span *ngIf="f['confirmPassword'].errors?.['mustMatch']">Passwords must match</span>
             </div>
           </div>
 
+          <!-- Role -->
           <div class="form-group">
             <label for="role">Role</label>
-            <select
-              id="role"
-              class="role ele"
-              formControlName="role"
-              required
-            >
-              <option value="" disabled selected>Select your role</option>
+            <select id="role" formControlName="role">
+              <option value="" disabled>Select your role</option>
               <option value="user">User</option>
               <option value="admin">Admin</option>
               <option value="organizer">Organizer</option>
             </select>
           </div>
 
+          <!-- Status -->
           <div class="form-group">
             <label for="status">Status</label>
-            <select
-              id="status"
-              class="status ele"
-              formControlName="status"
-              required
-            >
-              <option value="" disabled selected>Select your status</option>
+            <select id="status" formControlName="status">
+              <option value="" disabled>Select your status</option>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
           </div>
         </div>
 
-        <button type="submit" class="clkbtn" [disabled]="frm.invalid">Save Changes</button>
-        <button type="button" class="cancel" (click)="onCancel()">Cancel</button>
-        <div class="msg-light" *ngIf="status">
-          {{ status.message }}
-        </div>
+        <!-- Buttons -->
+        <button type="submit" [disabled]="frm.invalid">Save Changes</button>
+        <button type="button" (click)="onCancel()">Cancel</button>
+        <div *ngIf="status" class="msg">{{ status.message }}</div>
       </div>
     </form>
   </div>

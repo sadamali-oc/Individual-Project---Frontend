@@ -1,30 +1,41 @@
 <mat-sidenav-container class="sidenav-container">
+  <!-- Sidebar -->
   <mat-sidenav
     #sidenav
     [mode]="isSidebarOpen ? 'side' : 'over'"
     [opened]="isSidebarOpen"
     class="mat-sidenav"
   >
-    <mat-toolbar>Event Admin</mat-toolbar>
+    <mat-toolbar>Organizer Panel</mat-toolbar>
+
     <mat-nav-list>
-      <a mat-list-item [routerLink]="['/admin', userId, 'dashboard']" routerLinkActive="active">
-        <mat-icon>event</mat-icon> Dashboard
+      <a mat-list-item [routerLink]="['/organizer', userId, 'dashboard']" routerLinkActive="active">
+        <mat-icon>dashboard</mat-icon> Dashboard
       </a>
-      <a mat-list-item [routerLink]="['/admin', userId, 'reports']" routerLinkActive="active">
+
+      <a mat-list-item [routerLink]="['/organizer', userId, 'event']" routerLinkActive="active">
+        <mat-icon>event</mat-icon> Create Event
+      </a>
+
+      <a mat-list-item [routerLink]="['/organizer', userId, 'events']" routerLinkActive="active">
+        <mat-icon>event_note</mat-icon> View Events
+      </a>
+
+      <a mat-list-item [routerLink]="['/organizer', userId, 'attendees']" routerLinkActive="active">
+        <mat-icon>groups</mat-icon> Attendees
+      </a>
+
+      <a mat-list-item [routerLink]="['/organizer', userId, 'reports']" routerLinkActive="active">
         <mat-icon>bar_chart</mat-icon> Reports
       </a>
-      <a mat-list-item [routerLink]="['/admin', userId, 'events']" routerLinkActive="active">
-        <mat-icon>calendar_today</mat-icon> Manage Events
-      </a>
-      <a mat-list-item [routerLink]="['/admin', userId, 'attendees']" routerLinkActive="active">
-        <mat-icon>groups</mat-icon> Users
-      </a>
-      <a mat-list-item [routerLink]="['/admin', userId, 'organizers']" routerLinkActive="active">
-        <mat-icon>supervisor_account</mat-icon> Organizers
+
+      <a mat-list-item [routerLink]="['/organizer', userId, 'settings']" routerLinkActive="active">
+        <mat-icon>settings</mat-icon> Settings
       </a>
     </mat-nav-list>
   </mat-sidenav>
 
+  <!-- Main Content -->
   <mat-sidenav-content>
     <mat-toolbar>
       <button mat-icon-button (click)="toggleSidebar()">
@@ -55,6 +66,7 @@
       </mat-menu>
     </mat-toolbar>
 
+    <!-- Routed Components Will Load Here -->
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

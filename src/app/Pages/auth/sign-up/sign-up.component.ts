@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { SignupService } from '../../services/signup.service';
+import { SignupService } from '../../../services/signup.service';
 
 import {
   FormBuilder,
@@ -8,9 +8,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { validPattern } from '../../helpers/pattern-mact.validator';
-import { MustMatch } from '../../helpers/must-match.validator';
-import { Status } from '../../models/status';
+import { validPattern } from '../../../helpers/pattern-mact.validator';
+import { MustMatch } from '../../../helpers/must-match.validator';
+import { Status } from '../../../models/status';
 import { CommonModule } from '@angular/common';
 
 @Component({

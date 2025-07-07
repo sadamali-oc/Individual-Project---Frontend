@@ -11,6 +11,9 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog'; // Import MatDialog if you intend to use it for confirmations
+import { DecisionButtonsComponent } from '../../decision-buttons/decision-buttons.component';
+import { EventCardComponent } from '../../event-card/event-card.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Interface for Event data
 export interface Event {
@@ -25,17 +28,88 @@ export interface Event {
 
 // Mock Event Data (Moved outside the class for cleaner component code)
 const MOCK_EVENTS: Event[] = [
-  { id: 'e101', name: 'Annual Tech Summit', date: new Date(2025, 7, 15), time: '09:00 AM', location: 'Main Auditorium', registrations: 120, status: 'Approved' },
-  { id: 'e102', name: 'Science Fair Showcase', date: new Date(2025, 7, 22), time: '10:00 AM', location: 'Exhibition Hall', registrations: 85, status: 'Approved' },
-  { id: 'e103', name: 'Career Day 2025', date: new Date(2025, 8, 5), time: '08:30 AM', location: 'University Gym', registrations: 210, status: 'Pending' },
-  { id: 'e104', name: 'Alumni Reunion Gala', date: new Date(2025, 9, 1), time: '06:00 PM', location: 'Grand Ballroom', registrations: 150, status: 'Approved' },
-  { id: 'e105', name: 'Student Hackathon', date: new Date(2025, 9, 10), time: '09:00 AM', location: 'Computer Labs', registrations: 60, status: 'Pending' },
-  { id: 'e106', name: 'Freshers Orientation', date: new Date(2025, 6, 30), time: '09:00 AM', location: 'Lecture Hall 1', registrations: 300, status: 'Approved' },
-  { id: 'e107', name: 'Robotics Workshop', date: new Date(2025, 10, 5), time: '01:00 PM', location: 'Engineering Lab', registrations: 40, status: 'Pending' },
-  { id: 'e108', name: 'Literary Festival', date: new Date(2025, 10, 20), time: '03:00 PM', location: 'Library Auditorium', registrations: 90, status: 'Rejected' },
-  { id: 'e109', name: 'Coding Challenge', date: new Date(2025, 11, 1), time: '09:00 AM', location: 'IT Building', registrations: 75, status: 'Approved' },
-  { id: 'e110', name: 'Annual Sports Meet', date: new Date(2026, 0, 15), time: '08:00 AM', location: 'Sports Complex', registrations: 500, status: 'Approved' },
-  { id: 'e111', name: 'Research Symposium', date: new Date(2026, 1, 20), time: '09:30 AM', location: 'Conference Hall', registrations: 110, status: 'Pending' },
+  {
+    id: 'e101',
+    name: 'Annual Tech Summit',
+    date: new Date(2025, 7, 15),
+    time: '09:00 AM',
+    location: 'Main Auditorium',
+    registrations: 120,
+    status: 'Approved',
+  },
+  {
+    id: 'e102',
+    name: 'Science Fair Showcase',
+    date: new Date(2025, 7, 22),
+    time: '10:00 AM',
+    location: 'Exhibition Hall',
+    registrations: 85,
+    status: 'Approved',
+  },
+  {
+    id: 'e103',
+    name: 'Career Day 2025',
+    date: new Date(2025, 8, 5),
+    time: '08:30 AM',
+    location: 'University Gym',
+    registrations: 210,
+    status: 'Pending',
+  },
+  {
+    id: 'e104',
+    name: 'Alumni Reunion Gala',
+    date: new Date(2025, 9, 1),
+    time: '06:00 PM',
+    location: 'Grand Ballroom',
+    registrations: 150,
+    status: 'Approved',
+  },
+  {
+    id: 'e105',
+    name: 'Student Hackathon',
+    date: new Date(2025, 9, 10),
+    time: '09:00 AM',
+    location: 'Computer Labs',
+    registrations: 60,
+    status: 'Pending',
+  },
+  {
+    id: 'e106',
+    name: 'Freshers Orientation',
+    date: new Date(2025, 6, 30),
+    time: '09:00 AM',
+    location: 'Lecture Hall 1',
+    registrations: 300,
+    status: 'Approved',
+  },
+  {
+    id: 'e107',
+    name: 'Robotics Workshop',
+    date: new Date(2025, 10, 5),
+    time: '01:00 PM',
+    location: 'Engineering Lab',
+    registrations: 40,
+    status: 'Pending',
+  },
+ 
+  {
+    id: 'e110',
+    name: 'Annual Sports Meet',
+    date: new Date(2026, 0, 15),
+    time: '08:00 AM',
+    location: 'Sports Complex',
+    registrations: 500,
+    status: 'Approved',
+  },
+  {
+    id: 'e111',
+    name: 'Research Symposium',
+    date: new Date(2026, 1, 20),
+    time: '09:30 AM',
+    location: 'Conference Hall',
+    registrations: 110,
+    status: 'Pending',
+  },
 ];
 
 @Component({
@@ -51,22 +125,34 @@ const MOCK_EVENTS: Event[] = [
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatDialogModule,
     MatTooltipModule,
     // MatSelectModule // Uncomment if you decide to use mat-select for status change
+    DecisionButtonsComponent,
+    EventCardComponent,
   ],
   providers: [DatePipe],
   templateUrl: './event-list.component.html',
-  styleUrl: './event-list.component.css'
+  styleUrl: './event-list.component.css',
 })
 export class EventListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'date', 'location', 'registrations', 'status', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'date',
+    'location',
+    'registrations',
+    'status',
+    'actions',
+  ];
   dataSource = new MatTableDataSource<Event>(MOCK_EVENTS);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+
   // You can inject MatDialog if you plan to use it for more sophisticated confirmation prompts
-  constructor(private router: Router /*, private dialog: MatDialog */) { }
+  constructor(private router: Router, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     // Data is initialized directly with MOCK_EVENTS.
@@ -80,8 +166,10 @@ export class EventListComponent implements OnInit, AfterViewInit {
     // Custom sorting accessor for the 'date' column
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-        case 'date': return item.date.getTime(); // Sort by timestamp for date objects
-        default: return (item as any)[property];
+        case 'date':
+          return item.date.getTime(); // Sort by timestamp for date objects
+        default:
+          return (item as any)[property];
       }
     };
   }
@@ -104,8 +192,13 @@ export class EventListComponent implements OnInit, AfterViewInit {
    * @param eventId The ID of the event to view.
    */
   viewEventDetails(eventId: string): void {
-    console.log(`View details for event: ${eventId}`);
-    this.router.navigate(['/events', eventId, 'details']);
+    const event = this.dataSource.data.find((e) => e.id === eventId);
+    if (!event) return;
+
+    this.dialog.open(EventCardComponent, {
+      width: '450px',
+      data: event,
+    });
   }
 
   /**
@@ -124,10 +217,14 @@ export class EventListComponent implements OnInit, AfterViewInit {
    */
   deleteEvent(eventId: string): void {
     console.log(`Attempting to delete event: ${eventId}`);
-    const confirmDelete = confirm('Are you sure you want to delete this event? This action cannot be undone.');
+    const confirmDelete = confirm(
+      'Are you sure you want to delete this event? This action cannot be undone.'
+    );
     if (confirmDelete) {
       // Filter out the deleted event and update dataSource immutably
-      this.dataSource.data = this.dataSource.data.filter(event => event.id !== eventId);
+      this.dataSource.data = this.dataSource.data.filter(
+        (event) => event.id !== eventId
+      );
       console.log(`Event ${eventId} deleted successfully.`);
       // Optionally reset paginator to first page or current page logic
       if (this.dataSource.paginator) {
@@ -154,17 +251,21 @@ export class EventListComponent implements OnInit, AfterViewInit {
    * @param newStatus The new status to set ('Approved' or 'Rejected').
    */
   updateEventStatus(eventId: string, newStatus: 'Approved' | 'Rejected'): void {
-    const eventToUpdate = this.dataSource.data.find(event => event.id === eventId);
+    const eventToUpdate = this.dataSource.data.find(
+      (event) => event.id === eventId
+    );
 
     if (eventToUpdate) {
       let confirmAction = true;
       if (newStatus === 'Rejected') {
-        confirmAction = confirm(`Are you sure you want to set event '${eventToUpdate.name}' to 'Rejected'?`);
+        confirmAction = confirm(
+          `Are you sure you want to set event '${eventToUpdate.name}' to 'Rejected'?`
+        );
       }
 
       if (confirmAction) {
         // Update the status of the specific event
-        const updatedEvents = this.dataSource.data.map(event =>
+        const updatedEvents = this.dataSource.data.map((event) =>
           event.id === eventId ? { ...event, status: newStatus } : event
         );
 
@@ -191,7 +292,9 @@ export class EventListComponent implements OnInit, AfterViewInit {
         //   }
         // );
       } else {
-        console.log(`Status update for event ${eventId} to ${newStatus} cancelled.`);
+        console.log(
+          `Status update for event ${eventId} to ${newStatus} cancelled.`
+        );
       }
     }
   }

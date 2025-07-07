@@ -69,11 +69,11 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
 
   viewProfile(): void {
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/user/profile/:userid']);
   }
 
   handleLogout(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
   viewEventDetails(eventId: string): void {
