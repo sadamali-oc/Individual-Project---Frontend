@@ -1,53 +1,65 @@
 <div class="form-section">
   <h2>Create an Event</h2>
 
-  <!-- Event Name -->
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="full-width">
     <mat-label>Name of the Event</mat-label>
-    <input matInput [(ngModel)]="eventName" name="eventName" required>
+    <input matInput [(ngModel)]="eventName" name="eventName" required />
   </mat-form-field>
 
-  <!-- Event Description -->
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="full-width">
     <mat-label>Event Description</mat-label>
-    <input matInput [(ngModel)]="eventDescription" name="eventDescription">
+    <input matInput [(ngModel)]="eventDescription" name="eventDescription" />
   </mat-form-field>
 
-  <!-- Event Date -->
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="full-width">
     <mat-label>Event Date</mat-label>
-    <input matInput [matDatepicker]="datepicker" [(ngModel)]="eventDate" name="eventDate" required>
+    <input
+      matInput
+      [matDatepicker]="datepicker"
+      [(ngModel)]="eventDate"
+      name="eventDate"
+      required
+    />
+    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
     <mat-datepicker #datepicker></mat-datepicker>
-    <mat-datepicker-toggle [for]="datepicker" matSuffix></mat-datepicker-toggle>
   </mat-form-field>
 
-  <!-- Start Time -->
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="full-width">
     <mat-label>Start Time</mat-label>
-    <input matInput [ngxMatTimepicker]="startTimepicker" [(ngModel)]="startTime" name="startTime" required>
+    <input
+      matInput
+      [ngxMatTimepicker]="startTimepicker"
+      [(ngModel)]="startTime"
+      name="startTime"
+      required
+    />
     <mat-icon matSuffix>access_time</mat-icon>
     <ngx-mat-timepicker #startTimepicker></ngx-mat-timepicker>
   </mat-form-field>
 
-  <!-- End Time -->
-
-  <mat-form-field>
-    <mat-label>Event Status</mat-label>
-    <mat-select [(value)]="status" name="status" required>
-      <mat-option value="upcoming">upcoming</mat-option>
-
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="full-width">
     <mat-label>End Time</mat-label>
-    <input matInput [ngxMatTimepicker]="endTimepicker" [(ngModel)]="endTime" name="endTime" required>
+    <input
+      matInput
+      [ngxMatTimepicker]="endTimepicker"
+      [(ngModel)]="endTime"
+      name="endTime"
+      required
+    />
     <mat-icon matSuffix>access_time</mat-icon>
     <ngx-mat-timepicker #endTimepicker></ngx-mat-timepicker>
   </mat-form-field>
 
-  <!-- Event Category -->
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Event Status</mat-label>
+    <mat-select [(ngModel)]="status" name="status" required>
+      <mat-option value="upcoming">Upcoming</mat-option>
+      <mat-option value="ongoing">Ongoing</mat-option>
+      <mat-option value="completed">Completed</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
     <mat-label>Event Category</mat-label>
     <mat-select [(ngModel)]="eventCategory" name="eventCategory" required>
       <mat-option value="conference">Conference</mat-option>
@@ -56,23 +68,21 @@
     </mat-select>
   </mat-form-field>
 
-  <!-- Additional Notes -->
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="full-width">
     <mat-label>Additional Notes</mat-label>
     <textarea matInput [(ngModel)]="eventNotes" name="eventNotes"></textarea>
   </mat-form-field>
 
-  <!-- File Upload -->
   <div class="custom-file-upload">
     <label for="fileInput" class="upload-label">
-      <i class="material-icons">cloud_upload</i> Choose File
+      <mat-icon>cloud_upload</mat-icon> Choose File
     </label>
-    <input type="file" id="fileInput" class="file-upload" (change)="onFileSelected($event)">
+    <input type="file" id="fileInput" class="file-upload" (change)="onFileSelected($event)" />
     <span class="file-name">{{ fileName || 'No file chosen' }}</span>
   </div>
 
   <div class="form-actions">
-    <button mat-raised-button color="primary" (click)="submitForm()" class="buttonSubmit">Submit Event</button>
-    <button mat-raised-button color="warn" (click)="resetForm()" class="buttonReset">Reset</button>
+    <button mat-raised-button color="primary" (click)="submitForm()">Submit Event</button>
+    <button mat-raised-button color="warn" (click)="resetForm()">Reset</button>
   </div>
 </div>

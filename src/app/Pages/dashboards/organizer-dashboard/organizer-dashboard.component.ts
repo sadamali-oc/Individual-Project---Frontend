@@ -76,15 +76,15 @@ export class OrganizerDashboardComponent implements OnInit {
       );
 
       // Fetch events associated with this user
-      this.userService.getEvent(this.userId).subscribe(
-        (eventsData) => {
-          this.events = eventsData;
-          console.log('User Events:', eventsData);
-        },
-        (error) => {
-          console.error('Error fetching events data:', error);
-        }
-      );
+      // this.userService.getEvent(this.userId).subscribe(
+      //   (eventsData) => {
+      //     this.events = eventsData;
+      //     console.log('User Events:', eventsData);
+      //   },
+      //   (error) => {
+      //     console.error('Error fetching events data:', error);
+      //   }
+      // );
     }
   }
 

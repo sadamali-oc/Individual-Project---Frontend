@@ -15,12 +15,14 @@ import { HttpClient } from '@angular/common/http';
 import { PLATFORM_ID } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { MatIconModule } from '@angular/material/icon';
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,MatIconModule],
 })
 export class UserProfileComponent implements OnInit {
   frm!: FormGroup;
@@ -138,5 +140,17 @@ export class UserProfileComponent implements OnInit {
       statusCode: 0,
       message: 'Profile update canceled. All changes were discarded.',
     };
+  }
+
+
+    hidePassword = true;
+  hideConfirmPassword = true;
+
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 }

@@ -24,13 +24,14 @@ export class UserService {
 
   // Fetch events by userId
   getEvent(userId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/event/events/${userId}`).pipe(
+    return this.http.get(`${this.apiUrl}/event/${userId}`).pipe(
       catchError(this.handleError)
     );
   }
 
   // Error handling method
   private handleError(error: HttpErrorResponse): Observable<never> {
+  
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {
       // Client-side error

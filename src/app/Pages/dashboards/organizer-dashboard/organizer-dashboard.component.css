@@ -1,197 +1,42 @@
-/* Ensure the container fills the viewport */
-.dashboard-container {
-    height: 100vh;
-    display: flex;
-    background-color: #f4f5f7;
-    /* Light background for the whole container */
+/* organizer-dashboard.component.css */
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
 }
 
-/* Sidebar Full Height */
-mat-sidenav {
-    width: 250px;
-    background-color: #e6e9ec;
-    /* Light Grey */
-    color: white;
-    height: 100vh;
-    position: fixed;
-    /* top: 0;
-    left: 0;
-    transition: width 0.3s ease; */
-    /* Smooth transition for resizing */
-}
-
-/* Sidebar Toolbar */
-mat-toolbar {
-    background-color: #F8A700;
-    /* Yellow */
-    color: white;
-    padding: 10px 15px;
-}
-
-/* Title Styling for Sidebar */
-.dashname {
-    font-size: 20px;
-    font-weight: 500;
-    text-align: center;
-}
-
-/* Profile Avatar */
-.profile-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 15px;
-}
-
-/* Sidebar Links */
-mat-nav-list a {
-    color: white;
-    text-decoration: none;
-    font-size: medium;
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-}
-
-mat-nav-list a:hover {
-    background-color: #F8A700;
-    /* Hover color matches sidebar toolbar */
-    border-radius: 5px;
-    color: #34495e;
-    /* Dark Blue color for text on hover */
-}
-
-mat-nav-list a mat-icon {
-    margin-right: 10px;
-    /* Adds space between icon and text */
-}
-
-/* Main Content */
-mat-sidenav-content {
-    margin-left: 250px;
-    flex-grow: 1;
-    background-color: #f4f5f7;
-    display: flex;
-    flex-direction: column;
-    padding: 2px;
-    height: 100vh;
-    overflow-y: auto;
-}
-
-/* Stats Cards */
 .stats-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 25px;
-    padding: 20px;
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
 .stat-card {
-    flex: 1;
-    text-align: center;
-    padding: 15px;
-    color: rgb(12, 12, 12);
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 10px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    /* Slight shadow for depth */
+  flex: 1 1 200px;
+  text-align: center;
+  padding: 24px;
+  color: #80065f;
 }
 
-/* Colorful Cards */
-.stat-card:nth-child(1) {
-    background-color: #9acef1;
-    /* Blue */
+.stat-count {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-top: 8px;
 }
 
-.stat-card:nth-child(2) {
-    background-color: #b4e0c6;
-    /* Green */
+.events-table-card {
+  margin: 0 20px 30px 20px;
+  padding: 10px;
 }
 
-.stat-card:nth-child(3) {
-    background-color: #f7c19f;
-    /* Yellow */
-}
-
-/* Event Table */
-mat-card {
-    background-color: #333;
-    padding:20px;
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    margin-left: 20px;
-    margin-right: 20px;
-
-
-}
-
-/* Table Styling */
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
 }
 
-/* Table Header Styling */
-th.mat-header-cell {
-    background-color: #F8A700;
-    /* Yellow */
-    color: white;
-    font-weight: bold;
-    text-align: left;
-    padding: 12px;
-}
-
-/* Table Border Color */
-.mat-mdc-header-cell {
-    border-bottom-color: #0e1013;
-}
-
-/* Header Row Styling */
-.mat-mdc-header-row {
-    font-size: 20px;
-    color: #0e1013;
-}
-
-/* Table Row Styling */
-.mat-mdc-row {
-    font-size: 15px;
-    color: #0e1013;
-}
-
-/* Table Cell Styling */
-td.mat-cell {
-    padding: 10px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-/* Status Chip */
-mat-chip {
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.title {
-    color: #e09a1a;
-    font-size: 30px;
-    padding-bottom: 20px;
-margin-top: 1px;
-    align-items: center;
-
-}
-
-/* Upcoming Status */
-mat-chip[color="primary"] {
-    background-color: #3498db !important;
-    /* Blue */
-    color: white;
-}
-
-/* Completed Status */
-mat-chip[color="accent"] {
-    background-color: #27ae60 !important;
-    /* Green */
-    color: white;
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
 }

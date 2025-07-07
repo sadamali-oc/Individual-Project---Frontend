@@ -93,7 +93,7 @@ export class LoginComponent {
       this.router.navigate([`/user/dashboard/${userId}`]);
     } else if (role === 'organizer') {
       // Redirect to the organizer dashboard with userId in the URL
-      this.router.navigate([`/organizer/dashboard/${userId}`]);
+      this.router.navigate([`/organizer/${userId}/dashboard`]);
     } else {
       alert('Role not recognized');
     }

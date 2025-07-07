@@ -1,0 +1,12 @@
+.event-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  justify-content: center; /* center cards horizontally */
+}
+
+.event-card {
+  width: 300px;
+  box-sizing: border-box;
+}
