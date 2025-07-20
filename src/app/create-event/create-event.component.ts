@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -12,8 +12,19 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ActivatedRoute } from '@angular/router';
 
+import {
+  Storage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from '@angular/fire/storage';
+
+import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-create-event',
+  standalone: true,
   imports: [
     MatFormFieldModule,
     MatInputModule,
@@ -26,17 +37,21 @@ import { ActivatedRoute } from '@angular/router';
     MatIconModule,
     NgxMatTimepickerModule,
     MatNativeDateModule,
+    MatCard,
+    MatCardContent,
+    MatCardTitle,
+    MatSnackBarModule,
   ],
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateEventComponent {
+export class CreateEventComponent implements OnInit {
   userId: string | null = null;
 
   eventName: string = '';
   eventDescription: string = '';
-  eventDate: string = '';
+  eventDate: Date | string = '';
   startTime: string = '';
   endTime: string = '';
   eventCategory: string | undefined;
@@ -44,14 +59,20 @@ export class CreateEventComponent {
   fileName: string = '';
   eventFile: File | null = null;
   status: string = 'upcoming';
+  downloadURL: string | null = null;
+  isSubmitting: boolean = false;
+eventFormLink: any;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private storage: Storage,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.userId = params.get('userId');
-      console.log('User ID:', this.userId);
-    });
+    this.userId = this.route.parent?.snapshot.paramMap.get('userId') ?? null;
+    console.log('User ID:', this.userId);
   }
 
   onFileSelected(event: Event): void {
@@ -59,51 +80,94 @@ export class CreateEventComponent {
     if (input?.files?.length) {
       this.eventFile = input.files[0];
       this.fileName = this.eventFile.name;
+      console.log('Selected file:', this.fileName);
     }
   }
 
-  submitForm(): void {
-    console.log('Form submission started');
+  private formatDate(date: Date | string): string {
+    const d = typeof date === 'string' ? new Date(date) : date;
+    const year = d.getFullYear();
+    const month = ('0' + (d.getMonth() + 1)).slice(-2);
+    const day = ('0' + d.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
 
-    if (!this.eventName || !this.eventCategory || !this.startTime || !this.endTime) {
-      console.log('Missing required fields');
-      alert('Please fill in all required fields');
+  async submitForm(): Promise<void> {
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
+    if (
+      !this.eventName.trim() ||
+      !this.eventCategory ||
+      !this.startTime.trim() ||
+      !this.endTime.trim() ||
+      !this.eventDate
+    ) {
+      this.showError('Please fill in all required fields');
+      this.isSubmitting = false;
       return;
     }
 
-    const formData = new FormData();
-    formData.append('event_name', this.eventName);
-    formData.append('description', this.eventDescription);
-    formData.append('event_date', this.eventDate);
-    formData.append('start_time', this.startTime);
-    formData.append('end_time', this.endTime);
-    formData.append('event_category', this.eventCategory);
-    formData.append('additional_notes', this.eventNotes);
-    formData.append('status', this.status);
-    formData.append('user_id', this.userId || '');
+    try {
+      if (this.eventFile) {
+        const filePath = `event_flyers/${Date.now()}_${this.eventFile.name}`;
+        const storageRef = ref(this.storage, filePath);
+        const uploadTask = uploadBytesResumable(storageRef, this.eventFile);
+        await uploadTask;
+        this.downloadURL = await getDownloadURL(storageRef);
+        console.log('File uploaded to Firebase:', this.downloadURL);
+      }
 
-    if (this.eventFile) {
-      formData.append('flyer_image', this.eventFile, this.eventFile.name);
+      const formattedDate = this.formatDate(this.eventDate);
+      const formData = new FormData();
+      formData.append('event_name', this.eventName);
+      formData.append('description', this.eventDescription);
+      formData.append('event_date', formattedDate);
+      formData.append('start_time', this.startTime);
+      formData.append('end_time', this.endTime);
+      formData.append('event_category', this.eventCategory!);
+      formData.append('additional_notes', this.eventNotes);
+      formData.append('user_id', this.userId || '');
+
+      if (this.downloadURL) {
+        formData.append('flyer_image', this.downloadURL);
+      }
+
+      if (!this.userId) {
+        this.showError('User ID is missing');
+        return;
+      }
+
+      await this.http
+        .post(`http://localhost:3000/add/events/${this.userId}`, formData)
+        .toPromise();
+
+      this.showSuccess('Event created successfully!');
+      this.resetForm();
+    } catch (error) {
+      console.error('Error creating event', error);
+      this.showError('An error occurred while creating the event');
+    } finally {
+      this.isSubmitting = false;
     }
+  }
 
-    console.log('Form data prepared', formData);
+  showSuccess(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: ['success-snackbar'],
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+    });
+  }
 
-    if (this.userId) {
-      console.log('Sending data to backend for userId:', this.userId);
-      this.http.post(`http://localhost:3000/event/add/events/${this.userId}`, formData).subscribe(
-        (response) => {
-          console.log('Event created successfully', response);
-          alert('Event created successfully!');
-          this.resetForm();
-        },
-        (error) => {
-          console.error('Error creating event', error);
-          alert('An error occurred while creating the event');
-        }
-      );
-    } else {
-      alert('User ID is missing');
-    }
+  showError(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: ['error-snackbar'],
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+    });
   }
 
   resetForm(): void {
@@ -112,10 +176,11 @@ export class CreateEventComponent {
     this.eventDate = '';
     this.startTime = '';
     this.endTime = '';
-    this.eventCategory = '';
+    this.eventCategory = undefined;
     this.eventNotes = '';
     this.status = 'upcoming';
     this.fileName = '';
     this.eventFile = null;
+    this.downloadURL = null;
   }
 }

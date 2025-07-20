@@ -1,32 +1,57 @@
+/* Full width for all form fields */
 .full-width {
   width: 100%;
 }
 
+/* Main form card styling */
 .form-section {
-  max-width: 700px;
+  max-width: 800px;
   margin: 40px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 24px;
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+/* Styling inside mat-card */
+mat-card-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  padding-left: 10px;
+}
+
+mat-card-content {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
+/* File upload custom style */
 .custom-file-upload {
-  margin: 16px 0;
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
 }
 
 .upload-label {
-  cursor: pointer;
-  color: #80065f;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  background-color: #aa0671;
+  /* Custom purple */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.upload-label:hover {
+  background-color: #aa0671bc;
 }
 
 .file-upload {
@@ -36,10 +61,109 @@
 .file-name {
   font-style: italic;
   color: #555;
+  font-size: 14px;
 }
 
+/* Buttons */
 .form-actions {
-  margin-top: 24px;
   display: flex;
+  justify-content: flex-end;
   gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.success-snackbar {
+  background-color: #4caf50;
+  color: white;
+}
+
+.error-snackbar {
+  background-color: #f44336;
+  color: white;
+}
+
+.purple-btn {
+  background-color: #aa0671;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.purple-btn:hover {
+  background-color: #aa0671bc;
+}
+
+
+
+.purple-btn-reset {
+  background-color: #b588a6a7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.purple-btn-reset:hover {
+  background-color: #aa0671bc;
+}
+/* Responsive Styles */
+@media (max-width: 600px) {
+  .form-section {
+    margin: 20px;
+    padding: 16px;
+  }
+
+  mat-card-title {
+    font-size: 20px;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .purple-btn {
+    width: 100%;
+  }
+
+  .upload-label {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .custom-file-upload {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .file-name {
+    width: 100%;
+    text-align: left;
+    margin-top: 8px;
+  }
+}
+
+
+.success-snackbar {
+  background-color: #4caf50;
+  color: white;
+}
+
+.error-snackbar {
+  background-color: #f44336;
+  color: white;
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

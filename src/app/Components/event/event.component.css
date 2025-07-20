@@ -1,12 +1,221 @@
+/* ========================
+   Layout Container (Grid)
+======================== */
 .event-cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding: 16px;
-  justify-content: center; /* center cards horizontally */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* Responsive grid breakpoints */
+@media (max-width: 992px) {
+  .event-cards-container {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .event-cards-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================
+   Event Card Styling
+======================== */
 .event-card {
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ========================
+   Card Header & Titles
+======================== */
+mat-card-header {
+  padding-bottom: 8px;
+}
+
+mat-card-title {
+  font-size: 1.6rem;
+  /* increased from 1.4rem */
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+mat-card-subtitle {
+  font-size: 1.1rem;
+  /* increased from 1rem */
+  color: #666;
+  margin-top: 4px;
+}
+
+@media (max-width: 600px) {
+  mat-card-title {
+    font-size: 1.4rem;
+    /* increased from 1.2rem */
+  }
+
+  mat-card-subtitle {
+    font-size: 1rem;
+    /* increased from 0.9rem */
+  }
+}
+
+/* ========================
+   Card Content
+======================== */
+mat-card-content p {
+  margin: 6px 0;
+  font-size: 1.05rem;
+  /* increased from 0.9rem */
+  color: #444;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  mat-card-content p {
+    font-size: 1rem;
+    /* increased from 0.85rem */
+  }
+}
+
+/* ========================
+   Event Flyer Image
+======================== */
+img[mat-card-image] {
+  max-height: 180px;
+  min-height: 180px;
+  object-fit: cover;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  background: #f0f0f0;
+}
+
+/* ========================
+   Status Chips
+======================== */
+mat-chip {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  /* increased from 0.85rem */
+  text-transform: capitalize;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 16px;
+}
+
+.chip-active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.chip-pending {
+  background-color: #FFC107;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.chip-completed {
+  background-color: #9E9E9E;
+  color: white;
+}
+
+/* ========================
+   Card Actions (Buttons)
+======================== */
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px 8px;
+  font-size: 1rem;
+  /* increased from 0.9rem */
+  flex-wrap: wrap;
+}
+
+mat-card-actions button {
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-card-actions button:hover {
+  filter: brightness(0.9);
+  cursor: pointer;
+}
+
+mat-card-actions button:focus {
+  outline: 2px solid #9b1c7e;
+  outline-offset: 2px;
+}
+
+mat-card-actions button+button {
+  margin-left: 12px;
+}
+
+/* ========================
+   Button Icons
+======================== */
+mat-card-actions button mat-icon {
+  margin-right: 4px;
+  font-size: 20px;
+  /* increased from 18px */
+  height: 20px;
+  width: 20px;
+  color: #830e7b;
+}
+
+mat-card-actions button:hover mat-icon {
+  color: #a31994;
+}
+
+/* ========================
+   View Details Button Style
+======================== */
+.view-details-button {
+  font-size: 1rem;
+  /* increased from 0.9rem */
+  color: #830e7b;
+}
+
+/* ========================
+   No Events Placeholder
+======================== */
+.no-events-container {
+  text-align: center;
+  margin-top: 40px;
+  color: #666;
+  background-image: url('../../assets/no_data.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 300px;
+}
+
+.no-events-image {
   width: 300px;
-  box-sizing: border-box;
+  max-width: 90%;
+  opacity: 0.7;
+}
+
+.no-events-text {
+  font-size: 20px;
+  /* increased from 18px */
+  margin-top: 12px;
+  font-weight: 500;
 }

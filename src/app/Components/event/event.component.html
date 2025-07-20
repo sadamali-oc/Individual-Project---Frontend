@@ -1,33 +1,54 @@
-<div class="event-cards-container" *ngIf="events.length; else noEvents">
+<div class="event-cards-container" *ngIf="events.length > 0; else noEvents">
   <mat-card class="event-card" *ngFor="let event of events">
     <mat-card-header>
-      <mat-card-title>{{ event.name }}</mat-card-title>
-      <mat-card-subtitle>{{ event.category }}</mat-card-subtitle>
+      <mat-card-title>{{ event.event_name }}</mat-card-title>
     </mat-card-header>
 
+    <img
+      *ngIf="event.flyer_image"
+      mat-card-image
+      [src]="event.flyer_image"
+      alt="Event Flyer"
+    />
+
     <mat-card-content>
-      <p><strong>Start Time:</strong> {{ event.startTime }}</p>
-      <mat-chip
-        [color]="
-          event.status === 'Upcoming'
-            ? 'primary'
-            : event.status === 'Completed'
-            ? 'accent'
-            : 'warn'
-        "
-        selected
-      >
-        {{ event.status }}
-      </mat-chip>
+      <p><strong>Date:</strong> {{ event.event_date | date : "fullDate" }}</p>
+      <p><strong>Start Time:</strong> {{ event.start_time }}</p>
+      <p><strong>End Time:</strong> {{ event.end_time }}</p>
+      <mat-chip-listbox>
+        <mat-chip
+          selected
+          [ngStyle]="{
+            'background-color': getStatusColor(event.status),
+            color: getStatusColor(event.status)
+          }"
+        >
+          {{ event.status | titlecase }}
+        </mat-chip>
+      </mat-chip-listbox>
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-button color="primary">View Details</button>
-      <button mat-button color="warn">Cancel</button>
+      <button
+        mat-button
+        class="view-details-button"
+        (click)="viewDetails(event)"
+      >
+        <mat-icon>visibility</mat-icon> View Details
+      </button>
+      <!-- Replace Cancel button with Delete icon button -->
+      <button
+        mat-icon-button
+        aria-label="Delete event"
+        (click)="deleteEvent(event)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>
 
 <ng-template #noEvents>
-  <p>No events found.</p>
+  <div class="no-events-container">
+  </div>
 </ng-template>

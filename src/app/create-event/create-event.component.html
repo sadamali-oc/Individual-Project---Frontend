@@ -1,88 +1,149 @@
-<div class="form-section">
-  <h2>Create an Event</h2>
+<mat-card class="form-section">
+  <mat-card-title>Create an Event</mat-card-title>
+  <mat-card-content>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Name of the Event</mat-label>
+      <input
+        matInput
+        [(ngModel)]="eventName"
+        name="eventName"
+        required
+        autocomplete="off"
+      />
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Name of the Event</mat-label>
-    <input matInput [(ngModel)]="eventName" name="eventName" required />
-  </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Event Description</mat-label>
+      <input
+        matInput
+        [(ngModel)]="eventDescription"
+        name="eventDescription"
+        autocomplete="off"
+      />
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Event Description</mat-label>
-    <input matInput [(ngModel)]="eventDescription" name="eventDescription" />
-  </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Event Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="datepicker"
+        [(ngModel)]="eventDate"
+        name="eventDate"
+        required
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="datepicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #datepicker></mat-datepicker>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Event Date</mat-label>
-    <input
-      matInput
-      [matDatepicker]="datepicker"
-      [(ngModel)]="eventDate"
-      name="eventDate"
-      required
-    />
-    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-    <mat-datepicker #datepicker></mat-datepicker>
-  </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Start Time</mat-label>
+      <input
+        matInput
+        [ngxMatTimepicker]="startTimepicker"
+        [(ngModel)]="startTime"
+        name="startTime"
+        required
+      />
+      <mat-icon matSuffix>access_time</mat-icon>
+      <ngx-mat-timepicker #startTimepicker></ngx-mat-timepicker>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Start Time</mat-label>
-    <input
-      matInput
-      [ngxMatTimepicker]="startTimepicker"
-      [(ngModel)]="startTime"
-      name="startTime"
-      required
-    />
-    <mat-icon matSuffix>access_time</mat-icon>
-    <ngx-mat-timepicker #startTimepicker></ngx-mat-timepicker>
-  </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>End Time</mat-label>
+      <input
+        matInput
+        [ngxMatTimepicker]="endTimepicker"
+        [(ngModel)]="endTime"
+        name="endTime"
+        required
+      />
+      <mat-icon matSuffix>access_time</mat-icon>
+      <ngx-mat-timepicker #endTimepicker></ngx-mat-timepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Event Category</mat-label>
+      <mat-select [(ngModel)]="eventCategory" name="eventCategory" required>
+        <mat-option value="none">None</mat-option>
+        <mat-option value="lecture">Lecture</mat-option>
+        <mat-option value="seminar">Seminar</mat-option>
+        <mat-option value="workshop">Workshop</mat-option>
+        <mat-option value="webinar">Webinar</mat-option>
+        <mat-option value="orientation">Orientation</mat-option>
+        <mat-option value="graduation">Graduation Ceremony</mat-option>
+        <mat-option value="research_presentation"
+          >Research Presentation</mat-option
+        >
+        <mat-option value="club_meeting">Club Meeting</mat-option>
+        <mat-option value="sports_event">Sports Event</mat-option>
+        <mat-option value="cultural_show">Cultural Show</mat-option>
+        <mat-option value="alumni_gathering">Alumni Gathering</mat-option>
+        <mat-option value="student_union_event">Student Union Event</mat-option>
+        <mat-option value="career_fair">Career Fair</mat-option>
+        <mat-option value="exam">Exam</mat-option>
+        <mat-option value="guest_speaker">Guest Speaker/Talk</mat-option>
+        <mat-option value="faculty_meeting">Faculty Meeting</mat-option>
+        <mat-option value="board_meeting">Board Meeting</mat-option>
+        <mat-option value="conference">Conference</mat-option>
+        <mat-option value="symposium">Symposium</mat-option>
+        <mat-option value="poster_session">Poster Session</mat-option>
+        <mat-option value="thesis_defense">Thesis Defense</mat-option>
+        <mat-option value="open_day">Open Day / Campus Tour</mat-option>
+        <mat-option value="student_performance"
+          >Student Performance (Music/Drama/Dance)</mat-option
+        >
+        <mat-option value="counseling_session">Counseling Session</mat-option>
+        <mat-option value="fundraiser">Fundraiser / Gala</mat-option>
+        <mat-option value="health_wellness_fair"
+          >Health & Wellness Fair</mat-option
+        >
+        <mat-option value="field_trip">Field Trip / Excursion</mat-option>
+        <mat-option value="student_elections">Student Elections</mat-option>
+        <mat-option value="library_event">Library Event / Workshop</mat-option>
+        <mat-option value="admission_interview">Admission Interview</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Event Form Link</mat-label>
+      <input
+        matInput
+        [(ngModel)]="eventFormLink"
+        name="eventFormLink"
+        type="url"
+        placeholder="https://example.com/form"
+        autocomplete="off"
+      />
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>End Time</mat-label>
-    <input
-      matInput
-      [ngxMatTimepicker]="endTimepicker"
-      [(ngModel)]="endTime"
-      name="endTime"
-      required
-    />
-    <mat-icon matSuffix>access_time</mat-icon>
-    <ngx-mat-timepicker #endTimepicker></ngx-mat-timepicker>
-  </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Additional Notes</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="eventNotes"
+        name="eventNotes"
+        rows="4"
+      ></textarea>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Event Status</mat-label>
-    <mat-select [(ngModel)]="status" name="status" required>
-      <mat-option value="upcoming">Upcoming</mat-option>
-      <mat-option value="ongoing">Ongoing</mat-option>
-      <mat-option value="completed">Completed</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <div class="custom-file-upload">
+      <label for="fileInput" class="upload-label">
+        <mat-icon>cloud_upload</mat-icon> Choose File
+      </label>
+      <input
+        type="file"
+        id="fileInput"
+        class="file-upload"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+      />
+      <span class="file-name">{{ fileName || "No file chosen" }}</span>
+    </div>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Event Category</mat-label>
-    <mat-select [(ngModel)]="eventCategory" name="eventCategory" required>
-      <mat-option value="conference">Conference</mat-option>
-      <mat-option value="workshop">Workshop</mat-option>
-      <mat-option value="webinar">Webinar</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Additional Notes</mat-label>
-    <textarea matInput [(ngModel)]="eventNotes" name="eventNotes"></textarea>
-  </mat-form-field>
-
-  <div class="custom-file-upload">
-    <label for="fileInput" class="upload-label">
-      <mat-icon>cloud_upload</mat-icon> Choose File
-    </label>
-    <input type="file" id="fileInput" class="file-upload" (change)="onFileSelected($event)" />
-    <span class="file-name">{{ fileName || 'No file chosen' }}</span>
-  </div>
-
-  <div class="form-actions">
-    <button mat-raised-button color="primary" (click)="submitForm()">Submit Event</button>
-    <button mat-raised-button color="warn" (click)="resetForm()">Reset</button>
-  </div>
-</div>
+    <div class="form-actions">
+      <button class="purple-btn" (click)="submitForm()">Submit</button>
+      <button class="purple-btn-reset" (click)="resetForm()">Reset</button>
+    </div>
+  </mat-card-content>
+</mat-card>

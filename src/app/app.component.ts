@@ -1,15 +1,20 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterOutlet } from '@angular/router';
-import { FullCalendarModule } from '@fullcalendar/angular'; 
-import { GalleryComponent } from './Components/gallery/gallery.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatButtonModule, FullCalendarModule],
+  standalone: true,
+  imports: [RouterOutlet, MatButtonModule, 
+    
+    FullCalendarModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'my-angular-app';

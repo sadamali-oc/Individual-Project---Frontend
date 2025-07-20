@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { GalleryComponent } from '../../../Components/gallery/gallery.component';
 import { RouterModule } from '@angular/router';
 
 

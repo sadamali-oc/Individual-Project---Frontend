@@ -1,0 +1,95 @@
+.dialog-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #830e7b;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eeeeee;
+    letter-spacing: 0.3px;
+    padding-left: 12px;
+    padding-top: 12px;
+    text-transform: capitalize;
+    word-wrap: break-word;
+    line-height: 1.3;
+}
+
+.dialog-content {
+    font-family: 'Inter', Roboto, Arial, sans-serif;
+    font-size: 15px;
+    color: #333;
+    padding-top: 8px;
+    text-align: left;
+}
+
+
+
+/* You can keep the rest of your styles as before */
+.event-flyer {
+    width: 100%;
+    max-height: none;
+    /* Remove fixed max-height */
+    max-width: 100%;
+    height: auto;
+    /* Maintain natural aspect ratio */
+    object-fit: contain;
+    /* Ensure full image visible */
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Grouped info styling */
+.info-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+/* Individual row */
+.info-row {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: flex-start;
+    flex-wrap: wrap;
+    border-bottom: 1px dashed #e0e0e0;
+    padding-bottom: 6px;
+}
+
+.label {
+    font-weight: 700;
+    color: #222;
+    flex: 0 0 120px;
+    /* keeps label width consistent */
+}
+
+/* You can keep the rest of your styles as before */
+
+.value {
+    font-weight: 400;
+    color: #222;
+    flex: 1;
+    text-align: right;
+    word-wrap: break-word;
+}
+
+/* Chip styling */
+.status-chip {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px;
+}
+
+mat-chip {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Button alignment */
+mat-dialog-actions {
+    margin-top: 20px;
+}
