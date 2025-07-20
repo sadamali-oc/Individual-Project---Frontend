@@ -101,7 +101,7 @@ mat-card-content {
 
 .purple-btn-reset {
   background-color: #b588a6a7;
-  color: white;
+  color: rgb(114, 5, 80);
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
@@ -112,6 +112,7 @@ mat-card-content {
 
 .purple-btn-reset:hover {
   background-color: #aa0671bc;
+  color: #fff;
 }
 /* Responsive Styles */
 @media (max-width: 600px) {

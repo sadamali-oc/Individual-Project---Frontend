@@ -17,14 +17,50 @@ import { CommonModule } from '@angular/common';
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule, // Add ReactiveFormsModule here
-  ],
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class SignUpComponent implements OnInit {
   frm!: FormGroup;
   status!: Status;
+
+  universityClubs = [
+    { value: 'astronomical', display: 'Astronomical Society' },
+    { value: 'buddhist', display: 'Buddhist Society' },
+    { value: 'catholic_students', display: "Catholic Students' Society" },
+    { value: 'civil_engineering', display: 'Civil Engineering Society' },
+    { value: 'computer', display: 'Computer Society' },
+    {
+      value: 'electrical_engineering',
+      display: 'Electrical Engineering Society',
+    },
+    { value: 'electronic', display: 'Electronic Club' },
+    { value: 'english_literary', display: 'English Literary Association' },
+    { value: 'gavel', display: 'Gavel Club' },
+    { value: 'leo', display: 'LEO Club' },
+    { value: 'mathematics', display: 'Mathematics Society' },
+    {
+      value: 'mechanical_engineering',
+      display: 'Mechanical Engineering Society',
+    },
+    { value: 'media', display: 'Media Club' },
+    {
+      value: 'transport_logistics',
+      display: 'Society of Transport & Logistics',
+    },
+    { value: 'majlis_ui_islam', display: 'Majlis Ui Islam Society' },
+    { value: 'maritime', display: 'Maritime Club' },
+    {
+      value: 'materials_engineering',
+      display: "Materials Engineering Students' Society",
+    },
+    {
+      value: 'christian_fellowship',
+      display: 'Moratuwa Students Christian Fellowship',
+    },
+    { value: 'ethugalpura', display: "Ethugalpura Students' Circle" },
+    { value: 'students_union', display: "University Students' Union" },
+    { value: 'faculty_union', display: "Faculty Students' Unions" },
+  ];
 
   constructor(
     @Inject(SignupService) private signupService: SignupService,
@@ -36,39 +72,11 @@ export class SignUpComponent implements OnInit {
     return this.frm.controls;
   }
 
-  onPost() {
-    this.status = { statusCode: 0, message: 'Wait..' };
-
-    // Submit the form data to the backend via the signup service
-    this.signupService.signup(this.frm.value).subscribe({
-      next: (res) => {
-        console.log(res); // Log the response
-        this.status = res;
-        this.frm.reset(); // Reset form on successful submission
-
-        // Navigate to login page after successful signup
-        this.router.navigate(['/auth/login']); // <-- Navigate to login page
-      },
-      error: (err: any) => {
-        console.error(err); // Log the error
-        this.status.message = 'Some error on server side'; // Set error message
-      },
-      complete: () => {
-        this.status.statusCode = 0;
-        this.status.message = '';
-      },
-    });
-
-    console.log(this.frm.value); // Log form data for debugging
-  }
-
   ngOnInit(): void {
-    // Regex pattern for password validation
     const patternRegex = new RegExp(
       '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[#$^+=!*()@%&]).{6,}$'
     );
 
-    // Define the form group with validation rules
     this.frm = this.fb.group(
       {
         name: ['', Validators.required],
@@ -77,11 +85,11 @@ export class SignUpComponent implements OnInit {
         password: ['', [Validators.required, validPattern(patternRegex)]],
         confirmPassword: ['', Validators.required],
         role: ['', Validators.required],
-        gender: ['', Validators.required], // Added gender field
-        status: ['', Validators.required], // Added status field
+        gender: ['', Validators.required],
+        status: ['', Validators.required],
+        universityClub: [''], // No validator initially
       },
       {
-        // Custom validator for matching passwords
         validator: MustMatch(
           'password',
           'confirmPassword',
@@ -89,5 +97,40 @@ export class SignUpComponent implements OnInit {
         ),
       }
     );
+
+    // Dynamic validator for universityClub based on role
+    this.frm.get('role')?.valueChanges.subscribe((roleValue) => {
+      const clubControl = this.frm.get('universityClub');
+      if (roleValue === 'organizer') {
+        clubControl?.setValidators([Validators.required]);
+      } else {
+        clubControl?.clearValidators();
+        clubControl?.setValue('');
+      }
+      clubControl?.updateValueAndValidity();
+    });
+  }
+
+  onPost() {
+    this.status = { statusCode: 0, message: 'Wait..' };
+
+    this.signupService.signup(this.frm.value).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.status = res;
+        this.frm.reset();
+        this.router.navigate(['/auth/login']);
+      },
+      error: (err: any) => {
+        console.error(err);
+        this.status.message = 'Some error on server side';
+      },
+      complete: () => {
+        this.status.statusCode = 0;
+        this.status.message = '';
+      },
+    });
+
+    console.log(this.frm.value);
   }
 }

@@ -24,8 +24,13 @@
               formControlName="name"
               required
             />
-            <div class="msg error" *ngIf="f['name'].invalid && f['name'].touched">
-              <span *ngIf="f['name'].errors?.['required']">Name is required</span>
+            <div
+              class="msg error"
+              *ngIf="f['name'].invalid && f['name'].touched"
+            >
+              <span *ngIf="f['name'].errors?.['required']"
+                >Name is required</span
+              >
             </div>
           </div>
 
@@ -40,7 +45,10 @@
               formControlName="email"
               required
             />
-            <div class="msg error" *ngIf="f['email'].invalid && f['email'].touched">
+            <div
+              class="msg error"
+              *ngIf="f['email'].invalid && f['email'].touched"
+            >
               <span *ngIf="f['email'].errors?.['required']">Email is required</span>
               <span *ngIf="f['email'].errors?.['email']">Please enter a valid email</span>
             </div>
@@ -49,7 +57,12 @@
           <!-- Gender -->
           <div class="form-group">
             <label for="gender">Gender</label>
-            <select id="gender" class="gender ele" formControlName="gender" required>
+            <select
+              id="gender"
+              class="gender ele"
+              formControlName="gender"
+              required
+            >
               <option value="" disabled selected>Select your gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -68,8 +81,13 @@
               formControlName="phone_number"
               required
             />
-            <div class="msg error" *ngIf="f['phone_number'].invalid && f['phone_number'].touched">
-              <span *ngIf="f['phone_number'].errors?.['required']">Phone number is required</span>
+            <div
+              class="msg error"
+              *ngIf="f['phone_number'].invalid && f['phone_number'].touched"
+            >
+              <span *ngIf="f['phone_number'].errors?.['required']"
+                >Phone number is required</span
+              >
             </div>
           </div>
 
@@ -84,10 +102,16 @@
               formControlName="password"
               required
             />
-            <div class="msg error" *ngIf="f['password'].invalid && f['password'].touched">
-              <span *ngIf="f['password'].errors?.['required']">Password is required</span>
+            <div
+              class="msg error"
+              *ngIf="f['password'].invalid && f['password'].touched"
+            >
+              <span *ngIf="f['password'].errors?.['required']"
+                >Password is required</span
+              >
               <span *ngIf="f['password'].errors?.['invalidPattern']">
-                At least 6 characters long, must contain 1 uppercase, 1 lowercase, 1 digit, and 1 special character
+                At least 6 characters long, must contain 1 uppercase, 1
+                lowercase, 1 digit, and 1 special character
               </span>
             </div>
           </div>
@@ -103,9 +127,19 @@
               formControlName="confirmPassword"
               required
             />
-            <div class="msg error" *ngIf="f['confirmPassword'].invalid && (f['confirmPassword'].dirty || f['confirmPassword'].touched)">
-              <span *ngIf="f['confirmPassword'].errors?.['required']">Confirm Password is required</span>
-              <span *ngIf="f['confirmPassword'].errors?.['mustMatch']">Password and confirm password should match</span>
+            <div
+              class="msg error"
+              *ngIf="
+                f['confirmPassword'].invalid &&
+                (f['confirmPassword'].dirty || f['confirmPassword'].touched)
+              "
+            >
+              <span *ngIf="f['confirmPassword'].errors?.['required']"
+                >Confirm Password is required</span
+              >
+              <span *ngIf="f['confirmPassword'].errors?.['mustMatch']"
+                >Password and confirm password should match</span
+              >
             </div>
           </div>
 
@@ -120,6 +154,34 @@
             </select>
           </div>
 
+          <!-- University Club (Only if role = organizer) -->
+          <div class="form-group" *ngIf="frm.get('role')?.value === 'organizer'">
+            <label for="universityClub">University Club</label>
+            <select
+              id="universityClub"
+              class="universityClub ele"
+              formControlName="universityClub"
+              required
+            >
+              <option value="" disabled selected>Select your university club</option>
+              <option *ngFor="let club of universityClubs" [value]="club.value">
+                {{ club.display }}
+              </option>
+            </select>
+            <div
+              class="msg error"
+              *ngIf="
+                f['universityClub']?.invalid &&
+                f['universityClub']?.touched &&
+                frm.get('role')?.value === 'organizer'
+              "
+            >
+              <span *ngIf="f['universityClub'].errors?.['required']"
+                >University Club is required</span
+              >
+            </div>
+          </div>
+
           <!-- Status -->
           <div class="form-group">
             <label for="status">Status</label>
@@ -131,7 +193,9 @@
           </div>
         </div>
 
-        <button type="submit" class="clkbtn" [disabled]="frm.invalid">Signup</button>
+        <button type="submit" class="clkbtn" [disabled]="frm.invalid">
+          Signup
+        </button>
 
         <div class="msg-light" *ngIf="status">
           {{ status.message }}
