@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UserService } from './Pages/Dadhboards/organizer-dashboard/user.service';
+import { UserService } from './pages/dashboards/organizer-dashboard/user.service';
 
 describe('UserService', () => {
   let service: UserService;

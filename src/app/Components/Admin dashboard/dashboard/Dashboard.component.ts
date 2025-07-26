@@ -15,7 +15,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule, DatePipe } from '@angular/common';
 
-import { EventService, Event } from '../../../../services/event/event.service';
+import { EventService, Event } from '../../../services/event/event.service';
 
 @Component({
   selector: 'app-dashboard',

@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
 })
 export class SignUpComponent implements OnInit {
   frm!: FormGroup;
-  status!: Status;
+  status: Status = { statusCode: 0, message: '' };
 
   universityClubs = [
     { value: 'astronomical', display: 'Astronomical Society' },
@@ -112,22 +112,26 @@ export class SignUpComponent implements OnInit {
   }
 
   onPost() {
-    this.status = { statusCode: 0, message: 'Wait..' };
+    this.status = { statusCode: 0, message: 'Please wait...' };
 
     this.signupService.signup(this.frm.value).subscribe({
       next: (res) => {
-        console.log(res);
-        this.status = res;
+        this.status = {
+          statusCode: 1,
+          message: 'Signup successful! Redirecting...',
+        };
         this.frm.reset();
-        this.router.navigate(['/auth/login']);
+        setTimeout(() => this.router.navigate(['/auth/login']), 2000); // 2 sec delay
       },
       error: (err: any) => {
         console.error(err);
-        this.status.message = 'Some error on server side';
+        this.status = {
+          statusCode: -1,
+          message: 'Error: Email already exists or server error.',
+        };
       },
       complete: () => {
-        this.status.statusCode = 0;
-        this.status.message = '';
+        // Do not clear message here
       },
     });
 
