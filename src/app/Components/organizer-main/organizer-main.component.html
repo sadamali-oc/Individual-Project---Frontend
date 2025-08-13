@@ -6,67 +6,110 @@
     [opened]="isSidebarOpen"
     class="mat-sidenav"
   >
-    <mat-toolbar>Organizer Panel</mat-toolbar>
+    <mat-toolbar color="primary">Organizer Panel</mat-toolbar>
 
-    <mat-nav-list>
-      <a mat-list-item [routerLink]="['/organizer', userId, 'dashboard']" routerLinkActive="active">
+    <mat-nav-list class="content">
+      <a
+        mat-list-item
+        [routerLink]="['/organizer', userId, 'dashboard']"
+        routerLinkActive="active"
+      >
         <mat-icon>dashboard</mat-icon> Dashboard
       </a>
-
-      <a mat-list-item [routerLink]="['/organizer', userId, 'event']" routerLinkActive="active">
+      <a
+        mat-list-item
+        [routerLink]="['/organizer', userId, 'event']"
+        routerLinkActive="active"
+      >
         <mat-icon>event</mat-icon> Create Event
       </a>
-
-      <a mat-list-item [routerLink]="['/organizer', userId, 'events']" routerLinkActive="active">
+      <a
+        mat-list-item
+        [routerLink]="['/organizer', userId, 'events']"
+        routerLinkActive="active"
+      >
         <mat-icon>event_note</mat-icon> View Events
       </a>
 
-      <a mat-list-item [routerLink]="['/organizer', userId, 'attendees']" routerLinkActive="active">
+      <a
+        mat-list-item
+        [routerLink]="['/organizer', userId, 'finish']"
+        routerLinkActive="active"
+      >
+        <mat-icon>check_circle</mat-icon> Finished Events
+      </a>
+
+      <a
+        mat-list-item
+        [routerLink]="['/organizer', userId, 'attendees']"
+        routerLinkActive="active"
+      >
         <mat-icon>groups</mat-icon> Attendees
       </a>
-
-      <a mat-list-item [routerLink]="['/organizer', userId, 'reports']" routerLinkActive="active">
+      <a
+        mat-list-item
+        [routerLink]="['/organizer', userId, 'reports']"
+        routerLinkActive="active"
+      >
         <mat-icon>bar_chart</mat-icon> Reports
       </a>
-
-      <a mat-list-item [routerLink]="['/organizer', userId, 'settings']" routerLinkActive="active">
+      <a
+        mat-list-item
+        [routerLink]="['/organizer', userId, 'settings']"
+        routerLinkActive="active"
+      >
         <mat-icon>settings</mat-icon> Settings
+      </a>
+      <a
+        mat-list-item
+        [routerLink]="['/']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon>home</mat-icon> Go to Home
       </a>
     </mat-nav-list>
   </mat-sidenav>
 
-  <!-- Main Content -->
+  <!-- Main content -->
   <mat-sidenav-content>
-    <mat-toolbar>
-      <button mat-icon-button (click)="toggleSidebar()">
-        <mat-icon>menu</mat-icon>
-      </button>
-<span>{{ userName }}</span>
-      <span class="spacer"></span>
-
-      <!-- Notification Icon -->
-      <button mat-icon-button aria-label="Notifications">
-        <mat-icon>notifications</mat-icon>
-      </button>
-
-      <!-- Profile Icon -->
-      <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User profile menu">
-        <mat-icon>account_circle</mat-icon>
-      </button>
-
-      <mat-menu #profileMenu="matMenu">
-        <button mat-menu-item (click)="viewProfile()">
-          <mat-icon>person</mat-icon>
-          <span>Profile</span>
+    <mat-toolbar color="primary" class="main-toolbar">
+      <div class="toolbar-left">
+        <button mat-icon-button (click)="toggleSidebar()">
+          <mat-icon>menu</mat-icon>
         </button>
-        <button mat-menu-item (click)="handleLogout()">
-          <mat-icon>logout</mat-icon>
-          <span>Logout</span>
+        <span class="user-name">Hello, {{ userName }}👋 </span>
+      </div>
+
+      <div class="toolbar-right">
+        <button mat-icon-button aria-label="Notifications">
+          <mat-icon>notifications</mat-icon>
         </button>
-      </mat-menu>
+
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="profileMenu"
+          aria-label="User profile menu"
+        >
+          <mat-icon>account_circle</mat-icon>
+        </button>
+
+        <mat-menu #profileMenu="matMenu">
+          <button mat-menu-item (click)="viewProfile()">
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+          <button mat-menu-item (click)="handleLogout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </div>
     </mat-toolbar>
 
-    <!-- Routed Components Will Load Here -->
-    <router-outlet></router-outlet>
+    <!-- Main routed content -->
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

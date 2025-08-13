@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { SignupService } from '../../../services/signup.service';
-
 import {
   FormBuilder,
   FormGroup,
@@ -12,60 +11,33 @@ import { validPattern } from '../../../helpers/pattern-mact.validator';
 import { MustMatch } from '../../../helpers/must-match.validator';
 import { Status } from '../../../models/status';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatSelectModule,
+  ],
 })
 export class SignUpComponent implements OnInit {
   frm!: FormGroup;
   status: Status = { statusCode: 0, message: '' };
 
-  universityClubs = [
-    { value: 'astronomical', display: 'Astronomical Society' },
-    { value: 'buddhist', display: 'Buddhist Society' },
-    { value: 'catholic_students', display: "Catholic Students' Society" },
-    { value: 'civil_engineering', display: 'Civil Engineering Society' },
-    { value: 'computer', display: 'Computer Society' },
-    {
-      value: 'electrical_engineering',
-      display: 'Electrical Engineering Society',
-    },
-    { value: 'electronic', display: 'Electronic Club' },
-    { value: 'english_literary', display: 'English Literary Association' },
-    { value: 'gavel', display: 'Gavel Club' },
-    { value: 'leo', display: 'LEO Club' },
-    { value: 'mathematics', display: 'Mathematics Society' },
-    {
-      value: 'mechanical_engineering',
-      display: 'Mechanical Engineering Society',
-    },
-    { value: 'media', display: 'Media Club' },
-    {
-      value: 'transport_logistics',
-      display: 'Society of Transport & Logistics',
-    },
-    { value: 'majlis_ui_islam', display: 'Majlis Ui Islam Society' },
-    { value: 'maritime', display: 'Maritime Club' },
-    {
-      value: 'materials_engineering',
-      display: "Materials Engineering Students' Society",
-    },
-    {
-      value: 'christian_fellowship',
-      display: 'Moratuwa Students Christian Fellowship',
-    },
-    { value: 'ethugalpura', display: "Ethugalpura Students' Circle" },
-    { value: 'students_union', display: "University Students' Union" },
-    { value: 'faculty_union', display: "Faculty Students' Unions" },
-  ];
+  universityClubs: { value: string | number; display: string }[] = [];
 
   constructor(
     @Inject(SignupService) private signupService: SignupService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private http: HttpClient,
+    private snackBar: MatSnackBar // <-- Inject MatSnackBar here
   ) {}
 
   get f() {
@@ -73,6 +45,20 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Load clubs from backend and map to {value, display}
+    this.http.get<any[]>('http://localhost:3000/clubs').subscribe({
+      next: (clubs) => {
+        this.universityClubs = clubs.map((c) => ({
+          value: c.club_id, // club_id as value
+          display: c.display_name,
+        }));
+        console.log(this.universityClubs);
+      },
+      error: (err) => {
+        console.error('Failed to load clubs:', err);
+      },
+    });
+
     const patternRegex = new RegExp(
       '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[#$^+=!*()@%&]).{6,}$'
     );
@@ -86,8 +72,7 @@ export class SignUpComponent implements OnInit {
         confirmPassword: ['', Validators.required],
         role: ['', Validators.required],
         gender: ['', Validators.required],
-        status: ['', Validators.required],
-        universityClub: [''], // No validator initially
+        universityClub: [''], // Initially no validator
       },
       {
         validator: MustMatch(
@@ -98,7 +83,7 @@ export class SignUpComponent implements OnInit {
       }
     );
 
-    // Dynamic validator for universityClub based on role
+    // Dynamic validator: universityClub required only if role === 'organizer'
     this.frm.get('role')?.valueChanges.subscribe((roleValue) => {
       const clubControl = this.frm.get('universityClub');
       if (roleValue === 'organizer') {
@@ -114,14 +99,34 @@ export class SignUpComponent implements OnInit {
   onPost() {
     this.status = { statusCode: 0, message: 'Please wait...' };
 
-    this.signupService.signup(this.frm.value).subscribe({
+    if (this.frm.invalid) {
+      // You can optionally notify user to fix validation errors here
+      return;
+    }
+
+    this.snackBar.open('Signup successful!', 'Close', {
+      duration: 3000,
+      horizontalPosition:'center',
+      verticalPosition:'top'
+    });
+
+    // Map universityClub to club_id (number) for backend
+    const payload = {
+      ...this.frm.value,
+      club_id: this.frm.value.universityClub
+        ? Number(this.frm.value.universityClub)
+        : null,
+    };
+    delete payload.universityClub;
+
+    this.signupService.signup(payload).subscribe({
       next: (res) => {
         this.status = {
           statusCode: 1,
           message: 'Signup successful! Redirecting...',
         };
         this.frm.reset();
-        setTimeout(() => this.router.navigate(['/auth/login']), 2000); // 2 sec delay
+        setTimeout(() => this.router.navigate(['/auth/login']), 2000);
       },
       error: (err: any) => {
         console.error(err);
@@ -130,11 +135,8 @@ export class SignUpComponent implements OnInit {
           message: 'Error: Email already exists or server error.',
         };
       },
-      complete: () => {
-        // Do not clear message here
-      },
     });
 
-    console.log(this.frm.value);
+    console.log(payload);
   }
 }

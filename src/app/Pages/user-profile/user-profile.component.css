@@ -4,6 +4,16 @@
   padding: 40px;
 }
 
+.signup-box .topic-image {
+  width: 200px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 24px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .container {
   width: 100%;
   max-width: 600px;
@@ -15,60 +25,95 @@
 
 .signup-box h2 {
   text-align: center;
-  margin-bottom: 24px;
-  color: #80065f;
+  margin-bottom: 20px;
+  color: #012a6c;
+  font-size: 2.4rem;
+  /* increased from 2rem */
 }
 
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .form-group label {
   display: block;
-  font-weight: 600;
-  margin-bottom: 6px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #012a6c;
+  font-size: 1.9rem;
+  /* increased from default */
 }
 
-input, select {
+input,
+select {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 14px;
+  /* increased from 12px */
+  border: 1px solid #012a6c;
   border-radius: 6px;
+  font-size: 1.8rem;
+  /* increased from 1.1rem */
+  color: #1e293b;
+  background-color: #fefefe;
+  transition: border-color 0.3s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
 }
 
 .error {
-  color: #d9534f;
-  font-size: 0.85rem;
+  color: #ef4444;
+  font-size: 1.6rem;
+  /* increased from 1rem */
   margin-top: 4px;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 12px 24px;
+  /* increased */
   margin-right: 10px;
   border: none;
-  background-color: #80065f;
-  color: white;
-  font-weight: 600;
+  background-color: #ffcc00;
+  color: #012a6c;
+  font-weight: 700;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 1.2rem;
+  /* increased */
+  transition: background-color 0.3s ease;
+}
+
+button:hover:not(:disabled) {
+  background-color: #004080;
+  color: #ffffff;
 }
 
 button.cancel {
-  background-color: #ccc;
-  color: #333;
+  background-color: #ffcc00;
+  color: #012a6c;
+}
+
+button.cancel:hover:not(:disabled) {
+  background-color: #e6b800;
 }
 
 button:disabled {
-  background-color: #aaa;
+  background-color: #d5dae1;
+  color: #004080;
   cursor: not-allowed;
 }
 
 .msg {
   margin-top: 16px;
   font-weight: bold;
-  color: green;
+  color: #012a6c;
   text-align: center;
+  font-size: 1.3rem;
+  /* increased */
 }
+
 .password-input-wrapper {
   position: relative;
   display: flex;
@@ -77,7 +122,18 @@ button:disabled {
 
 .password-input-wrapper input {
   flex: 1;
-  padding-right: 40px; /* space for the button */
+  padding-right: 44px;
+  border: 1px solid #012a6c;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  /* match increased input size */
+  color: #1e293b;
+  transition: border-color 0.3s ease;
+}
+
+.password-input-wrapper input:focus {
+  border-color: #ffcc00;
+  outline: none;
 }
 
 .toggle-btn {
@@ -91,9 +147,16 @@ button:disabled {
   align-items: center;
   justify-content: center;
   padding: 0;
+  color: #012a6c;
+  transition: color 0.3s ease;
+}
+
+.toggle-btn:hover {
+  color: #ffcc00;
 }
 
 .toggle-btn mat-icon {
-  font-size: 24px;
-  color: #666;
+  font-size: 26px;
+  /* slightly increased */
+  color: inherit;
 }

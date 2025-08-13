@@ -1,166 +1,104 @@
-/* Container for table with horizontal scroll */
-.event-table-container {
-  overflow-x: auto;
-  width: 100%;
-  margin-top: 20px;
-  padding-bottom: 8px;
-}
-
-/* Center card wrapper */
 .page-center-wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding: 24px;
+  background-color: #fefeff;
   min-height: 100vh;
-  background-color: #f5f7fa;
-  padding: 20px;
-  box-sizing: border-box;
 }
 
-/* Material card styling */
-.event-list-card {
-  margin: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
+.organizer-list-card {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1100px;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
-/* Card header */
-.event-list-card .mat-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  background-color: #004D7A;
-  color: white;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  flex-wrap: wrap;
+mat-card-content {
+  padding: 24px;
 }
 
-/* Table styling */
+
+
+.search-input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.user-table-container {
+  overflow-x: auto;
+}
+
 .user-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 600px;
-  table-layout: fixed;
-  margin-left: 10px;
-}
-
-.user-table th,
-.user-table td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #c0c0c0;
-  color: #555;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 .user-table th {
-  background-color: #e0e6ec;
-  color: #333;
+  background-color: #fafafa;
+  color: #444;
   font-weight: 600;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
   text-align: left;
-  border-bottom: 1px solid #c0c0c0;
-}
-
-.user-table th.text-center {
-  text-align: center !important;
 }
 
 .user-table td {
+  padding: 12px 16px;
   border-bottom: 1px solid #eee;
 }
 
-.user-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
 .user-table tr:hover {
-  background-color: #f0f5fa;
+  background-color: #f0f4ff;
 }
 
-/* Status cell styles */
-.status-buttons {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-start;
-}
-
-.status {
-  font-weight: 500;
-  padding: 4px 8px;
-  border-radius: 4px;
-  display: inline-block;
-}
-
-.status.accepted {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
-
-.status.rejected {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
-
-/* Actions column */
 .actions-cell {
   text-align: center;
-  padding: 8px;
-  width: 100px;
 }
 
-/* Inline buttons */
-.action-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: nowrap;
+.actions-cell button {
+  color: #7d0569;
+  transition: transform 0.2s ease;
+  border: none;
+  background-color:#ffffff
 }
 
-.action-buttons button {
-  width: 40px;
-  height: 40px;
-  padding: 6px;
+.actions-cell button:hover {
+  transform: scale(1.2);
 }
 
-.action-buttons button mat-icon {
-  font-size: 24px;
-  height: 24px;
-  width: 24px;
+.status-dropdown {
+  width: 140px;
 }
 
-/* Loading spinner */
-.loading-spinner {
-  padding: 30px;
-  text-align: center;
+/* Color the closed mat-select value text */
+.status-accepted .mat-select-value {
+  color: #2e7d32 !important;
+  font-weight: 600;
 }
 
-/* Responsive layout for smaller screens */
-@media (max-width: 768px) {
-  .event-list-card {
-    margin: 10px;
-    width: 100%;
-  }
+.status-rejected .mat-select-value {
+  color: #c62828 !important;
+  font-weight: 600;
+}
 
-  .action-buttons {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+.status-pending .mat-select-value {
+  color: #f9a825 !important;
+  font-weight: 600;
+}
 
-  .user-table th,
-  .user-table td {
-    padding: 8px 10px;
-  }
+/* Color the dropdown options */
+::ng-deep .mat-option.status-option-accepted {
+  color: #2e7d32 !important;
+  font-weight: 600;
+}
 
-  .user-table {
-    min-width: 600px;
-  }
+::ng-deep .mat-option.status-option-rejected {
+  color: #c62828 !important;
+  font-weight: 600;
+}
+
+::ng-deep .mat-option.status-option-pending {
+  color: #f9a825 !important;
+  font-weight: 600;
 }

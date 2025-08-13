@@ -69,6 +69,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
 
   viewProfile(): void {
+    console.log('Navigating to user profile with ID:', this.userId);
     this.router.navigate(['/user/profile/:userid']);
   }
 

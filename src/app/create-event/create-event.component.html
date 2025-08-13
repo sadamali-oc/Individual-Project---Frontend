@@ -31,10 +31,7 @@
         name="eventDate"
         required
       />
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="datepicker"
-      ></mat-datepicker-toggle>
+      <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
       <mat-datepicker #datepicker></mat-datepicker>
     </mat-form-field>
 
@@ -63,6 +60,7 @@
       <mat-icon matSuffix>access_time</mat-icon>
       <ngx-mat-timepicker #endTimepicker></ngx-mat-timepicker>
     </mat-form-field>
+
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Event Category</mat-label>
       <mat-select [(ngModel)]="eventCategory" name="eventCategory" required>
@@ -73,9 +71,7 @@
         <mat-option value="webinar">Webinar</mat-option>
         <mat-option value="orientation">Orientation</mat-option>
         <mat-option value="graduation">Graduation Ceremony</mat-option>
-        <mat-option value="research_presentation"
-          >Research Presentation</mat-option
-        >
+        <mat-option value="research_presentation">Research Presentation</mat-option>
         <mat-option value="club_meeting">Club Meeting</mat-option>
         <mat-option value="sports_event">Sports Event</mat-option>
         <mat-option value="cultural_show">Cultural Show</mat-option>
@@ -91,20 +87,17 @@
         <mat-option value="poster_session">Poster Session</mat-option>
         <mat-option value="thesis_defense">Thesis Defense</mat-option>
         <mat-option value="open_day">Open Day / Campus Tour</mat-option>
-        <mat-option value="student_performance"
-          >Student Performance (Music/Drama/Dance)</mat-option
-        >
+        <mat-option value="student_performance">Student Performance (Music/Drama/Dance)</mat-option>
         <mat-option value="counseling_session">Counseling Session</mat-option>
         <mat-option value="fundraiser">Fundraiser / Gala</mat-option>
-        <mat-option value="health_wellness_fair"
-          >Health & Wellness Fair</mat-option
-        >
+        <mat-option value="health_wellness_fair">Health & Wellness Fair</mat-option>
         <mat-option value="field_trip">Field Trip / Excursion</mat-option>
         <mat-option value="student_elections">Student Elections</mat-option>
         <mat-option value="library_event">Library Event / Workshop</mat-option>
         <mat-option value="admission_interview">Admission Interview</mat-option>
       </mat-select>
     </mat-form-field>
+
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Event Form Link</mat-label>
       <input
@@ -125,6 +118,41 @@
         name="eventNotes"
         rows="4"
       ></textarea>
+    </mat-form-field>
+
+    <!-- New: Event Mode -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Event Mode</mat-label>
+      <mat-select [(ngModel)]="eventMode" name="eventMode" required>
+        <mat-option value="online">Online</mat-option>
+        <mat-option value="physical">Physical</mat-option>
+        <mat-option value="hybrid">Hybrid</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- New: Location (show only if physical or hybrid) -->
+    <mat-form-field appearance="fill" class="full-width" *ngIf="eventMode === 'physical' || eventMode === 'hybrid'">
+      <mat-label>Location</mat-label>
+      <input
+        matInput
+        [(ngModel)]="location"
+        name="location"
+        placeholder="Enter location"
+        autocomplete="off"
+        required
+      />
+    </mat-form-field>
+
+    <!-- New: Audience Type -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Audience Type</mat-label>
+      <mat-select [(ngModel)]="audienceType" name="audienceType" required>
+        <mat-option value="open">Open to All</mat-option>
+        <mat-option value="club_members">Club Members</mat-option>
+        <mat-option value="private">Private</mat-option>
+        <mat-option value="faculty only">Faculty Only</mat-option>
+
+      </mat-select>
     </mat-form-field>
 
     <div class="custom-file-upload">

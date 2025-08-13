@@ -1,5 +1,42 @@
-<div class="event-cards-container" *ngIf="events.length > 0; else noEvents">
-  <mat-card class="event-card" *ngFor="let event of events">
+<div
+  class="search-filter-container"
+  style="display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap"
+>
+  <mat-form-field
+    appearance="outline"
+    style="flex: 1 1 300px; min-width: 250px"
+  >
+    <mat-label>Search Events</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput [(ngModel)]="searchTerm" placeholder="Enter event name" />
+    <button
+      mat-icon-button
+      *ngIf="searchTerm"
+      matSuffix
+      aria-label="Clear"
+      (click)="searchTerm = ''"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 200px; min-width: 150px">
+    <mat-label>Filter by Status</mat-label>
+    <mat-select [(value)]="selectedStatus">
+      <mat-option value="">All</mat-option>
+      <mat-option value="pending">Pending</mat-option>
+      <mat-option value="approved">Active</mat-option>
+      <mat-option value="rejected">Rejected</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<!-- Events List -->
+<div
+  class="event-cards-container"
+  *ngIf="filteredEvents.length > 0; else noEvents"
+>
+  <mat-card class="event-card" *ngFor="let event of filteredEvents">
     <mat-card-header>
       <mat-card-title>{{ event.event_name }}</mat-card-title>
     </mat-card-header>
@@ -28,6 +65,8 @@
       </mat-chip-listbox>
     </mat-card-content>
 
+
+
     <mat-card-actions>
       <button
         mat-button
@@ -36,7 +75,15 @@
       >
         <mat-icon>visibility</mat-icon> View Details
       </button>
-      <!-- Replace Cancel button with Delete icon button -->
+
+         <!-- Slide Toggle for Event Progress -->
+      <mat-slide-toggle
+        [checked]="event.event_status === 'completed'"
+        (change)="onToggleChange(event, $event.checked)"
+      >
+        {{ event.event_status === 'completed' ? 'Done' : 'Upcoming' }}
+      </mat-slide-toggle>
+ 
       <button
         mat-icon-button
         aria-label="Delete event"
@@ -48,7 +95,9 @@
   </mat-card>
 </div>
 
+<!-- No Events Template -->
 <ng-template #noEvents>
   <div class="no-events-container">
+    <p>No events to display for the selected status.</p>
   </div>
 </ng-template>

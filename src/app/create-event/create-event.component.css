@@ -10,7 +10,7 @@
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 24px;
-  background: #fff;
+  background: #ffffff;
 }
 
 /* Styling inside mat-card */
@@ -19,6 +19,8 @@ mat-card-title {
   font-weight: 500;
   margin-bottom: 16px;
   padding-left: 10px;
+  color: #012a6c;
+  /* Deep blue */
 }
 
 mat-card-content {
@@ -40,8 +42,8 @@ mat-card-content {
   display: flex;
   align-items: center;
   gap: 6px;
-  background-color: #aa0671;
-  /* Custom purple */
+  background-color:#ffcc00;
+  /* Blue */
   color: white;
   padding: 8px 16px;
   border-radius: 8px;
@@ -51,7 +53,8 @@ mat-card-content {
 }
 
 .upload-label:hover {
-  background-color: #aa0671bc;
+  background-color: #012a6c;
+  /* Lighter blue */
 }
 
 .file-upload {
@@ -72,18 +75,21 @@ mat-card-content {
   margin-top: 24px;
   flex-wrap: wrap;
 }
+
 .success-snackbar {
-  background-color: #4caf50;
+  background-color: #43a047;
   color: white;
 }
 
 .error-snackbar {
-  background-color: #f44336;
+  background-color: #e53935;
   color: white;
 }
 
 .purple-btn {
-  background-color: #aa0671;
+  background-color:#ffcc00;
+
+
   color: white;
   border: none;
   padding: 10px 20px;
@@ -94,14 +100,12 @@ mat-card-content {
 }
 
 .purple-btn:hover {
-  background-color: #aa0671bc;
+  background-color:#012a6c;
 }
 
-
-
 .purple-btn-reset {
-  background-color: #b588a6a7;
-  color: rgb(114, 5, 80);
+  background-color:#d5d1c5;
+  color: #ffffff;
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
@@ -111,9 +115,10 @@ mat-card-content {
 }
 
 .purple-btn-reset:hover {
-  background-color: #aa0671bc;
+  background-color: #012a6c;
   color: #fff;
 }
+
 /* Responsive Styles */
 @media (max-width: 600px) {
   .form-section {
@@ -151,17 +156,6 @@ mat-card-content {
     text-align: left;
     margin-top: 8px;
   }
-}
-
-
-.success-snackbar {
-  background-color: #4caf50;
-  color: white;
-}
-
-.error-snackbar {
-  background-color: #f44336;
-  color: white;
 }
 
 button[disabled] {

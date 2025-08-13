@@ -4,22 +4,40 @@
       <div class="signup-box">
         <h2>My Profile</h2>
 
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/Copilot_20250803_154030.png?alt=media&token=4b11cb5d-5f3d-4fa7-9b82-b058ff03e451"
+          alt="Topic Image"
+          class="topic-image"
+        />
+
         <div class="form-fields">
 
           <!-- Name -->
           <div class="form-group">
             <label for="name">Name</label>
-            <input id="name" type="text" formControlName="name" placeholder="Enter your name" />
-            <div *ngIf="f['name'].invalid && f['name'].touched" class="error">Name is required</div>
+            <input
+              id="name"
+              type="text"
+              formControlName="name"
+              placeholder="Enter your name"
+            />
+            <div *ngIf="f['name'].invalid && (f['name'].touched || f['name'].dirty)" class="error">
+              Name is required
+            </div>
           </div>
 
           <!-- Email -->
           <div class="form-group">
             <label for="email">Email</label>
-            <input id="email" type="email" formControlName="email" placeholder="Enter your email" />
-            <div *ngIf="f['email'].invalid && f['email'].touched" class="error">
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="Enter your email"
+            />
+            <div *ngIf="f['email'].invalid && (f['email'].touched || f['email'].dirty)" class="error">
               <span *ngIf="f['email'].errors?.['required']">Email is required</span>
-              <span *ngIf="f['email'].errors?.['email']">Invalid email</span>
+              <span *ngIf="f['email'].errors?.['email']">Invalid email format</span>
             </div>
           </div>
 
@@ -32,13 +50,24 @@
               <option value="female">Female</option>
               <option value="other">Other</option>
             </select>
+            <div *ngIf="f['gender'].invalid && (f['gender'].touched || f['gender'].dirty)" class="error">
+              Gender is required
+            </div>
           </div>
 
           <!-- Phone Number -->
           <div class="form-group">
             <label for="phone_number">Phone Number</label>
-            <input id="phone_number" type="text" formControlName="phone_number" placeholder="Phone number" />
-            <div *ngIf="f['phone_number'].invalid && f['phone_number'].touched" class="error">Phone number is required</div>
+            <input
+              id="phone_number"
+              type="text"
+              formControlName="phone_number"
+              placeholder="Phone number"
+            />
+            <div *ngIf="f['phone_number'].invalid && (f['phone_number'].touched || f['phone_number'].dirty)" class="error">
+              <span *ngIf="f['phone_number'].errors?.['required']">Phone number is required</span>
+              <span *ngIf="f['phone_number'].errors?.['pattern']">Only numbers are allowed</span>
+            </div>
           </div>
 
           <!-- Password -->
@@ -55,10 +84,10 @@
                 <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
             </div>
-            <div *ngIf="f['password'].invalid && f['password'].touched" class="error">
+            <div *ngIf="f['password'].invalid && (f['password'].touched || f['password'].dirty)" class="error">
               <span *ngIf="f['password'].errors?.['required']">Password is required</span>
               <span *ngIf="f['password'].errors?.['pattern']">
-                Must be 6+ chars with uppercase, lowercase, number & special char
+                Must include uppercase, lowercase, number & special character (6+ characters)
               </span>
             </div>
           </div>
@@ -77,7 +106,7 @@
                 <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
             </div>
-            <div *ngIf="f['confirmPassword'].invalid && (f['confirmPassword'].dirty || f['confirmPassword'].touched)" class="error">
+            <div *ngIf="f['confirmPassword'].invalid && (f['confirmPassword'].touched || f['confirmPassword'].dirty)" class="error">
               <span *ngIf="f['confirmPassword'].errors?.['required']">Confirm Password is required</span>
               <span *ngIf="f['confirmPassword'].errors?.['mustMatch']">Passwords must match</span>
             </div>
@@ -92,23 +121,15 @@
               <option value="admin">Admin</option>
               <option value="organizer">Organizer</option>
             </select>
-          </div>
-
-          <!-- Status -->
-          <div class="form-group">
-            <label for="status">Status</label>
-            <select id="status" formControlName="status">
-              <option value="" disabled>Select your status</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
+            <div *ngIf="f['role'].invalid && (f['role'].touched || f['role'].dirty)" class="error">
+              Role is required
+            </div>
           </div>
         </div>
 
         <!-- Buttons -->
         <button type="submit" [disabled]="frm.invalid">Save Changes</button>
         <button type="button" (click)="onCancel()">Cancel</button>
-        <div *ngIf="status" class="msg">{{ status.message }}</div>
       </div>
     </form>
   </div>

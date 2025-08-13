@@ -1,247 +1,173 @@
-:root {
-  --z-fixed: 100;
-  --box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
-  --font-semi-bold: 600;
-  --white-color: #ffffff;
-  --text-color-light: #777;
-  --normal-font: 1.6rem;
-  --smaller-font: 1.4rem;
-  --orange-color: #f0a500;
-  --tran-0-3: all 0.3s ease;
+/* Global reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* Section Padding */
-.section {
-  padding: 1.8rem 9%;
-}
-
-/* --- Hero Section --- */
+/* Home section container */
 .home-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: #ffffff;
+}
+
+/* Left side: Text content */
+.home-content {
+  flex: 1 1 400px;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s forwards ease-out;
+  animation-delay: 0.3s;
+}
+
+/* Main heading */
+.home-content h1.organic {
+  font-family: 'Cursive', sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 6vw, 3.5rem);
+  color: #012a6c;
+  /* Deep blue */
+}
+
+.home-content h1.organic span {
+  color: #ffcc00;
+  /* Bright yellow */
+}
+
+/* Secondary heading */
+.home-content h1:nth-of-type(2) {
+  font-size: clamp(2.5rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #012a6c;
+}
+
+.home-content h1:nth-of-type(2) span {
+  color: #ffcc00;
+}
+
+/* Description paragraph */
+.home-content p {
+  font-size: 1.5rem;
+  color: #4a4a4a;
+  margin-bottom: 1.75rem;
+}
+
+/* Button styling */
+.btn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #012a6c;
+  border: 2px solid  #ffcc00;
+  /* Explicitly define the border */
+  border-radius: 30px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: fit-content;
+}
+
+.btn:hover {
+  background-color: #0055b8;
+  transform: scale(1.05);
+}
+
+
+.home-description {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s forwards ease-out;
+  animation-delay: 0.6s;
+  /* appears after headings */
+}
+
+/* Right side: Background image */
+.home-image-side {
+  flex: 1 1 400px;
+  min-height: 400px;
+  background-image: url('../../../assets/100.png');
+  /* Adjust path as needed */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s forwards ease-out;
+  animation-delay: 0.5s;
+}
+
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px;
+  /* space for the icon */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #012a6c;
+  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("../../../assets/1.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100vh;
-  width: 100%;
-  color: #ffffff;
+}
+/* Animation */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.home-content {
-  text-align: center;
-  max-width: 900px;
-  margin: 0 auto;
-  padding-top: 4rem;
-  width: 100%;
-}
-
-.home-content h1 {
-  font-size: 3.8rem;
-  margin-bottom: 10px;
-}
-
-.home-content .organic {
-  font-size: 5rem;
-  margin-bottom: 1rem;
-  font-family: 'Georgia', serif;
-  font-weight: normal;
-}
-
-.home-content .organic span,
-.home-content h1 span {
-  color: #FDB813;
-}
-
-.home-content p {
-  font-size: 1.8rem;
-  padding: 1rem 0;
-  margin: 20px 0 40px;
-  line-height: 3rem;
-  color: #ffffff;
-}
-
-.home-content .btn {
-  width: 15rem;
-  background-color: #FDB813;
-  border-radius: 3rem;
-  display: inline-block;
-  color: #ffffff;
-  padding: 0.8rem 3rem;
-  font-size: var(--normal-font);
-  cursor: pointer;
-  border: none;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-}
-
-.home-content .btn:hover {
-  background-color: #e0a500;
-}
-
-/* --- Features Section --- */
-.features-section {
-  padding: 80px 20px;
-  background-color: #f8f9fa;
-  text-align: center;
-}
-
-.features-section h2 {
-  font-size: 2.5em;
-  margin-bottom: 50px;
-  color: #333;
-}
-
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.feature-item {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  text-align: center;
-}
-
-.feature-item i {
-  font-size: 3em;
-  color: #007bff;
-  margin-bottom: 20px;
-}
-
-.feature-item h3 {
-  font-size: 1.8em;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.feature-item p {
-  color: #666;
-}
-
-/* --- CTA Section --- */
-.cta-section {
-  padding: 80px 20px;
-  background-color: #007bff;
-  color: white;
-  text-align: center;
-}
-
-.cta-section h2 {
-  font-size: 3em;
-  margin-bottom: 20px;
-}
-
-.cta-section p {
-  font-size: 1.3em;
-  margin-bottom: 40px;
-}
-
-.cta-section .btn {
-  background-color: #28a745;
-  color: white;
-  padding: 15px 30px;
-  border-radius: 5px;
-  font-size: 1.1em;
-  border: none;
-  transition: background-color 0.3s ease;
-}
-
-.cta-section .btn:hover {
-  background-color: #218838;
-}
-
-/* --- Responsive --- */
-@media (max-width: 575px) {
-  html {
-    font-size: 50%;
+/* Responsive styles */
+@media (max-width: 900px) {
+  .home-section {
+    flex-direction: column;
+    padding: 1.5rem;
   }
 
-  .section {
-    padding: 2rem;
+  .home-content,
+  .home-image-side {
+    flex: 1 1 100%;
+    max-width: 100%;
+    min-height: 300px;
   }
 
-  .home-content h1 {
-    font-size: 2.2rem;
+  .home-content h1.organic {
+    font-size: clamp(2.5rem, 7vw, 3rem);
   }
 
-  .home-content .organic {
-    font-size: 3.5rem;
+  .home-content h1:nth-of-type(2) {
+    font-size: clamp(2.2rem, 6vw, 2.5rem);
   }
 
   .home-content p {
-    font-size: 1.4rem;
-  }
-
-  .home-content .btn {
-    width: auto;
-    padding: 1rem 2rem;
-  }
-
-  .features-section h2,
-  .cta-section h2 {
-    font-size: 2rem;
-  }
-
-  .feature-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (min-width: 576px) and (max-width: 767px) {
-  html {
-    font-size: 52%;
-  }
-
-  .section {
-    padding: 2rem;
-  }
-
-  .home-content h1 {
-    font-size: 2.8rem;
-  }
-
-  .home-content .organic {
-    font-size: 4rem;
-  }
-
-  .home-content p {
-    font-size: 1.6rem;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  html {
-    font-size: 55%;
-  }
-
-  .section {
-    padding: 1.8rem 5%;
-  }
-}
-
-@media (min-width: 992px) and (max-width: 1199px) {
-  html {
-    font-size: 60%;
-  }
-
-  .section {
-    padding: 1.8rem 7%;
-  }
-}
-
-@media (min-width: 1200px) {
-  html {
-    font-size: 65%;
-  }
-
-  .section {
-    padding: 1.8rem 9%;
+    font-size: 1.3rem;
   }
 }

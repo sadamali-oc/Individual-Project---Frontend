@@ -1,140 +1,224 @@
-/* * {
+/* 🌐 Reset */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-} */
-
-.parent {
-  font-family: 'Open Sans', sans-serif;
-  /* background-color: #222; */
-  background: url("https://uom.lk/sites/default/files/Faculty/Business/slideshow/batch17.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
+/* 🌄 Background Setup */
+.parent {
+  font-family: 'Open Sans', sans-serif;
+  background: url("https://uom.lk/sites/default/files/Faculty/Business/slideshow/batch17.jpg") no-repeat center center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 10px;
+}
+
+/* 📦 Container Centering */
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  width: 100%;
 }
 
+/* 💾 Form Box */
 .form-container {
-  width: 600px;
-  margin: 0 auto;
-  padding: 50px;
-  background-color: #333;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  color: #fff;
-  font-weight: 00;
-
+  width: 100%;
+  max-width: 420px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(1, 42, 108, 0.25);
+  color: #012a6c;
 }
 
+/* 🖼️ Logo Styling */
+.logo {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+#logo {
+  width: 80px;
+}
+
+/* 🔤 Title */
 h1 {
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 36px;
-  color: #FDB813;
-  font-weight: 400;
+  font-size: 28px;
+  margin-bottom: 24px;
+  color: #ffcc00;
+  font-weight: 600;
 }
 
+/* 📝 Form Structure */
 form {
   display: flex;
   flex-direction: column;
 }
 
 label {
-  margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: #012a6c;
 }
 
 input {
-  padding: 12px;
-  border: none;
+  padding: 10px;
+  font-size: 15px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 20px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #555;
-  font-weight: 400;
-
+  background-color: #f5f5f5;
 }
 
+/* 🔘 Buttons */
 button {
   padding: 10px;
-  background-color: #FDB813;
-  color: #fff;
+  font-size: 16px;
+  background-color: #ffcc00;
+  color: #012a6c;
+  font-weight: 600;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px;
-  transition: background-color 0.2s ease-in-out;
-  font-weight: 400;
-
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #F8A700;
+  /* background-color: #f2b800; */
+  color: #001a47;
 }
 
-.signup:hover {
-  background-color: #ffffff;
-}
-
+/* 🟨 Signup Variant */
 .signup {
-  background-color: #333;
-  color: #F8A700;
-
-
-}
-
-a {
-  text-decoration: none;
-  color: #FDB813;
-  font-size: 18px;
-  transition: color 0.2s ease-in-out;
-}
-
-a:hover {
-  color: #F8A700;
-}
-
-p {
-  text-align: center;
-  margin: 8px;
-}
-
-/* Style for the logo */
-.logo {
-  text-align: center;
-  margin-bottom: 20px;
-
-}
-
-#logo {
-  width: 200px;
-  /* Adjust the width as needed */
-  height: auto;
-  /* Maintain aspect ratio */
-}
-
-
-.msg.error {
-  color: #ff4444;
-  font-size: 1em;
-  margin-top: 1px;
-  padding-top: 0;
-  padding-bottom: 10px;
-  font-weight: 400;
-}
-
-.msg-light {
-  color: orange;
+  background: transparent;
+  color: #ffcc00;
   margin-top: 10px;
 }
 
-/* button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  } */
+.signup:hover {
+  color: #012a6c;
+}
+
+/* 🔐 Forgot Password */
+.forgot-password {
+  text-align: right;
+  font-size: 14px;
+  margin: 6px 0 12px;
+}
+
+.forgot-password a {
+    color: #012a6c;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.forgot-password a:hover {
+  text-decoration: none;
+    color: #ffcc00;
+
+
+
+}
+
+/* 📋 Alerts */
+.msg.error {
+  color: #ff4c4c;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* 📱 Responsive Tweaks */
+@media (max-width: 480px) {
+  .form-container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  label,
+  input,
+  button,
+  .signup {
+    font-size: 14px;
+  }
+
+  #logo {
+    width: 60px;
+  }
+}
+
+
+
+.input-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+input {
+  width: 100%;
+
+  padding-right: 40px;
+  /* space for right button */
+  box-sizing: border-box;
+  background: transparent;
+
+  /* keep border or customize */
+}
+
+.input-icon-right {
+  position: absolute;
+  right: 5px;
+  background: transparent;
+  /* no background */
+  border: none;
+  /* no border */
+  cursor: pointer;
+  color: #012a6c;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  outline: none;
+  background-color: none;
+  /* remove focus outline if you want, or style it */
+}
+
+
+.input-icon-right {
+  background: none !important;
+  border: none !important;
+  margin-bottom: 10px;
+}
+
+
+
+
+/* Reset mat-icon color inside the visibility button */
+.input-icon-right mat-icon {
+  color: unset !important;
+  background: none !important;
+  border: none !important;
+  font-size: 24px; /* Optional: keeps sizing consistent */
+}
+.success-snackbar {
+  background-color: #4caf50;
+  color: white;
+}
+
+.error-snackbar {
+  background-color: #f44336;
+  color: white;
+}

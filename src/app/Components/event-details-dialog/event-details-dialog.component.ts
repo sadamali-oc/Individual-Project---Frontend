@@ -1,8 +1,15 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogActions, MatDialogContent } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogActions,
+  MatDialogContent,
+} from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { MatProgressSpinner } from "@angular/material/progress-spinner";
-import { MatChipListbox } from "@angular/material/chips";               // Import CommonModule here
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatChipListbox } from '@angular/material/chips';
+import { MatIcon } from '@angular/material/icon';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-event-details-dialog',
@@ -12,21 +19,26 @@ import { MatChipListbox } from "@angular/material/chips";               // Impor
     MatDialogActions,
     MatDialogContent,
     CommonModule,
+    MatIcon,
     MatProgressSpinner,
-    MatChipListbox
-], // Add CommonModule to imports
+    MatChipListbox,
+  ],
   standalone: true,
 })
 export class EventDetailsDialogComponent {
-  onImageError($event: ErrorEvent) {
-    throw new Error('Method not implemented.');
-  }
-  event: any;
-  imageLoading: any;
+  safeEventFormLink: SafeUrl | null = null;
+
   constructor(
     public dialogRef: MatDialogRef<EventDetailsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private sanitizer: DomSanitizer
+  ) {
+    if (data?.event_form_link) {
+      const cleanedLink = data.event_form_link.trim();
+      this.safeEventFormLink =
+        this.sanitizer.bypassSecurityTrustUrl(cleanedLink);
+    }
+  }
 
   onClose(): void {
     this.dialogRef.close();
@@ -37,7 +49,7 @@ export class EventDetailsDialogComponent {
       case 'active':
         return '#1976d2';
       case 'pending':
-        return '#ffa000';
+        return '#ffcc00';
       case 'completed':
         return '#388e3c';
       default:

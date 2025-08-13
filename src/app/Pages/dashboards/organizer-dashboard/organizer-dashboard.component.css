@@ -5,20 +5,37 @@
   justify-content: space-between;
   align-items: center;
   margin: 20px 0;
+  color: #012a6c;
+  /* Deep blue for header text */
 }
 
 .stats-container {
   display: flex;
   gap: 24px;
   justify-content: center;
-  margin-bottom: 30px;
+  margin: 30px;
 }
 
 .stat-card {
   flex: 1 1 200px;
   text-align: center;
   padding: 24px;
-  color: #80065f;
+  color: #012a6c;
+  /* Deep blue text */
+  background-color: #fff9d5;
+  /* Soft yellow background */
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(1, 42, 108, 0.1);
+  transition: background-color 0.3s ease;
+  margin-left: 20px;
+}
+
+.stat-card:hover {
+  background-color: #ffcc00;
+  /* Bright yellow on hover */
+  color: #012a6c;
+  /* Ensure text stays blue on hover */
+  cursor: pointer;
 }
 
 .stat-count {
@@ -30,10 +47,38 @@
 .events-table-card {
   margin: 0 20px 30px 20px;
   padding: 10px;
+  background-color: #ffffff;
+  /* White background for table card */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(1, 42, 108, 0.1);
 }
 
 table {
   width: 100%;
+  border-collapse: collapse;
+  color: #012a6c;
+  /* Blue text for table */
+}
+
+table th {
+  background-color: #012a6c;
+  color: #ffffff;
+  padding: 12px 10px;
+  text-align: left;
+}
+
+table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #fffbe5;
+  /* light yellow highlight */
 }
 
 mat-card-actions {

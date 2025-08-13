@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+
+import { UserDetailsDialogComponent } from '../../user-details-dialog/user-details-dialog.component'
 
 export type UserStatus = 'Pending' | 'Accepted' | 'Rejected';
 
@@ -42,6 +45,7 @@ export interface PeriodicElement {
     MatIconModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatDialogModule, // ✅ added dialog module
   ],
 })
 export class UserComponent implements OnInit, AfterViewInit {
@@ -54,7 +58,7 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   statusOptions: UserStatus[] = ['Pending', 'Accepted', 'Rejected'];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -98,6 +102,10 @@ export class UserComponent implements OnInit, AfterViewInit {
             name: user.name,
             email: user.email,
             status,
+            phone_number:user.phone_number,
+            gender:user.gender,
+            role:user.role
+
           };
         });
 
@@ -147,6 +155,22 @@ export class UserComponent implements OnInit, AfterViewInit {
   }
 
   viewUser(user: PeriodicElement): void {
-    console.log('View user:', user);
+    console.log(user)
+    const dialogRef = this.dialog.open(UserDetailsDialogComponent, {
+      width: '700px',
+      data: { ...user },
+    });
+
+    dialogRef.afterClosed().subscribe((updatedUser: PeriodicElement) => {
+      if (updatedUser) {
+        const index = this.dataSource.data.findIndex(
+          (u) => u.id === updatedUser.id
+        );
+        if (index !== -1) {
+          this.dataSource.data[index] = updatedUser;
+          this.dataSource._updateChangeSubscription(); // refresh table display
+        }
+      }
+    });
   }
 }

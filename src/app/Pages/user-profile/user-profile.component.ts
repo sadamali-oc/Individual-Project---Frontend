@@ -14,7 +14,6 @@ import { SignupService } from '../../services/signup.service';
 import { HttpClient } from '@angular/common/http';
 import { PLATFORM_ID } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -22,7 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,MatIconModule],
+  imports: [CommonModule, ReactiveFormsModule, MatIconModule],
 })
 export class UserProfileComponent implements OnInit {
   frm!: FormGroup;
@@ -84,11 +83,14 @@ export class UserProfileComponent implements OnInit {
       .subscribe(
         (response) => {
           this.frm.patchValue(response);
+          this.frm.get('role')?.disable();
         },
         (error) => {
           console.error('Error fetching user profile:', error);
           this.snackBar.open('Failed to load user profile', 'Close', {
             duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
           });
         }
       );
@@ -99,6 +101,8 @@ export class UserProfileComponent implements OnInit {
       console.error('User ID is missing. Cannot update profile.');
       this.snackBar.open('User ID is missing. Please log in again.', 'Close', {
         duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
       });
       return;
     }
@@ -117,6 +121,8 @@ export class UserProfileComponent implements OnInit {
           };
           this.snackBar.open('Profile updated successfully!', 'Close', {
             duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
           });
         },
         error: (err) => {
@@ -128,7 +134,11 @@ export class UserProfileComponent implements OnInit {
           this.snackBar.open(
             'Failed to update profile. Please try again.',
             'Close',
-            { duration: 3000 }
+            {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'center',
+            }
           );
         },
       });
@@ -142,8 +152,7 @@ export class UserProfileComponent implements OnInit {
     };
   }
 
-
-    hidePassword = true;
+  hidePassword = true;
   hideConfirmPassword = true;
 
   togglePasswordVisibility() {

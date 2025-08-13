@@ -7,8 +7,14 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { EventDetailsDialogComponent } from '../../event-details-dialog/event-details-dialog.component';
+import { EventDetailsDialogComponent } from '../event-details-dialog/event-details-dialog.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatOption } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { FormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-event',
@@ -21,6 +27,11 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     MatSnackBarModule,
     MatIconModule,
     MatDialogModule,
+    MatInputModule,
+    MatOption,
+    MatSelectModule,
+    FormsModule,
+    MatSlideToggleModule,
   ],
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.css'],
@@ -29,12 +40,14 @@ export class EventComponent implements OnInit {
   events: any[] = [];
   isLoading = true;
   userId: string | null = null;
+  selectedStatus: any;
+  searchTerm: any;
 
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar // <-- Inject MatSnackBar here!
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -59,21 +72,60 @@ export class EventComponent implements OnInit {
     });
   }
 
+  onToggleChange(eventItem: any, isChecked: boolean) {
+    const newStatus = isChecked ? 'completed' : 'upcoming';
+
+    this.http
+      .put(`http://localhost:3000/events/${eventItem.event_id}/progress`, {
+        event_status: newStatus,
+      })
+      .subscribe({
+        next: (res: any) => {
+          eventItem.event_status = newStatus; // update UI immediately
+          this.snackBar.open(`Event marked as ${newStatus}`, 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          });
+        },
+        error: (err) => {
+          console.error('Error updating status:', err);
+          this.snackBar.open('Failed to update status', 'Close', {
+            duration: 3000,
+          });
+        },
+      });
+  }
+
   getStatusColor(status: string): string {
     switch (status?.toLowerCase()) {
       case 'active':
-        return '#1976d2';
+        return '#1976d2'; // blue
       case 'pending':
-        return '#ffa000';
+        return '#ffcc00'; // yellow
       case 'completed':
-        return '#388e3c';
+        return '#388e3c'; // green
       default:
-        return '#555';
+        return '#888';
     }
   }
 
+  get filteredEvents() {
+    return this.events
+      .filter((event) => {
+        return this.selectedStatus
+          ? event.status === this.selectedStatus
+          : true;
+      })
+      .filter((event) => {
+        if (!this.searchTerm) return true;
+        return event.event_name
+          .toLowerCase()
+          .includes(this.searchTerm.toLowerCase());
+      });
+  }
+
   viewDetails(event: any): void {
-    console.log('View details for:', event);
     this.dialog.open(EventDetailsDialogComponent, {
       width: '700px',
       data: event,
@@ -81,34 +133,35 @@ export class EventComponent implements OnInit {
   }
 
   deleteEvent(event: any): void {
-    if (
-      confirm(
-        `Are you sure you want to delete the event "${event.event_name}"?`
-      )
-    ) {
-      const url = `http://localhost:3000/events/${event.event_id}`;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: `Are you sure you want to delete "${event.event_name}"?`,
+      },
+    });
 
-      this.http.delete(url).subscribe({
-        next: (response: any) => {
-          console.log('Event deleted:', response);
-          this.snackBar.open('Event deleted successfully', 'Close', {
-            duration: 3000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top', // <-- add this line
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.http
+          .delete(`http://localhost:3000/events/${event.event_id}`)
+          .subscribe({
+            next: () => {
+              this.snackBar.open('Event deleted', 'Close', {
+                duration: 3000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center',
+              });
+              this.events = this.events.filter(
+                (e) => e.event_id !== event.event_id
+              );
+            },
+            error: () => {
+              this.snackBar.open('Failed to delete event', 'Close', {
+                duration: 3000,
+              });
+            },
           });
-
-          // Remove the deleted event from the local events array
-          this.events = this.events.filter(
-            (e: any) => e.event_id !== event.event_id
-          );
-        },
-        error: (error) => {
-          console.error('Error deleting event:', error);
-          this.snackBar.open('Failed to delete event', 'Close', {
-            duration: 3000,
-          });
-        },
-      });
-    }
+      }
+    });
   }
 }
+

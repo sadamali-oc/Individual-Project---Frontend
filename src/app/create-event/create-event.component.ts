@@ -6,11 +6,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import {
   Storage,
@@ -41,6 +42,7 @@ import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
     MatCardContent,
     MatCardTitle,
     MatSnackBarModule,
+    CommonModule
   ],
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.css'],
@@ -61,7 +63,12 @@ export class CreateEventComponent implements OnInit {
   status: string = 'upcoming';
   downloadURL: string | null = null;
   isSubmitting: boolean = false;
-eventFormLink: any;
+  eventFormLink: any;
+
+  // New fields
+  eventMode: 'online' | 'physical' | 'hybrid' = 'online';
+  location: string = '';
+  audienceType: 'open' | 'club_members' | 'private' = 'open';
 
   constructor(
     private http: HttpClient,
@@ -108,6 +115,15 @@ eventFormLink: any;
       return;
     }
 
+    if (
+      (this.eventMode === 'physical' || this.eventMode === 'hybrid') &&
+      !this.location.trim()
+    ) {
+      this.showError('Location is required for physical or hybrid events');
+      this.isSubmitting = false;
+      return;
+    }
+
     try {
       if (this.eventFile) {
         const filePath = `event_flyers/${Date.now()}_${this.eventFile.name}`;
@@ -128,13 +144,21 @@ eventFormLink: any;
       formData.append('event_category', this.eventCategory!);
       formData.append('additional_notes', this.eventNotes);
       formData.append('user_id', this.userId || '');
+      formData.append('event_form_link', this.eventFormLink);
+
 
       if (this.downloadURL) {
         formData.append('flyer_image', this.downloadURL);
       }
 
+      // Append new fields
+      formData.append('event_mode', this.eventMode);
+      formData.append('location', this.location);
+      formData.append('audience_type', this.audienceType);
+
       if (!this.userId) {
         this.showError('User ID is missing');
+        this.isSubmitting = false;
         return;
       }
 
@@ -144,9 +168,19 @@ eventFormLink: any;
 
       this.showSuccess('Event created successfully!');
       this.resetForm();
-    } catch (error) {
-      console.error('Error creating event', error);
-      this.showError('An error occurred while creating the event');
+    } catch (err) {
+      console.error('Error creating event', err);
+
+      let errorMsg = 'An error occurred while creating the event';
+      if (err instanceof HttpErrorResponse) {
+        if (typeof err.error === 'string') {
+          errorMsg = err.error;
+        } else if (err.error?.error) {
+          errorMsg = err.error.error;
+        }
+      }
+
+      this.showError(errorMsg);
     } finally {
       this.isSubmitting = false;
     }
@@ -156,7 +190,7 @@ eventFormLink: any;
     this.snackBar.open(message, 'Close', {
       duration: 3000,
       panelClass: ['success-snackbar'],
-      horizontalPosition: 'right',
+      horizontalPosition: 'center',
       verticalPosition: 'top',
     });
   }
@@ -182,5 +216,9 @@ eventFormLink: any;
     this.fileName = '';
     this.eventFile = null;
     this.downloadURL = null;
+
+    this.eventMode = 'online';
+    this.location = '';
+    this.audienceType = 'open';
   }
 }

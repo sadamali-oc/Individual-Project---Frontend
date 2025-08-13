@@ -1,110 +1,55 @@
+<section class="section features-section" id="gallery" aria-label="Upcoming Events">
+  <h1 class="heading">
+    <mat-icon>event</mat-icon>
+    <span>Upcoming Events for the Month</span>
+  </h1>
 
-<!-- hi
+  <!-- Events available -->
+  <div class="box-container" *ngIf="events.length > 0; else noEvents">
+    <div
+      class="box"
+      *ngFor="let event of events"
+      tabindex="0"
+      [attr.aria-label]="'Event: ' + event.event_name"
+      role="article"
+    >
+      <img
+        class="event-image"
+        [src]="event.flyer_image || 'assets/default-event.jpg'"
+        [alt]="event.event_name + ' flyer'"
+        loading="lazy"
+      />
 
-<div *ngIf="events.length > 0; else noEvents">
-  <div *ngFor="let event of events">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ event.name }}</mat-card-title>
-        <mat-card-subtitle>{{ event.date }}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Location: {{ event.event_category }}</p>
-        <p>Status: {{ event.status }}</p>
- <img *ngIf="event.flyer_image" [src]="event.flyer_image" alt="Event Flyer" class="event-image">      </mat-card-content>
-    </mat-card>
-  </div>
-</div> -->
+      <div class="event-details">
+        <h3 class="event-title">
+          <mat-icon>event_note</mat-icon>
+          {{ event.event_name }}
+        </h3>
 
-<ng-template #noEvents>
-  <p>No events available.</p>
-</ng-template>
-
-
-<section class="section features-section" id="gallery">
-    <h1 class="heading"><span>Register with Upcoming Events </span></h1>
-  
-    <div class="box-container">
-      <!-- Event 1 -->
-      <div class="box">
-        <img
-          src="https://uom.lk/sites/default/files/fm/images/WhatsApp%20Image%202024-07-08%20at%2014.25.01_39734d06_0.jpg"
-          alt="Event Image"
-        />
-  
-        <p>
-          Join us for a day filled with exciting sports events and team
-          competitions. All students are invited!
+        <p class="event-description">
+          <mat-icon>description</mat-icon>
+          {{ event.description || 'No description available.' }}
         </p>
-        <button class="btn">View More</button>
-      </div>
-  
 
-      <div class="box">
-        <img
-          src="https://uom.lk/sites/default/files/archi/images/1671770117729_0.jpg"
-          alt="Event Image"
-        />
-        <h3>Cultural Fest</h3>
-        <p>
-          Celebrate diversity with performances, food, and traditions from
-          different cultures.
-        </p>
-        <button class="btn">View More</button>
-      </div>
-      <!-- Event 2 -->
-      <div class="box">
-        <img
-          src="https://uom.lk/sites/default/files/business/images/4.jpg"
-          alt="Event Image"
-        />
-        <h3>Tech Innovation Workshop</h3>
-        <p>
-          Explore the latest trends in technology at this hands-on workshop with
-          industry experts.
-        </p>
-        <button class="btn">View More</button>
-      </div>
-  
-      <!-- Event 3 -->
-      <div class="box">
-        <img
-          src="https://uom.lk/sites/default/files/archi/images/1671770117729_0.jpg"
-          alt="Event Image"
-        />
-        <h3>Cultural Fest</h3>
-        <p>
-          Celebrate diversity with performances, food, and traditions from
-          different cultures.
-        </p>
-        <button class="btn">View More</button>
-      </div>
-
-      <div class="box">
-        <img
-          src="https://uom.lk/sites/default/files/archi/images/1671770117729_0.jpg"
-          alt="Event Image"
-        />
-        <h3>Cultural Fest</h3>
-        <p>
-          Celebrate diversity with performances, food, and traditions from
-          different cultures.
-        </p>
-        <button class="btn">View More</button>
-      </div>
-
-
-      <div class="box">
-        <img
-          src="https://uom.lk/sites/default/files/archi/images/1671770117729_0.jpg"
-          alt="Event Image"
-        />
-        <h3>Cultural Fest</h3>
-        <p>
-          Celebrate diversity with performances, food, and traditions from
-          different cultures.
-        </p>
-        <button class="btn">View More</button>
+        <button
+          mat-raised-button
+          color="primary"
+          class="view-more-btn"
+          (click)="viewEvent(event)"
+          [attr.aria-label]="'View more about ' + event.event_name"
+        >
+          <mat-icon>visibility</mat-icon>
+          View More
+        </button>
       </div>
     </div>
+  </div>
+
+  <!-- No events fallback -->
+  <ng-template #noEvents>
+    <p class="no-events-message" aria-live="polite">
+      <mat-icon>event_busy</mat-icon>
+      No events available for this month.
+    </p>
+  </ng-template>
 </section>

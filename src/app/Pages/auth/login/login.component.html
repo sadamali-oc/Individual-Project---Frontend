@@ -1,46 +1,60 @@
 <div class="parent">
   <div class="container">
-    <!-- Login Form Container -->
     <div class="form-container" id="login-form">
-      <!-- Logo Above the Form -->
       <div class="logo">
         <img
-          src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/login-logo.png?alt=media&token=7e30e06e-f414-44e0-bdf3-93de5838b6e8"
+          src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/Copilot_20250801_220120.png?alt=media&token=db7068a3-bcfc-47a3-b89b-8bc03d39e338"
           alt="Logo"
           id="logo"
         />
       </div>
 
       <h1>Mora Fusion</h1>
+
       <form (ngSubmit)="onLogin()" #loginForm="ngForm">
         <label for="username">Email</label>
         <input
           type="text"
           id="username"
+          placeholder="Enter your email"
           [(ngModel)]="loginObj.username"
           name="username"
           required
+          email
           #username="ngModel"
         />
-
-        <!-- Show error if username is touched and invalid -->
         <div class="msg error" *ngIf="username.touched && username.invalid">
-          Email is required
+          Valid email is required
         </div>
 
         <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          [(ngModel)]="loginObj.password"
-          name="password"
-          required
-          #password="ngModel"
-        />
+        <div class="input-icon-wrapper">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            placeholder="Enter your password"
+            [(ngModel)]="loginObj.password"
+            name="password"
+            required
+            #password="ngModel"
+          />
 
-        <!-- Show error if password is touched and invalid -->
+          <button
+            type="button"
+            class="input-icon-right"
+            (click)="togglePasswordVisibility()"
+            tabindex="-1"
+            aria-label="Toggle password visibility"
+          >
+            <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </div>
         <div class="msg error" *ngIf="password.touched && password.invalid">
           Password is required
+        </div>
+
+        <div class="forgot-password">
+          <a (click)="gotoForgetPassword()">Forgot Password?</a>
         </div>
 
         <button type="submit" [disabled]="loginForm.invalid">Login</button>

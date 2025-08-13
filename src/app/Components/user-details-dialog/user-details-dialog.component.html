@@ -1,0 +1,46 @@
+<h2 mat-dialog-title class="dialog-title">
+  {{ data.name || 'User Details' }}
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <div class="info-group">
+    <div class="info-row">
+      <span class="label">Email</span>
+      <span class="value">{{ data.email }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">Phone</span>
+      <span class="value">{{ data.phone_number || 'N/A' }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">Gender</span>
+      <span class="value">{{ data.gender || 'N/A' }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">Role</span>
+      <span class="value">{{ data.role || 'N/A' }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">Status</span>
+      <span class="value">
+        <mat-chip
+          selected
+          [ngStyle]="{
+            'background-color': getStatusColor(data.status),
+            color: '#fff'
+          }"
+        >
+          {{ data.status | titlecase }}
+        </mat-chip>
+      </span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" (click)="onClose()">Close</button>
+</mat-dialog-actions>

@@ -16,6 +16,8 @@ import { AdminComponent } from '../app/pages/dashboards/admin/admin.component';
 import { OrganizerComponent } from './organizer/organizer.component';
 import { OrganizerMainComponent } from './components/organizer-main/organizer-main.component';
 import { EventComponent } from './components/event/event.component';
+import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
 
 export const routes: Routes = [
   //landing page
@@ -24,6 +26,9 @@ export const routes: Routes = [
   //auth pages
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/signup', component: SignUpComponent },
+  { path: 'auth/forgot-password', component: ForgotPasswordComponent },
+  { path: 'auth/reset-password', component: ResetPasswordComponent },
+  { path: 'user/profile/:userId', component: UserProfileComponent },
 
   //admin dashboard routes
   {
@@ -49,8 +54,31 @@ export const routes: Routes = [
     ],
   },
 
-  { path: 'new-user-page', component: NewuserComponent },
-  { path: 'user/dashboard/:userId', component: NormalUserDashboardComponent },
-  { path: 'user/profile/:userid', component: UserProfileComponent },
-  { path: 'enrolledEvents/:userid', component: EnrollEventsComponent },
+  {
+    path: 'user/:userId',
+    component: NormalUserDashboardComponent,
+    children: [
+      { path: 'dashboard', component: NewuserComponent },
+      { path: 'enrolledEvents', component: EnrollEventsComponent },
+    ],
+  },
+
+  //   { path: 'new-user-page', component: NewuserComponent },
+  //   { path: 'user/dashboard/:userId', component: NormalUserDashboardComponent },
+  //   { path: 'user/profile/:userid', component: UserProfileComponent },
+  //   { path: 'enrolledEvents/:userid', component: EnrollEventsComponent },
 ];
+
+
+
+
+
+
+  // { path: 'user/:userID', component: NewuserComponent,
+  //   children: [
+  //       { path: 'dashboard', component: NormalUserDashboardComponent },
+  // { path: 'user/profile/:userid', component: UserProfileComponent },
+  // { path: 'enrolledEvents/:userid', component: EnrollEventsComponent },
+
+  //   ]
+  //  },
