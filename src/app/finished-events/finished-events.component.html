@@ -1,0 +1,81 @@
+<!-- Search Bar -->
+<div
+  class="search-filter-container"
+  style="display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap"
+>
+  <mat-form-field
+    appearance="outline"
+    style="flex: 1 1 300px; min-width: 250px"
+  >
+    <mat-label>Search Events</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput [(ngModel)]="searchTerm" placeholder="Enter event name" />
+    <button
+      mat-icon-button
+      *ngIf="searchTerm"
+      matSuffix
+      aria-label="Clear"
+      (click)="searchTerm = ''"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<!-- Events List -->
+<div class="event-cards-container" *ngIf="filteredEvents.length > 0; else noEvents">
+  <mat-card class="event-card" *ngFor="let event of filteredEvents">
+    <mat-card-header>
+      <mat-card-title>{{ event.event_name }}</mat-card-title>
+    </mat-card-header>
+
+    <img
+      *ngIf="event.flyer_image"
+      mat-card-image
+      [src]="event.flyer_image"
+      alt="Event Flyer"
+    />
+
+    <mat-card-content>
+      <p><strong>Date:</strong> {{ event.event_date | date : "fullDate" }}</p>
+      <p><strong>Start Time:</strong> {{ event.start_time }}</p>
+      <p><strong>End Time:</strong> {{ event.end_time }}</p>
+      <mat-chip-listbox>
+        <mat-chip
+          selected
+          [ngStyle]="{
+            'background-color': getStatusColor(event.event_status),
+            color: '#fff'
+          }"
+        >
+          {{ event.event_status | titlecase }}
+        </mat-chip>
+      </mat-chip-listbox>
+    </mat-card-content>
+
+    <mat-card-actions style="display: flex; align-items: center; gap: 12px;">
+      <button mat-button (click)="viewDetails(event)">
+        <mat-icon>visibility</mat-icon> View Details
+      </button>
+
+      <!-- Slide Toggle to Change Status -->
+      <mat-slide-toggle
+        [checked]="event.event_status === 'completed'"
+        (change)="onToggleChange(event, $event.checked)"
+      >
+        {{ event.event_status === 'completed' ? 'Done' : 'Upcoming' }}
+      </mat-slide-toggle>
+
+      <button mat-icon-button aria-label="Delete event" (click)="deleteEvent(event)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<!-- No Events Template -->
+<ng-template #noEvents>
+  <div class="no-events-container">
+    <p>No finished events to display.</p>
+  </div>
+</ng-template>

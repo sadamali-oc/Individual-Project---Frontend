@@ -18,6 +18,7 @@ import { OrganizerMainComponent } from './components/organizer-main/organizer-ma
 import { EventComponent } from './components/event/event.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
+import { FinishedEventsComponent } from './finished-events/finished-events.component';
 
 export const routes: Routes = [
   //landing page
@@ -51,6 +52,7 @@ export const routes: Routes = [
       { path: 'dashboard', component: OrganizerDashboardComponent },
       { path: 'event', component: CreateEventComponent },
       { path: 'events', component: EventComponent },
+      {path: 'finish-events', component:FinishedEventsComponent},
     ],
   },
 

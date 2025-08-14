@@ -7,65 +7,29 @@
     class="mat-sidenav"
   >
     <mat-toolbar color="primary">Organizer Panel</mat-toolbar>
-
     <mat-nav-list class="content">
-      <a
-        mat-list-item
-        [routerLink]="['/organizer', userId, 'dashboard']"
-        routerLinkActive="active"
-      >
+      <a mat-list-item [routerLink]="['/organizer', userId, 'dashboard']" routerLinkActive="active">
         <mat-icon>dashboard</mat-icon> Dashboard
       </a>
-      <a
-        mat-list-item
-        [routerLink]="['/organizer', userId, 'event']"
-        routerLinkActive="active"
-      >
+      <a mat-list-item [routerLink]="['/organizer', userId, 'event']" routerLinkActive="active">
         <mat-icon>event</mat-icon> Create Event
       </a>
-      <a
-        mat-list-item
-        [routerLink]="['/organizer', userId, 'events']"
-        routerLinkActive="active"
-      >
+      <a mat-list-item [routerLink]="['/organizer', userId, 'events']" routerLinkActive="active">
         <mat-icon>event_note</mat-icon> View Events
       </a>
-
-      <a
-        mat-list-item
-        [routerLink]="['/organizer', userId, 'finish']"
-        routerLinkActive="active"
-      >
+      <a mat-list-item [routerLink]="['/organizer', userId, 'finish-events']" routerLinkActive="active">
         <mat-icon>check_circle</mat-icon> Finished Events
       </a>
-
-      <a
-        mat-list-item
-        [routerLink]="['/organizer', userId, 'attendees']"
-        routerLinkActive="active"
-      >
+      <a mat-list-item [routerLink]="['/organizer', userId, 'attendees']" routerLinkActive="active">
         <mat-icon>groups</mat-icon> Attendees
       </a>
-      <a
-        mat-list-item
-        [routerLink]="['/organizer', userId, 'reports']"
-        routerLinkActive="active"
-      >
-        <mat-icon>bar_chart</mat-icon> Reports
+      <a mat-list-item [routerLink]="['/organizer', userId, 'chat']" routerLinkActive="active">
+        <mat-icon>chat</mat-icon> Chat
       </a>
-      <a
-        mat-list-item
-        [routerLink]="['/organizer', userId, 'settings']"
-        routerLinkActive="active"
-      >
+      <a mat-list-item [routerLink]="['/organizer', userId, 'settings']" routerLinkActive="active">
         <mat-icon>settings</mat-icon> Settings
       </a>
-      <a
-        mat-list-item
-        [routerLink]="['/']"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
+      <a mat-list-item [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <mat-icon>home</mat-icon> Go to Home
       </a>
     </mat-nav-list>
@@ -78,37 +42,33 @@
         <button mat-icon-button (click)="toggleSidebar()">
           <mat-icon>menu</mat-icon>
         </button>
-        <span class="user-name">Hello, {{ userName }}👋 </span>
+        <span class="user-name">Hello, {{ userName }} 👋</span>
       </div>
-
       <div class="toolbar-right">
         <button mat-icon-button aria-label="Notifications">
           <mat-icon>notifications</mat-icon>
         </button>
-
-        <button
-          mat-icon-button
-          [matMenuTriggerFor]="profileMenu"
-          aria-label="User profile menu"
-        >
+        <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User profile menu">
           <mat-icon>account_circle</mat-icon>
         </button>
-
         <mat-menu #profileMenu="matMenu">
           <button mat-menu-item (click)="viewProfile()">
-            <mat-icon>person</mat-icon>
-            <span>Profile</span>
+            <mat-icon>person</mat-icon> Profile
           </button>
           <button mat-menu-item (click)="handleLogout()">
-            <mat-icon>logout</mat-icon>
-            <span>Logout</span>
+            <mat-icon>logout</mat-icon> Logout
           </button>
         </mat-menu>
       </div>
     </mat-toolbar>
 
-    <!-- Main routed content -->
+
+
+
     <div class="main-content">
+      <!-- Event Status Chart -->
+  
+      <!-- Routed content -->
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

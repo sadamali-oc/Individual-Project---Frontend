@@ -7,6 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
+  [x: string]: any;
   getUserData(userId: string) {
     throw new Error('Method not implemented.');
   }

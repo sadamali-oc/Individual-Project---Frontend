@@ -1,0 +1,248 @@
+/* ========================
+   Layout Container (Grid)
+======================== */
+.event-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+
+
+
+}
+
+
+
+.search-filter-container {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* add this */
+}
+
+.filter-container {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px;
+
+
+
+}
+
+
+
+.no-events-container {
+    text-align: center;
+    margin-top: 2rem;
+    font-weight: 500;
+    color: #777;
+}
+
+@media (max-width: 992px) {
+    .event-cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .event-cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================
+   Event Card Styling
+======================== */
+.event-card {
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    border-radius: 8px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.event-card:hover {
+    transform: translateY(-4px);
+}
+
+/* ========================
+   Card Header & Titles
+======================== */
+mat-card-header {
+    padding-bottom: 8px;
+}
+
+mat-card-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #0d47a1;
+    /* Ocean Blue */
+}
+
+mat-card-subtitle {
+    font-size: 1.1rem;
+    color: #607d8b;
+    /* Muted blue-gray */
+    margin-top: 4px;
+}
+
+@media (max-width: 600px) {
+    mat-card-title {
+        font-size: 1.4rem;
+    }
+
+    mat-card-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* ========================
+   Card Content
+======================== */
+mat-card-content p {
+    margin: 6px 0;
+    font-size: 1.05rem;
+    color: #333;
+    line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+    mat-card-content p {
+        font-size: 1rem;
+    }
+}
+
+/* ========================
+   Event Flyer Image
+======================== */
+img[mat-card-image] {
+    max-height: 180px;
+    min-height: 180px;
+    object-fit: cover;
+    width: 100%;
+    border-bottom: 1px solid #eee;
+    background: #e3f2fd;
+}
+
+/* ========================
+   Status Chips
+======================== */
+mat-chip {
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: capitalize;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    height: 28px;
+    padding: 0 8px;
+    border-radius: 16px;
+}
+
+.chip-active {
+    background-color: #0288d1;
+    /* Light Blue */
+    color: white;
+}
+
+.chip-pending {
+    background-color: #ffcc00;
+    /* Citrus Yellow */
+    color: #000;
+}
+
+.chip-completed {
+    background-color: #78909c;
+    /* Gray Blue */
+    color: white;
+}
+
+/* ========================
+   Card Actions (Buttons)
+======================== */
+mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px 8px;
+    font-size: 1rem;
+    flex-wrap: wrap;
+}
+
+mat-card-actions button {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    color: #0d47a1;
+}
+
+mat-card-actions button:hover {
+    filter: brightness(0.9);
+    cursor: pointer;
+    color: #1565c0;
+}
+
+mat-card-actions button:focus {
+    outline: 2px solid #ffcc00;
+    outline-offset: 2px;
+}
+
+mat-card-actions button+button {
+    margin-left: 12px;
+}
+
+/* ========================
+   Button Icons
+======================== */
+mat-card-actions button mat-icon {
+    margin-right: 4px;
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+    color: #0d47a1;
+}
+
+mat-card-actions button:hover mat-icon {
+    color: #1565c0;
+}
+
+/* ========================
+   View Details Button Style
+======================== */
+.view-details-button {
+    font-size: 1rem;
+    color: #0d47a1;
+}
+
+/* ========================
+   No Events Placeholder
+======================== */
+.no-events-container {
+    text-align: center;
+    margin-top: 40px;
+    color: #888;
+    background-image: url('../assets//no_data.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 300px;
+}
+
+.no-events-text {
+    font-size: 20px;
+    margin-top: 12px;
+    font-weight: 500;
+}

@@ -1,12 +1,14 @@
 <mat-sidenav-container class="sidenav-container">
+
+  <!-- Sidebar -->
   <mat-sidenav
     #sidenav
     [mode]="isSidebarOpen ? 'side' : 'over'"
     [opened]="isSidebarOpen"
     class="mat-sidenav"
   >
-    <mat-toolbar>Event Admin</mat-toolbar>
-    <mat-nav-list>
+    <mat-toolbar class="sidebar-toolbar">Event Admin</mat-toolbar>
+    <mat-nav-list class="content">
       <a mat-list-item [routerLink]="['/admin', userId, 'dashboard']" routerLinkActive="active">
         <mat-icon>event</mat-icon> Dashboard
       </a>
@@ -25,36 +27,36 @@
     </mat-nav-list>
   </mat-sidenav>
 
+  <!-- Main content -->
   <mat-sidenav-content>
-    <mat-toolbar>
-      <button mat-icon-button (click)="toggleSidebar()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>University Event Dashboard</span>
-      <span class="spacer"></span>
-
-      <!-- Notification Icon -->
-      <button mat-icon-button aria-label="Notifications">
-        <mat-icon>notifications</mat-icon>
-      </button>
-
-      <!-- Profile Icon -->
-      <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User profile menu">
-        <mat-icon>account_circle</mat-icon>
-      </button>
-
-      <mat-menu #profileMenu="matMenu">
-        <button mat-menu-item (click)="viewProfile()">
-          <mat-icon>person</mat-icon>
-          <span>Profile</span>
+    <mat-toolbar class="main-toolbar">
+      <div class="toolbar-left">
+        <button mat-icon-button (click)="toggleSidebar()">
+          <mat-icon>menu</mat-icon>
         </button>
-        <button mat-menu-item (click)="handleLogout()">
-          <mat-icon>logout</mat-icon>
-          <span>Logout</span>
+        <span class="user-name">University Event Dashboard</span>
+      </div>
+      <div class="toolbar-right">
+        <button mat-icon-button aria-label="Notifications">
+          <mat-icon>notifications</mat-icon>
         </button>
-      </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User profile menu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #profileMenu="matMenu">
+          <button mat-menu-item (click)="viewProfile()">
+            <mat-icon>person</mat-icon> Profile
+          </button>
+          <button mat-menu-item (click)="handleLogout()">
+            <mat-icon>logout</mat-icon> Logout
+          </button>
+        </mat-menu>
+      </div>
     </mat-toolbar>
 
-    <router-outlet></router-outlet>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
+
 </mat-sidenav-container>

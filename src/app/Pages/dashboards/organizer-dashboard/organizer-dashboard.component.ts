@@ -9,90 +9,186 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
-import { ActivatedRoute } from '@angular/router';
+import { MatDividerModule } from '@angular/material/divider';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { UserService } from './user.service';
-import {MatDividerModule} from '@angular/material/divider';
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { FormsModule } from '@angular/forms';
 
 interface Event {
   name: string;
   date: string;
   location: string;
-  status: string;
+  event_status: 'upcoming' | 'completed';
+  status: 'pending' | 'accepted' | 'rejected';
 }
 
 @Component({
   selector: 'app-organizer-dashboard',
+  standalone: true,
   imports: [
+    CommonModule,
+    RouterModule,
     MatToolbarModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatSidenavModule,
-    RouterModule,
     MatListModule,
-    CommonModule,
     MatCardModule,
     MatTableModule,
     MatChipsModule,
-    MatButtonModule
+    MatDividerModule,
+    CanvasJSAngularChartsModule,
+    FormsModule
   ],
   templateUrl: './organizer-dashboard.component.html',
-  styleUrls: ['./organizer-dashboard.component.css']
+  styleUrls: ['./organizer-dashboard.component.css'],
 })
 export class OrganizerDashboardComponent implements OnInit {
-  userId: string | null = ''; 
-  name: string = 'Guest';  
-
-  upcomingEventsCount: number = 0;
-  completedEventsCount: number = 0;
+  userId: string | null = null;
+  name: string = 'Guest';
+  userName: string = 'Guest';
+  events: Event[] = [];
   participantsCount: number = 0;
+  isSidebarOpen: boolean = true;
 
-  events: Event[] = [];  // Dynamic event data
+  // Bar chart options
+  chartOptions = {
+    animationEnabled: true,
+    // title: { text: 'Event Status Overview' },
+    data: [
+      {
+        type: 'column',
+        dataPoints: [
+          { label: 'All', y: 0 },
+          { label: 'Pending', y: 0 },
+          { label: 'Accepted', y: 0 },
+          { label: 'Rejected', y: 0 },
+          { label: 'Upcoming', y: 0 },
+          { label: 'Completed', y: 0 },
+        ],
+      },
+    ],
+  };
 
-  constructor(private route: ActivatedRoute, private userService: UserService) {}
+  // Pie chart options
+  pieChartOptions = {
+    animationEnabled: true,
+    // title: { text: 'Event Status Distribution' },
+    data: [
+      {
+        type: 'pie',
+        showInLegend: true,
+        legendText: '{label}',
+        indexLabel: '{label}: {y}',
+        dataPoints: [
+          { label: 'Upcoming', y: 0 },
+          { label: 'Completed', y: 0 },
+        ],
+      },
+    ],
+  };
+
+  // Chat
+  chatMessages: string[] = [];
+  newMessage: string = '';
+
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService
+  ) {}
+
+  // Event counts
+  get allEventsCount(): number {
+    return this.events.length;
+  }
+
+  get pendingEventsCount(): number {
+    return this.events.filter((e) => e.status === 'pending').length;
+  }
+
+  get acceptedEventsCount(): number {
+    return this.events.filter((e) => e.status === 'accepted').length;
+  }
+
+  get rejectedEventsCount(): number {
+    return this.events.filter((e) => e.status === 'rejected').length;
+  }
+
+  get upcomingEventsCount(): number {
+    return this.events.filter((e) => e.event_status === 'upcoming').length;
+  }
+
+  get completedEventsCount(): number {
+    return this.events.filter((e) => e.event_status === 'completed').length;
+  }
 
   ngOnInit(): void {
-    this.userId = this.route.snapshot.paramMap.get('userId');
-    console.log('User ID in Dashboard:', this.userId);
+    this.userId =
+      this.route.snapshot.paramMap.get('userId') ||
+      this.route.parent?.snapshot.paramMap.get('userId') ||
+      null;
 
-    // Fetch user data using the UserService
-    if (this.userId) {
-      this.userService.getUserProfile(this.userId).subscribe(
-        (userData) => {
-          this.name = userData.name || 'Guest';  
-          console.log('User data:', userData);
-        
-          this.upcomingEventsCount = userData.upcomingEventsCount;
-          this.completedEventsCount = userData.completedEventsCount;
-          this.participantsCount = userData.participantsCount;
-        },
-        (error) => {
-          console.error('Error fetching user data:', error);
-          this.name = 'Guest';  
-        }
-      );
+    if (!this.userId) return;
 
-      // Fetch events associated with this user
-      // this.userService.getEvent(this.userId).subscribe(
-      //   (eventsData) => {
-      //     this.events = eventsData;
-      //     console.log('User Events:', eventsData);
-      //   },
-      //   (error) => {
-      //     console.error('Error fetching events data:', error);
-      //   }
-      // );
+    // Fetch user profile
+    this.userService.getUserProfile(this.userId).subscribe({
+      next: (userData) => {
+        this.name = userData.name || 'Guest';
+        this.userName = this.name;
+        this.participantsCount = userData.participantsCount || 0;
+      },
+      error: (err) => console.error('Error fetching user data:', err),
+    });
+
+    // Fetch events
+    this.userService.getEvent(this.userId).subscribe({
+      next: (eventsData) => {
+        this.events = eventsData;
+
+        // Update bar chart dynamically
+        this.chartOptions.data[0].dataPoints = [
+          { label: 'All', y: this.allEventsCount },
+          { label: 'Pending', y: this.pendingEventsCount },
+          { label: 'Accepted', y: this.acceptedEventsCount },
+          { label: 'Rejected', y: this.rejectedEventsCount },
+          { label: 'Upcoming', y: this.upcomingEventsCount },
+          { label: 'Completed', y: this.completedEventsCount },
+        ];
+
+        // Update pie chart dynamically
+        this.pieChartOptions.data[0].dataPoints = [
+          { label: 'Upcoming', y: this.upcomingEventsCount },
+          { label: 'Completed', y: this.completedEventsCount },
+        ];
+      },
+      error: (err) => console.error('Error fetching events:', err),
+    });
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  viewProfile() {
+    console.log('View profile clicked');
+  }
+
+  handleLogout() {
+    console.log('Logout clicked');
+  }
+
+  sendMessage() {
+    if (this.newMessage.trim()) {
+      this.chatMessages.push(this.newMessage.trim());
+      this.newMessage = '';
+      setTimeout(() => {
+        const container = document.querySelector('.chat-messages');
+        if (container) container.scrollTop = container.scrollHeight;
+      });
     }
-  }
-
-  goToProfile(): void {
-    console.log('Navigating to profile...');
-  }
-
-  logout(): void {
-    console.log('Logging out...');
   }
 }

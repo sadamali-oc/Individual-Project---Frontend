@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EventDetailsDialogComponent } from '../components/event-details-dialog/event-details-dialog.component';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { EventDetailsDialogComponent } from '../event-details-dialog/event-details-dialog.component';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-event',
@@ -33,15 +33,15 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
     FormsModule,
     MatSlideToggleModule,
   ],
-  templateUrl: './event.component.html',
-  styleUrls: ['./event.component.css'],
+  templateUrl: './finished-events.component.html',
+  styleUrls: ['./finished-events.component.css'],
 })
-export class EventComponent implements OnInit {
+export class FinishedEventsComponent implements OnInit {
   events: any[] = [];
   isLoading = true;
   userId: string | null = null;
   selectedStatus: any;
-  searchTerm: string = '';
+  searchTerm: any;
 
   constructor(
     private http: HttpClient,
@@ -62,8 +62,7 @@ export class EventComponent implements OnInit {
   fetchEvents(userId: string): void {
     this.http.get<any[]>(`http://localhost:3000/event/${userId}`).subscribe({
       next: (data) => {
-        // Only show events that are not completed
-        this.events = data.filter((e) => e.event_status !== 'completed');
+        this.events = data;
         this.isLoading = false;
       },
       error: (err) => {
@@ -73,6 +72,12 @@ export class EventComponent implements OnInit {
     });
   }
 
+  viewDetails(event: any): void {
+    this.dialog.open(EventDetailsDialogComponent, {
+      width: '700px',
+      data: event,
+    });
+  }
   onToggleChange(eventItem: any, isChecked: boolean) {
     const newStatus = isChecked ? 'completed' : 'upcoming';
 
@@ -81,16 +86,8 @@ export class EventComponent implements OnInit {
         event_status: newStatus,
       })
       .subscribe({
-        next: () => {
-          eventItem.event_status = newStatus;
-
-          // Remove the event from this page if marked as completed
-          if (newStatus === 'completed') {
-            this.events = this.events.filter(
-              (e) => e.event_id !== eventItem.event_id
-            );
-          }
-
+        next: (res: any) => {
+          eventItem.event_status = newStatus; // update UI immediately
           this.snackBar.open(`Event marked as ${newStatus}`, 'Close', {
             duration: 3000,
             verticalPosition: 'top',
@@ -121,25 +118,13 @@ export class EventComponent implements OnInit {
 
   get filteredEvents() {
     return this.events
+      .filter((event) => event.event_status === 'completed') // show only done events
       .filter((event) => {
-        return this.selectedStatus
-          ? event.status === this.selectedStatus
-          : true;
-      })
-      .filter((event) => {
-        return this.searchTerm
-          ? event.event_name
-              .toLowerCase()
-              .includes(this.searchTerm.toLowerCase())
-          : true;
+        if (!this.searchTerm) return true;
+        return event.event_name
+          .toLowerCase()
+          .includes(this.searchTerm.toLowerCase());
       });
-  }
-
-  viewDetails(event: any): void {
-    this.dialog.open(EventDetailsDialogComponent, {
-      width: '700px',
-      data: event,
-    });
   }
 
   deleteEvent(event: any): void {

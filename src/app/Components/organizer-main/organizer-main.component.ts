@@ -9,6 +9,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { PLATFORM_ID } from '@angular/core';
+import { MatCardModule } from "@angular/material/card";
+import { CanvasJSAngularChartsModule } from "@canvasjs/angular-charts";
 
 @Component({
   selector: 'app-organizer-main',
@@ -22,14 +24,21 @@ import { PLATFORM_ID } from '@angular/core';
     MatListModule,
     MatButtonModule,
     MatMenuModule,
-  ],
+    MatCardModule,
+    CanvasJSAngularChartsModule
+],
   templateUrl: './organizer-main.component.html',
   styleUrls: ['./organizer-main.component.css'],
 })
 export class OrganizerMainComponent implements OnInit {
+[x: string]: any;
   isSidebarOpen: boolean = true;
   userId: string = '';
   userName: string = 'Dashboard';
+rejectedEventsCount: any;
+approvedEventsCount: any;
+pendingEventsCount: any;
+completedEventsCount: any;
 
   constructor(
     private router: Router,
