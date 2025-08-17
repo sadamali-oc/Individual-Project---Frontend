@@ -1,61 +1,161 @@
+:root {
+  --primary-color: #012a6c;
+  --primary-hover: #001f4c;
+  --warn-color: #c62828;
+  --warn-hover: #8e1c1c;
+  --success-color: #2e7d32;
+  --pending-color: #f9a825;
+}
+
+/* Page wrapper */
 .page-center-wrapper {
   display: flex;
   justify-content: center;
-  padding: 24px;
+  padding: 10px;
   background-color: #fefeff;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
+/* Card container */
 .user-list-card {
-  width: 100%;
+  width: 200%;
   max-width: 1100px;
   border-radius: 12px;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  margin: 1px;
+  box-sizing: border-box;
 }
 
+/* Card content padding */
 mat-card-content {
   padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Filter row (search + status filter) */
+.filter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
 }
 
 .search-input {
-  width: 100%;
-  margin-bottom: 20px;
+  width: 300px;
+  margin-right: 12px;
+  box-sizing: border-box;
 }
 
+.status-filter {
+  width: 200px;
+  box-sizing: border-box;
+}
+
+/* Table container */
 .user-table-container {
   overflow-x: auto;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-top: 10px;
+  box-sizing: border-box;
 }
 
-.user-table {
+/* Table */
+.user-table,
+table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: auto;
 }
 
-.user-table th {
-  background-color: #fafafa;
-  color: #444;
+/* Table headers */
+table th {
+  background-color: #e0e6ec;
+  color: #012a6c;
+  padding: 8px 10px;
   font-weight: 600;
-  padding: 12px 16px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
+  text-align: center;
+  border-bottom: 2px solid #c0c0c0;
+  white-space: nowrap;
+  font-size: 13px;
 }
 
-.user-table td {
-  padding: 12px 16px;
+/* Table cells */
+table td {
+  padding: 6px 10px;
   border-bottom: 1px solid #eee;
-}
-
-.user-table tr:hover {
-  background-color: #f0f4ff;
-}
-
-.actions-cell {
+  color: #555;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 13px;
   text-align: center;
 }
 
+/* ID column smaller size */
+table th:first-child,
+table td:first-child {
+  width: 50px;
+  min-width: 40px;
+  max-width: 60px;
+  text-align: center;
+}
+
+/* Row striping & hover */
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f0f5fa;
+}
+
+/* Status buttons */
+.status-cell {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.status-cell button {
+  font-size: 12px;
+  padding: 4px 8px;
+  min-width: 60px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.status-cell button:hover {
+  transform: scale(1.1);
+}
+
+/* Empty state */
+.no-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #555;
+  padding: 12px 0;
+}
+
+/* Actions cell */
+.actions-cell {
+  text-align: center;
+  white-space: nowrap;
+}
+
 .actions-cell button {
-  color: #3f51b5;
+  color: #012a6c;
   transition: transform 0.2s ease;
 }
 
@@ -63,38 +163,46 @@ mat-card-content {
   transform: scale(1.2);
 }
 
-.status-dropdown {
-  width: 140px;
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .user-list-card {
+    max-width: 95%;
+  }
 }
 
-/* Color the closed mat-select value text */
-.status-accepted .mat-select-value {
-  color: #2e7d32 !important;
-  font-weight: 600;
+@media (max-width: 768px) {
+  .user-list-card {
+    width: calc(100% - 20px);
+    margin: 1px;
+  }
+
+  mat-card-content {
+    padding: 16px;
+  }
+
+  .search-input,
+  .status-filter {
+    width: 100%;
+    margin: 8px 0;
+  }
 }
 
-.status-rejected .mat-select-value {
-  color: #c62828 !important;
-  font-weight: 600;
-}
+@media (max-width: 600px) {
+  table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
 
-.status-pending .mat-select-value {
-  color: #f9a825 !important;
-  font-weight: 600;
-}
+  table td,
+  table th {
+    padding: 6px 5px;
+    font-size: 12px;
+  }
 
-/* Color the dropdown options */
-::ng-deep .mat-option.status-option-accepted {
-  color: #2e7d32 !important;
-  font-weight: 600;
-}
-
-::ng-deep .mat-option.status-option-rejected {
-  color: #c62828 !important;
-  font-weight: 600;
-}
-
-::ng-deep .mat-option.status-option-pending {
-  color: #f9a825 !important;
-  font-weight: 600;
+  .status-cell button {
+    font-size: 10px;
+    min-width: 50px;
+    padding: 3px 6px;
+  }
 }

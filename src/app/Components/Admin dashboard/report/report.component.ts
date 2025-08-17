@@ -1,156 +1,187 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
+interface Event {
+  event_id: string;
+  event_name: string;
+  event_date: string;
+  location: string;
+  status: 'active' | 'pending' | 'inactive';
+}
+
+interface User {
+  user_id: number;
+  name: string;
+  email: string;
+  status: 'Pending' | 'Accepted' | 'Rejected';
+  role?: string;
+  gender?: string;
+}
+
+interface Organizer {
+  user_id: number;
+  name: string;
+  email: string;
+  status: 'Pending' | 'Accepted' | 'Rejected';
+  role?: string;
+  gender?: string;
+}
+
 @Component({
-  standalone: true,
   selector: 'app-report',
+  standalone: true,
+  imports: [CommonModule, HttpClientModule, CanvasJSAngularChartsModule],
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css'],
-  imports: [CommonModule, CanvasJSAngularChartsModule],
 })
-export class ReportComponent {
-  onDummyEvent() {
-    throw new Error('Method not implemented.');
+export class ReportComponent implements OnInit {
+  events: Event[] = [];
+  users: User[] = [];
+  organizers: Organizer[] = [];
+
+  eventStatusCounts: { [key: string]: number } = {};
+  eventLocationCounts: { [key: string]: number } = {};
+  eventMonthCounts: { [key: string]: number } = {};
+
+  userStatusCounts: { [key: string]: number } = {};
+  organizerStatusCounts: { [key: string]: number } = {};
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.loadEvents();
+    this.loadUsers();
+    this.loadOrganizers();
   }
 
-  // 📈 Spline Chart (Monthly breakdown)
-  chartOptions = {
-    animationEnabled: true,
-    axisX: {
-      title: 'Months',
-    },
-    axisY: {
-      title: 'Number of Events',
-    },
-    toolTip: {
-      shared: true,
-    },
-    legend: {
-      cursor: 'pointer',
-      itemclick: function (e: any) {
-        if (
-          typeof e.dataSeries.visible === 'undefined' ||
-          e.dataSeries.visible
-        ) {
-          e.dataSeries.visible = false;
-        } else {
-          e.dataSeries.visible = true;
-        }
-        e.chart.render();
+  // -------------------- EVENTS --------------------
+  loadEvents() {
+    this.http.get<Event[]>('http://localhost:3000/organizer-events').subscribe({
+      next: (data) => {
+        this.events = data;
+        this.calculateEventCounts();
       },
-    },
-    data: [
-      {
-        type: 'spline',
-        showInLegend: true,
-        name: 'Workshops',
-        dataPoints: [
-          { label: 'Jan', y: 2 },
-          { label: 'Feb', y: 3 },
-          { label: 'Mar', y: 4 },
-          { label: 'Apr', y: 2 },
-          { label: 'May', y: 5 },
-          { label: 'Jun', y: 3 },
-          { label: 'Jul', y: 4 },
-          { label: 'Aug', y: 2 },
-          { label: 'Sep', y: 3 },
-          { label: 'Oct', y: 4 },
-          { label: 'Nov', y: 2 },
-          { label: 'Dec', y: 3 },
-        ],
-      },
-      {
-        type: 'spline',
-        showInLegend: true,
-        name: 'Seminars',
-        dataPoints: [
-          { label: 'Jan', y: 1 },
-          { label: 'Feb', y: 2 },
-          { label: 'Mar', y: 3 },
-          { label: 'Apr', y: 1 },
-          { label: 'May', y: 4 },
-          { label: 'Jun', y: 2 },
-          { label: 'Jul', y: 3 },
-          { label: 'Aug', y: 1 },
-          { label: 'Sep', y: 2 },
-          { label: 'Oct', y: 3 },
-          { label: 'Nov', y: 1 },
-          { label: 'Dec', y: 2 },
-        ],
-      },
-      {
-        type: 'spline',
-        showInLegend: true,
-        name: 'Cultural Events',
-        dataPoints: [
-          { label: 'Jan', y: 1 },
-          { label: 'Feb', y: 1 },
-          { label: 'Mar', y: 2 },
-          { label: 'Apr', y: 2 },
-          { label: 'May', y: 3 },
-          { label: 'Jun', y: 2 },
-          { label: 'Jul', y: 1 },
-          { label: 'Aug', y: 2 },
-          { label: 'Sep', y: 3 },
-          { label: 'Oct', y: 1 },
-          { label: 'Nov', y: 2 },
-          { label: 'Dec', y: 1 },
-        ],
-      },
-    ],
-  };
+      error: (err) => console.error('Failed to load events', err),
+    });
+  }
 
-  // 🥧 Pie Chart (Total event type distribution)
-  pieChartOptions = {
-    animationEnabled: true,
-    title: {
-      text: 'Event Type Distribution (Yearly)',
-    },
-    data: [
-      {
-        type: 'pie',
-        indexLabel: '{label}: {y}',
-        startAngle: 60,
-        dataPoints: [
-          { y: 41, label: 'Workshops' }, // Sum of workshop Y values
-          { y: 25, label: 'Seminars' }, // Sum of seminar Y values
-          { y: 21, label: 'Cultural Events' }, // Sum of cultural Y values
-        ],
-      },
-    ],
-  };
+  calculateEventCounts() {
+    // Status counts
+    this.eventStatusCounts = { active: 0, pending: 0, inactive: 0 };
+    this.eventLocationCounts = {};
+    this.eventMonthCounts = {};
 
-  // 📊 Bar Chart (Total monthly events)
-  barChartOptions = {
-    animationEnabled: true,
-    title: {
-      text: 'Total Events Per Month',
-    },
-    axisX: {
-      title: 'Months',
-    },
-    axisY: {
-      title: 'Total Events',
-    },
-    data: [
-      {
-        type: 'column',
-        dataPoints: [
-          { label: 'Jan', y: 4 }, // 2+1+1
-          { label: 'Feb', y: 6 },
-          { label: 'Mar', y: 9 },
-          { label: 'Apr', y: 5 },
-          { label: 'May', y: 12 },
-          { label: 'Jun', y: 7 },
-          { label: 'Jul', y: 8 },
-          { label: 'Aug', y: 5 },
-          { label: 'Sep', y: 8 },
-          { label: 'Oct', y: 8 },
-          { label: 'Nov', y: 5 },
-          { label: 'Dec', y: 6 },
-        ],
+    this.events.forEach((e) => {
+      // status
+      this.eventStatusCounts[e.status] =
+        (this.eventStatusCounts[e.status] || 0) + 1;
+
+      // location
+      this.eventLocationCounts[e.location] =
+        (this.eventLocationCounts[e.location] || 0) + 1;
+
+      // month
+      const month = new Date(e.event_date).toLocaleString('default', {
+        month: 'short',
+      });
+      this.eventMonthCounts[month] = (this.eventMonthCounts[month] || 0) + 1;
+    });
+  }
+
+  getEventsByStatus() {
+    return this.eventStatusCounts;
+  }
+
+  getEventsByLocation() {
+    return this.eventLocationCounts;
+  }
+
+  getEventsByMonth() {
+    return this.eventMonthCounts;
+  }
+
+  // -------------------- USERS --------------------
+  loadUsers() {
+    this.http.get<User[]>('http://localhost:3000/all/users').subscribe({
+      next: (data) => {
+        this.users = data;
+        this.calculateUserCounts();
       },
-    ],
-  };
+      error: (err) => console.error('Failed to load users', err),
+    });
+  }
+
+  calculateUserCounts() {
+    this.userStatusCounts = {};
+    this.users.forEach((u) => {
+      this.userStatusCounts[u.status] =
+        (this.userStatusCounts[u.status] || 0) + 1;
+    });
+  }
+
+  getUserCounts() {
+    return this.userStatusCounts;
+  }
+
+  // -------------------- ORGANIZERS --------------------
+  loadOrganizers() {
+    this.http
+      .get<Organizer[]>('http://localhost:3000/all/organizers')
+      .subscribe({
+        next: (data) => {
+          this.organizers = data;
+          this.calculateOrganizerCounts();
+        },
+        error: (err) => console.error('Failed to load organizers', err),
+      });
+  }
+
+  calculateOrganizerCounts() {
+    this.organizerStatusCounts = {};
+    this.organizers.forEach((o) => {
+      this.organizerStatusCounts[o.status] =
+        (this.organizerStatusCounts[o.status] || 0) + 1;
+    });
+  }
+
+  getOrganizerCounts() {
+    return this.organizerStatusCounts;
+  }
+
+  // -------------------- CHART DATA --------------------
+  getEventStatusChartData() {
+    return Object.entries(this.eventStatusCounts).map(([status, count]) => ({
+      label: status,
+      y: count,
+    }));
+  }
+
+  getEventLocationChartData() {
+    return Object.entries(this.eventLocationCounts).map(([loc, count]) => ({
+      label: loc,
+      y: count,
+    }));
+  }
+
+  getEventMonthChartData() {
+    return Object.entries(this.eventMonthCounts).map(([month, count]) => ({
+      label: month,
+      y: count,
+    }));
+  }
+
+  getUserStatusChartData() {
+    return Object.entries(this.userStatusCounts).map(([status, count]) => ({
+      label: status,
+      y: count,
+    }));
+  }
+
+  getOrganizerStatusChartData() {
+    return Object.entries(this.organizerStatusCounts).map(
+      ([status, count]) => ({ label: status, y: count })
+    );
+  }
 }

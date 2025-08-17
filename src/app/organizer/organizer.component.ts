@@ -9,15 +9,17 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCardContent, MatCard } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
 
 import { UserDetailsDialogComponent } from '../components/user-details-dialog/user-details-dialog.component';
 
 export interface PeriodicElement {
-  user_id: number; // raw id from backend
-  id: number; // mapped id for table
+  user_id: number;
+  id: number;
   name: string;
   email: string;
   status: 'Pending' | 'Accepted' | 'Rejected' | string;
@@ -40,9 +42,10 @@ export interface PeriodicElement {
     MatProgressSpinnerModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardContent,
-    MatCard,
+    MatCardModule,
     MatIconModule,
+    MatButtonModule,
+    MatChipsModule,
     MatSelectModule,
   ],
   templateUrl: './organizer.component.html',
@@ -52,7 +55,6 @@ export class OrganizerComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'email', 'status', 'actions'];
   dataSource = new MatTableDataSource<PeriodicElement>([]);
   isLoading = true;
-  statusOptions: string[] = ['Pending', 'Accepted', 'Rejected'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -60,9 +62,6 @@ export class OrganizerComponent implements OnInit {
   constructor(private http: HttpClient, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    console.log('OrganizerComponent initialized');
-
-    // Custom filter to check id, name, email fields
     this.dataSource.filterPredicate = (
       data: PeriodicElement,
       filter: string
@@ -71,103 +70,120 @@ export class OrganizerComponent implements OnInit {
       return (
         data.id.toString().includes(filterValue) ||
         data.name.toLowerCase().includes(filterValue) ||
-        data.email.toLowerCase().includes(filterValue)
+        data.email.toLowerCase().includes(filterValue) ||
+        data.status.toLowerCase().includes(filterValue)
       );
     };
-
     this.fetchData();
   }
 
   fetchData(): void {
     this.isLoading = true;
-    console.log('Fetching organizer data...');
     this.http
       .get<PeriodicElement[]>('http://localhost:3000/all/organizers')
       .subscribe({
         next: (data) => {
-          console.log('Fetched organizers:', data);
           const normalizedData = data.map((user) => ({
             ...user,
-            id: user.user_id, // map user_id to id for table use
-            status: this.capitalizeStatus(user.status),
+            id: user.user_id,
+            status: this.normalizeStatus(user.status),
           }));
-          console.log('Normalized organizer data:', normalizedData);
-
           this.dataSource = new MatTableDataSource(normalizedData);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.isLoading = false;
         },
-        error: (error) => {
-          console.error('Error fetching organizers:', error);
+        error: (err) => {
+          console.error('Error fetching organizers:', err);
           this.isLoading = false;
         },
       });
   }
 
-  capitalizeStatus(status: string): string {
-    if (!status) return '';
-    const lower = status.toLowerCase();
-    if (lower === 'pending') return 'Pending';
-    if (lower === 'active') return 'Accepted';
-    if (lower === 'inactive') return 'Rejected';
-    return status;
+  /**
+   * Normalize API status → UI status
+   */
+  normalizeStatus(status: string): string {
+    if (!status) return 'Pending';
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return 'Pending';
+      case 'active':
+        return 'Accepted'; // map backend "active" → UI "Accepted"
+      case 'inactive':
+        return 'Rejected'; // map backend "inactive" → UI "Rejected"
+      default:
+        return this.capitalize(status);
+    }
+  }
+
+  /**
+   * UI status → API status
+   */
+  toApiStatus(uiStatus: string): string {
+    switch (uiStatus) {
+      case 'Accepted':
+        return 'active';
+      case 'Rejected':
+        return 'inactive';
+      case 'Pending':
+        return 'pending';
+      default:
+        return uiStatus.toLowerCase();
+    }
+  }
+
+  capitalize(text: string): string {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
+
+  getStatusColor(status: string): string {
+    switch (status) {
+      case 'Accepted':
+        return '#0a1f44'; // dark blue
+      case 'Rejected':
+        return '#d32f2f'; // red
+      case 'Pending':
+        return '#ffa000'; // amber
+      default:
+        return '#9e9e9e';
+    }
   }
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
-    console.log('Filter applied:', filterValue);
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    if (this.dataSource.paginator) this.dataSource.paginator.firstPage();
   }
 
-  openDetailsDialog(user: PeriodicElement): void {
-    console.log('Opening details dialog for user:', user);
+  applyStatusFilter(status: string): void {
+    this.dataSource.filterPredicate = (data: PeriodicElement, filter: string) =>
+      !filter || data.status.toLowerCase() === filter.toLowerCase();
+    this.dataSource.filter = status;
+  }
+
+  viewUser(user: PeriodicElement): void {
     this.dialog.open(UserDetailsDialogComponent, {
       width: '400px',
       data: user,
     });
   }
 
-  viewUser(user: PeriodicElement): void {
-    this.openDetailsDialog(user);
-  }
-
   changeStatus(user: PeriodicElement, newStatus: string): void {
-    if (user.status === newStatus) {
-      console.log('Status unchanged for user', user.id, ', skipping update');
-      return;
-    }
+    if (user.status === newStatus) return;
 
-    // Map UI status to backend status values
-    const statusMap: { [key: string]: string } = {
-      Pending: 'pending',
-      Accepted: 'active',
-      Rejected: 'inactive',
-    };
-
-    const normalizedStatus = statusMap[newStatus] || newStatus.toLowerCase();
-    console.log(
-      `Changing status for user ${user.id} from ${user.status} to ${newStatus} (backend value: ${normalizedStatus})`
-    );
+    const apiStatus = this.toApiStatus(newStatus);
 
     this.http
       .patch(`http://localhost:3000/user/status/${user.id}`, {
-        status: normalizedStatus,
+        status: apiStatus,
       })
       .subscribe({
         next: () => {
-          console.log(`Status updated successfully for user ${user.id}`);
           user.status = newStatus;
-          // Optional: Refresh table data if needed:
-          // this.fetchData();
+          this.dataSource.data = [...this.dataSource.data]; // refresh UI
         },
-        error: (err) => {
-          console.error(`Failed to update status for user ${user.id}:`, err);
-        },
+        error: (err) => console.error('Failed to update status', err),
       });
   }
 }

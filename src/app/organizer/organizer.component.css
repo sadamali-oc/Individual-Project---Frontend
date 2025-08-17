@@ -1,104 +1,200 @@
+:root {
+  --primary-color: #012a6c;
+  --primary-hover: #001f4c;
+  --warn-color: #c62828;
+  --warn-hover: #8e1c1c;
+  --success-color: #2e7d32;
+  --pending-color: #f9a825;
+}
+
+/* === Page Wrapper === */
 .page-center-wrapper {
   display: flex;
   justify-content: center;
-  padding: 24px;
+  padding: 20px;
   background-color: #fefeff;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
-.organizer-list-card {
+/* === Main Card === */
+.user-list-card {
   width: 100%;
   max-width: 1100px;
   border-radius: 12px;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
 mat-card-content {
-  padding: 24px;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-
-
-.search-input {
-  width: 100%;
-  margin-bottom: 20px;
+/* === Filter Row === */
+.filter-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
 }
 
+.search-input,
+.status-filter {
+  flex: 1;
+  min-width: 200px;
+  box-sizing: border-box;
+}
+
+.search-input input,
+.status-filter .mat-select-trigger {
+  height: 40px;
+  line-height: 40px;
+  box-sizing: border-box;
+}
+
+.status-filter .mat-select-arrow {
+  top: 12px;
+}
+
+/* === Table Container === */
 .user-table-container {
   overflow-x: auto;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-top: 10px;
+  box-sizing: border-box;
 }
 
-.user-table {
+table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: auto;
 }
-
-.user-table th {
-  background-color: #fafafa;
-  color: #444;
+/* Table headers */
+table th {
+  background-color: #e0e6ec;
+  color: #012a6c;
+  padding: 8px 10px;
   font-weight: 600;
-  padding: 12px 16px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
+  text-align: center;
+  border-bottom: 2px solid #c0c0c0;
+  white-space: nowrap;
+  font-size: 13px;
 }
 
-.user-table td {
-  padding: 12px 16px;
+/* Table cells */
+table td {
+  padding: 6px 10px;
   border-bottom: 1px solid #eee;
+  color: #555;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 13px;
+  text-align: center;
 }
 
-.user-table tr:hover {
-  background-color: #f0f4ff;
+/* ID column smaller size */
+table th:first-child,
+table td:first-child {
+  width: 50px;
+  min-width: 40px;
+  max-width: 60px;
+  text-align: center;
 }
 
+
+
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f0f5fa;
+}
+
+/* === Status Buttons === */
+.status-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.status-cell button {
+  font-size: 12px;
+  padding: 4px 8px;
+  min-width: 60px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.status-cell button:hover {
+  transform: scale(1.1);
+}
+
+/* === Action Buttons === */
 .actions-cell {
   text-align: center;
 }
 
 .actions-cell button {
-  color: #7d0569;
+  color: var(--primary-color);
   transition: transform 0.2s ease;
-  border: none;
-  background-color:#ffffff
 }
 
 .actions-cell button:hover {
   transform: scale(1.2);
 }
 
-.status-dropdown {
-  width: 140px;
+/* === Empty Table State === */
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: #555;
+  padding: 12px 0;
 }
 
-/* Color the closed mat-select value text */
-.status-accepted .mat-select-value {
-  color: #2e7d32 !important;
-  font-weight: 600;
+/* === Responsive === */
+@media (max-width: 1024px) {
+  .user-list-card {
+    max-width: 100%;
+  }
 }
 
-.status-rejected .mat-select-value {
-  color: #c62828 !important;
-  font-weight: 600;
+@media (max-width: 768px) {
+
+  .search-input,
+  .status-filter {
+    width: 100%;
+  }
+
+  .status-cell {
+    gap: 4px;
+  }
 }
 
-.status-pending .mat-select-value {
-  color: #f9a825 !important;
-  font-weight: 600;
-}
+@media (max-width: 600px) {
 
-/* Color the dropdown options */
-::ng-deep .mat-option.status-option-accepted {
-  color: #2e7d32 !important;
-  font-weight: 600;
-}
+  table th,
+  table td {
+    padding: 6px 5px;
+    font-size: 12px;
+  }
 
-::ng-deep .mat-option.status-option-rejected {
-  color: #c62828 !important;
-  font-weight: 600;
-}
-
-::ng-deep .mat-option.status-option-pending {
-  color: #f9a825 !important;
-  font-weight: 600;
+  .status-cell button {
+    font-size: 10px;
+    min-width: 50px;
+    padding: 3px 6px;
+  }
 }

@@ -57,6 +57,7 @@ export class UserComponent implements OnInit, AfterViewInit {
   searchTerm = '';
 
   statusOptions: UserStatus[] = ['Pending', 'Accepted', 'Rejected'];
+  statusFilter: string = '';
 
   constructor(private http: HttpClient, private dialog: MatDialog) {}
 
@@ -78,6 +79,17 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+  }
+
+  applyStatusFilter(status: string) {
+    this.statusFilter = status;
+    this.dataSource.filter =
+      (document.querySelector('.search-input input') as HTMLInputElement)?.value
+        .trim()
+        .toLowerCase() || '';
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   loadUsers(): void {
@@ -102,10 +114,9 @@ export class UserComponent implements OnInit, AfterViewInit {
             name: user.name,
             email: user.email,
             status,
-            phone_number:user.phone_number,
-            gender:user.gender,
-            role:user.role
-
+            phone_number: user.phone_number,
+            gender: user.gender,
+            role: user.role,
           };
         });
 
@@ -155,7 +166,7 @@ export class UserComponent implements OnInit, AfterViewInit {
   }
 
   viewUser(user: PeriodicElement): void {
-    console.log(user)
+    console.log(user);
     const dialogRef = this.dialog.open(UserDetailsDialogComponent, {
       width: '700px',
       data: { ...user },

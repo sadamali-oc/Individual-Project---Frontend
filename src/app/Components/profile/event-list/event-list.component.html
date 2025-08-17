@@ -1,37 +1,44 @@
 <mat-card class="event-list-card">
   <mat-card-header>
-  <mat-form-field appearance="outline" class="event-filter-input" style="width: 400px;">
-  <mat-label>Search Events</mat-label>
-  <input
-    matInput
-    (keyup)="applyFilter($event)"
-    placeholder="Filter by name or location"
-  />
-  <mat-icon matSuffix>search</mat-icon>
-</mat-form-field>
 
+    <div class="header-actions">
+      <mat-form-field appearance="outline" class="event-filter-input">
+        <mat-label>Search Events</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter by name or location" />
+        <mat-icon matSuffix>search</mat-icon>
+        <button
+          mat-icon-button
+          *ngIf="dataSource?.filter"
+          matSuffix
+          aria-label="Clear"
+          (click)="clearFilter()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
   </mat-card-header>
+
   <mat-card-content>
     <div class="mat-elevation-z2 event-table-container">
-      <table mat-table [dataSource]="dataSource" matSort>
+      <table mat-table [dataSource]="dataSource" matSort class="full-width-table">
+
         <!-- ID Column -->
-        <ng-container matColumnDef="id">
+        <ng-container matColumnDef="event_id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.event_id }}</td>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="name">
+        <ng-container matColumnDef="event_name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Event Name</th>
-          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.event_name }}</td>
         </ng-container>
 
         <!-- Date Column -->
-        <ng-container matColumnDef="date">
+        <ng-container matColumnDef="event_date">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.date | date : "mediumDate" }}
-          </td>
+          <td mat-cell *matCellDef="let element">{{ element.event_date | date: 'mediumDate' }}</td>
         </ng-container>
 
         <!-- Location Column -->
@@ -40,47 +47,39 @@
           <td mat-cell *matCellDef="let element">{{ element.location }}</td>
         </ng-container>
 
-        <!-- Registrations Column -->
-        <ng-container matColumnDef="registrations">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Registrations
-          </th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.registrations }}
-          </td>
-        </ng-container>
-
-        <!-- Status Column with decision buttons -->
+        <!-- Status Column -->
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
           <td mat-cell *matCellDef="let element" class="status-cell">
-            <app-decision-buttons
-              [eventId]="element.id"
-              [status]="element.status"
-              (accept)="updateEventStatus($event, 'Approved')"
-              (reject)="updateEventStatus($event, 'Rejected')"
-              class="decision-buttons"
+            <button
+              mat-raised-button
+              color="primary"
+              *ngIf="element.status !== 'active'"
+              (click)="updateEventStatus(element, 'active')"
             >
-            </app-decision-buttons>
+              Enable
+            </button>
+
+            <button
+              mat-raised-button
+              color="warn"
+              *ngIf="element.status === 'active'"
+              (click)="updateEventStatus(element, 'rejected')"
+            >
+              Disable
+            </button>
           </td>
         </ng-container>
 
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Actions</th>
-          <td mat-cell *matCellDef="let element">
-
-            
-             <button mat-icon-button aria-label="View" (click)="viewEventDetails(element.id)">
+          <td mat-cell *matCellDef="let element" class="actions-cell">
+            <button mat-icon-button aria-label="View" (click)="viewDetails(element)">
               <mat-icon>visibility</mat-icon>
             </button>
-        
-            <button
-              mat-icon-button
-              color="warn"
-              (click)="deleteEvent(element.id)"
-              matTooltip="Delete Event"
-            >
+
+            <button mat-icon-button (click)="deleteEvent(element)" matTooltip="Delete Event">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
@@ -90,17 +89,13 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
         <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="7">
-            No data matching the filter "{{ dataSource.filter }}"
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            No events found matching the filter "{{ dataSource.filter }}"
           </td>
         </tr>
       </table>
 
-      <mat-paginator
-        [pageSizeOptions]="[5, 10, 25, 100]"
-        aria-label="Select page of events"
-      >
-      </mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     </div>
   </mat-card-content>
 </mat-card>

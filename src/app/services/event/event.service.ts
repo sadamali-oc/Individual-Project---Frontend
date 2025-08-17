@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Event {
+  organizerId: any;
   id: string;
   name: string;
   date: Date;

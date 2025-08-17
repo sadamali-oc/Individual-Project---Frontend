@@ -9,133 +9,23 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card class="card summary-card accent-bg">
-      <mat-card-header>
-        <mat-card-title>ggggggggggggEvents</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p class="summary-value">{{ upcomingEventsCount }}</p>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card class="card summary-card warn-bg">
-      <mat-card-header>
-        <mat-card-title>Registered Attendees</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p class="summary-value">{{ totalRegistrations }}</p>
-      </mat-card-content>
-    </mat-card>
 
     <mat-card class="card summary-card info-bg">
       <mat-card-header>
-        <mat-card-title>Organizers</mat-card-title>
+        <mat-card-title>Total Organizers</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <p class="summary-value">{{ totalOrganizers }}</p>
       </mat-card-content>
     </mat-card>
+
+    <mat-card class="card summary-card accent-bg">
+      <mat-card-header>
+        <mat-card-title>Total Users</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="summary-value">{{ totalUsers }}</p>
+      </mat-card-content>
+    </mat-card>
   </div>
-</div>
-
-<div class="dashboard-section">
-  <mat-card class="full-width-card">
-    <mat-card-header>
-      <mat-card-title>Upcoming Events</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-
-      <!-- Filters -->
-      <div class="filter-section" style="display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
-        <mat-form-field appearance="outline" class="filter-field" style="flex: 1 1 300px; min-width: 250px;">
-          <mat-label>Search Event Name</mat-label>
-          <input matInput (keyup)="applyEventNameFilter($event)" aria-label="Search Event Name" />
-          <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="filter-field date-range-field" style="flex: 1 1 300px; min-width: 250px;">
-          <mat-label>Filter by Date Range</mat-label>
-          <mat-date-range-input [rangePicker]="rangePicker" aria-label="Filter by Date Range">
-            <input
-              matStartDate
-              placeholder="Start date"
-              (dateInput)="applyDateRangeFilter($event, 'start')"
-            />
-            <input
-              matEndDate
-              placeholder="End date"
-              (dateInput)="applyDateRangeFilter($event, 'end')"
-            />
-          </mat-date-range-input>
-          <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
-          <mat-date-range-picker #rangePicker></mat-date-range-picker>
-        </mat-form-field>
-      </div>
-
-      <!-- Event Table -->
-      <table
-        mat-table
-        [dataSource]="upcomingEventsDataSource"
-        class="mat-elevation-z8 event-table"
-        aria-label="Upcoming events table"
-      >
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let event">{{ event.name }}</td>
-        </ng-container>
-
-        <!-- Date Column -->
-        <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef>Date</th>
-          <td mat-cell *matCellDef="let event">{{ event.date | date: 'mediumDate' }}</td>
-        </ng-container>
-
-        <!-- Time Column -->
-        <ng-container matColumnDef="time">
-          <th mat-header-cell *matHeaderCellDef>Time</th>
-          <td mat-cell *matCellDef="let event">{{ event.time }}</td>
-        </ng-container>
-
-        <!-- Location Column -->
-        <ng-container matColumnDef="location">
-          <th mat-header-cell *matHeaderCellDef>Location</th>
-          <td mat-cell *matCellDef="let event">{{ event.location }}</td>
-        </ng-container>
-
-        <!-- Registrations Column -->
-        <ng-container matColumnDef="registrations">
-          <th mat-header-cell *matHeaderCellDef>Registrations</th>
-          <td mat-cell *matCellDef="let event">{{ event.registrations }}</td>
-        </ng-container>
-
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>Action</th>
-          <td mat-cell *matCellDef="let event">
-            <button
-              mat-icon-button
-            
-              (click)="viewEventDetails(event.id)"
-              matTooltip="View Details"
-            >
-              <mat-icon>visibility</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-
-        <!-- Header and Rows -->
-        <tr mat-header-row *matHeaderRowDef="displayedUpcomingEventColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedUpcomingEventColumns"></tr>
-
-        <!-- No Data Row -->
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" [attr.colspan]="displayedUpcomingEventColumns.length">
-            No upcoming events found matching your filters.
-          </td>
-        </tr>
-      </table>
-
-    </mat-card-content>
-  </mat-card>
 </div>

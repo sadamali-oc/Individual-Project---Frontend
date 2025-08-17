@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
@@ -15,7 +16,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule, DatePipe } from '@angular/common';
 
-import { EventService, Event } from '../../../services/event/event.service';
+export interface Event {
+  id: string;
+  name: string;
+  date: string | Date;
+  time: string;
+  location: string;
+  registrations: number;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -40,15 +48,12 @@ import { EventService, Event } from '../../../services/event/event.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  // Summary Card Data
   totalEvents: number = 0;
   upcomingEventsCount: number = 0;
   totalRegistrations: number = 0;
   totalOrganizers: number = 0;
-  totalVolunteers: number = 0;
-  totalTicketsIssued: number = 0;
+  totalUsers: number = 0; // New card for all users
 
-  // Upcoming Events Table Data
   private allUpcomingEvents: Event[] = [];
   upcomingEventsDataSource = new MatTableDataSource<Event>([]);
   displayedUpcomingEventColumns: string[] = [
@@ -60,13 +65,12 @@ export class DashboardComponent implements OnInit {
     'actions',
   ];
 
-  // Filters
   eventNameFilter: string = '';
   dateRangeStart: Date | null = null;
   dateRangeEnd: Date | null = null;
 
   private router = inject(Router);
-  private eventService = inject(EventService);
+  private http = inject(HttpClient);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -77,19 +81,19 @@ export class DashboardComponent implements OnInit {
       this.createUpcomingEventsFilterPredicate();
   }
 
-  // --- Load Dashboard Data from API ---
   private loadDashboardData(): void {
     const now = new Date();
 
-    this.eventService.getAllEvents().subscribe({
+    // --- Get All Events ---
+    this.http.get<Event[]>('http://localhost:3000/all/events').subscribe({
       next: (events: Event[]) => {
-        // Convert string to Date object
         events.forEach((event) => (event.date = new Date(event.date)));
 
         this.allUpcomingEvents = events
-          .filter((event) => event.date >= now)
-          .sort((a, b) => a.date.getTime() - b.date.getTime());
-
+          .filter((event) => (event.date as Date) >= now)
+          .sort(
+            (a, b) => (a.date as Date).getTime() - (b.date as Date).getTime()
+          );
         this.upcomingEventsDataSource.data = this.allUpcomingEvents;
 
         this.totalEvents = events.length;
@@ -98,18 +102,23 @@ export class DashboardComponent implements OnInit {
           (sum, e) => sum + e.registrations,
           0
         );
-        this.totalOrganizers = 25;
-        this.totalVolunteers = 90;
-        this.totalTicketsIssued = 720;
       },
-      error: (error) => {
-        console.error('Failed to fetch events:', error);
-        // Optionally show an error message to the user
-      },
+      error: (err) => console.error('Failed to fetch events:', err),
+    });
+
+    // --- Get Organizer Count ---
+    this.http.get<any[]>('http://localhost:3000/all/organizers').subscribe({
+      next: (organizers) => (this.totalOrganizers = organizers.length),
+      error: (err) => console.error('Failed to fetch organizers:', err),
+    });
+
+    // --- Get All Users Count ---
+    this.http.get<any[]>('http://localhost:3000/all/users').subscribe({
+      next: (users) => (this.totalUsers = users.length),
+      error: (err) => console.error('Failed to fetch users:', err),
     });
   }
 
-  // --- Table Filters ---
   applyEventNameFilter(event: KeyboardEvent): void {
     this.eventNameFilter = (event.target as HTMLInputElement).value
       .trim()
@@ -159,7 +168,6 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  // --- Navigation & Actions ---
   viewProfile(): void {
     this.router.navigate(['/profile']);
   }

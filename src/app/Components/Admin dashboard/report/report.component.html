@@ -1,14 +1,76 @@
-<!-- Existing Spline Chart -->
-<div style="margin-bottom: 40px;">
-  <canvasjs-chart [options]="chartOptions" style="width: 100%; height: 360px;"></canvasjs-chart>
-</div>
+<div class="chart-grid">
+  <!-- Events by Status -->
+  <div class="chart-box">
+    <h3>Events by Status</h3>
+    <canvasjs-chart
+      [options]="{
+        animationEnabled: true,
+        data: [{ type: 'pie', dataPoints: getEventStatusChartData() }]
+      }"
+    ></canvasjs-chart>
+  </div>
 
-<!-- Pie Chart -->
-<div style="margin-bottom: 40px;">
-  <canvasjs-chart [options]="pieChartOptions" style="width: 100%; height: 360px;"></canvasjs-chart>
-</div>
+  <!-- Events by Location -->
+  <div class="chart-box">
+    <h3>Events by Location</h3>
+    <canvasjs-chart
+      [options]="{
+        animationEnabled: true,
+        axisY: { title: 'Number of Events' },
+        data: [{ type: 'column', dataPoints: getEventLocationChartData() }]
+      }"
+    ></canvasjs-chart>
+  </div>
 
-<!-- Bar Chart -->
-<div>
-  <canvasjs-chart [options]="barChartOptions" style="width: 100%; height: 360px;"></canvasjs-chart>
+  <!-- Events by Month -->
+  <div class="chart-box">
+    <h3>Events by Month</h3>
+    <canvasjs-chart
+      [options]="{
+        animationEnabled: true,
+        axisY: { title: 'Number of Events' },
+        data: [{ type: 'column', dataPoints: getEventMonthChartData() }]
+      }"
+    ></canvasjs-chart>
+  </div>
+
+  <!-- Monthly Event Trend (Line Chart) -->
+  <div class="chart-box">
+    <h3>Monthly Event Trend</h3>
+    <canvasjs-chart
+      [options]="{
+        animationEnabled: true,
+        axisX: { title: 'Months' },
+        axisY: { title: 'Number of Events' },
+        data: [{
+          type: 'line',
+          showInLegend: true,
+          name: 'Events',
+          dataPoints: getEventMonthChartData()
+        }]
+      }"
+    ></canvasjs-chart>
+  </div>
+
+  <!-- Users by Status -->
+  <div class="chart-box">
+    <h3>Users by Status</h3>
+    <canvasjs-chart
+      [options]="{
+        animationEnabled: true,
+        data: [{ type: 'pie', dataPoints: getUserStatusChartData() }]
+      }"
+    ></canvasjs-chart>
+  </div>
+
+  <!-- Organizers by Status -->
+  <div class="chart-box">
+    <h3>Organizers by Status</h3>
+    <canvasjs-chart
+      [options]="{
+        animationEnabled: true,
+        data: [{ type: 'pie', dataPoints: getOrganizerStatusChartData() }]
+      }"
+    ></canvasjs-chart>
+  </div>
 </div>
