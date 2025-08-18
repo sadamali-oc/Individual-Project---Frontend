@@ -5,17 +5,28 @@
     padding: 2rem 1rem;
     font-family: 'Roboto', sans-serif;
     background-color: #f5f7fa;
-    color: #1a237e;
+    /* light gray-blue */
+    color: #012a6c;
+    /* ocean blue */
     overflow: visible;
-    /* ensure no clipping */
 }
 
-#gallery .box-container {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    padding: 1rem;
-    justify-content: center;
+/* =========================== */
+/*        SEARCH/FILTER BAR     */
+/* =========================== */
+#gallery .search-filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+#gallery .filter-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 0 10px;
 }
 
 /* =========================== */
@@ -27,45 +38,51 @@
     flex-wrap: wrap;
     gap: 0.75rem;
     font-size: 2.5rem;
-    /* increased font size */
     font-weight: 700;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
     color: #012a6c;
 }
 
 #gallery .heading mat-icon {
     font-size: 3.5rem;
-    /* larger icon */
     width: 3.5rem;
     height: 3.5rem;
-    line-height: 1;
-    padding: 0.25rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #012a6c;
-    overflow: visible;
+    color:#012a6c;
+}
+
+/* =========================== */
+/*        EVENT CARD GRID       */
+/* =========================== */
+#gallery .box-container {
+    display: grid;
+    gap: 20px;
+    /* match dashboard gap */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    padding: 1rem;
+    justify-content: center;
 }
 
 /* =========================== */
 /*        EVENT CARD STYLES     */
 /* =========================== */
 .box {
-    border: 1px solid #d0d0d0;
-    border-radius: 12px;
+    width: 100%;
+    border-radius: 8px;
     overflow: hidden;
     background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     cursor: pointer;
 }
 
-.box:focus,
 .box:hover {
-    box-shadow: 0 8px 24px rgba(63, 81, 181, 0.35);
     transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* =========================== */
@@ -73,11 +90,13 @@
 /* =========================== */
 .event-image {
     width: 100%;
-    height: 200px;
+    height: 180px;
     object-fit: cover;
     display: block;
-    border-radius: 12px 12px 0 0;
-    border-bottom: 1px solid #e0e0e0;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 1px solid #eee;
+    background: #e3f2fd;
+    /* light blue placeholder */
 }
 
 /* =========================== */
@@ -96,13 +115,13 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 2rem;
-    font-weight: 600;
-    color: #012a6c;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color:#012a6c;
 }
 
 .event-title mat-icon {
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: #012a6c;
 }
 
@@ -111,48 +130,91 @@
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
-    font-size: 1.6rem;
-    line-height: 1.6;
-    color: #555;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: #333;
 }
 
 .event-description mat-icon {
-    font-size: 1.7rem;
-    color: #012a6c;
+    font-size: 1.3rem;
+    color:#012a6c;
     margin-top: 1px;
+}
+
+/* =========================== */
+/*        STATUS CHIP           */
+/* =========================== */
+.event-status {
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: capitalize;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    height: 28px;
+    padding: 0 8px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-active {
+    background-color: #0288d1;
+    color: #fff;
+}
+
+.status-pending {
+    background-color: #ffcc00;
+    color: #000;
+}
+
+.status-completed {
+    background-color: #78909c;
+    color: #fff;
 }
 
 /* =========================== */
 /*        VIEW MORE BUTTON      */
 /* =========================== */
 .view-more-btn {
-    margin-top: auto;
-    align-self: flex-start;
+    font-size: 1.6rem;
     font-weight: 500;
+    border-radius: 8px;
+    padding: 10px 16px;
+    background-color: #012a6c;
+    /* default dark blue */
+    color: #ffffff;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.4rem;
-    font-size: 1.6rem;
-    border-radius: 10px;
-    padding: 12px 20px;
-    background-color: #ffcc00;
-    color: #ffffff;
-    line-height: 1.4;
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
     cursor: pointer;
 }
 
 .view-more-btn:hover {
-    background-color: #012a6c;
+    background-color: #ffcc00;
+    /* hover yellow */
+    color: #000;
+    transform: translateY(-2px);
 }
 
 .view-more-btn mat-icon {
-    font-size: 2.4rem;
+    font-size: 1.6rem;
+    margin-right: 0.4rem;
     vertical-align: middle;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    color: #ffffff;
+    /* visible on dark blue */
+    padding: 30px;
+}
+
+.view-more-btn:hover mat-icon {
+    color: #000;
+    /* matches hover text */
 }
 
 /* =========================== */
@@ -163,16 +225,22 @@
     align-items: center;
     justify-content: center;
     gap: 0.6rem;
-    font-size: 1.6rem;
-    color: #90a4ae;
+    font-size: 1rem;
+    color: #777;
     background-color: #eceff1;
     padding: 2rem;
     border-radius: 8px;
 }
 
 .no-events-message mat-icon {
-    font-size: 2rem;
+    font-size: 1.4rem;
     color: #78909c;
+}
+
+
+.mat-mdc-raised-button.mat-primary {
+    --mdc-protected-button-container-color: #012a6c;
+    --mdc-protected-button-label-text-color: white;
 }
 
 /* =========================== */
@@ -184,23 +252,24 @@
     }
 
     .event-title {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 
     .event-description {
-        font-size: 1.3rem;
+        font-size: 1rem;
     }
 
     .view-more-btn {
-        font-size: 1.4rem;
-        padding: 10px 16px;
+        font-size: 0.9rem;
+        padding: 30px;
     }
 
     .view-more-btn mat-icon {
-        font-size: 2rem;
+        font-size: 1.2rem;
+        /* padding: 30px; */
     }
 
     .no-events-message {
-        font-size: 1.4rem;
+        font-size: 0.9rem;
     }
 }

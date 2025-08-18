@@ -8,41 +8,53 @@
   >
     <mat-toolbar color="primary" class="dashname">User Dashboard</mat-toolbar>
 
-    <mat-nav-list>
-      <a mat-list-item routerLink="/user/dashboard" routerLinkActive="active">
-        <mat-icon>dashboard</mat-icon> Dashboard
-      </a>
+    <ng-container *ngIf="userId">
+      <mat-nav-list>
+     <!-- Dashboard -->
+<a mat-list-item 
+   routerLink="/user/{{ userId }}/dashboard" 
+   routerLinkActive="active">
+  <mat-icon>dashboard</mat-icon>
+  Dashboard
+</a>
 
-      <a
-        mat-list-item
-        [routerLink]="['/enrolledEvents', userId]"
-        routerLinkActive="active"
-      >
-        <mat-icon>event</mat-icon> Enrolled Events
-      </a>
+<!-- Enrolled Events -->
+<a mat-list-item 
+   routerLink="/user/{{ userId }}/viewEvents" 
+   routerLinkActive="active">
+  <mat-icon>event</mat-icon>
+  View all Events
+</a>
 
-      <a
-        mat-list-item
-        [routerLink]="['/user/profile', userId]"
-        routerLinkActive="active"
-      >
-        <mat-icon>account_circle</mat-icon> Profile
-      </a>
-    </mat-nav-list>
+
+<a mat-list-item 
+   routerLink="/user/{{ userId }}/enrolledEvents" 
+   routerLinkActive="active">
+  <mat-icon>event</mat-icon>
+  Enrolled Events
+</a>
+
+<!-- Profile -->
+ <mat-list-item 
+   routerLink="/user/profile/{{ userId }}" 
+   routerLinkActive="active">
+  <mat-icon>account_circle</mat-icon>
+  Profile
+</mat-list-item>
+
+
+      </mat-nav-list>
+    </ng-container>
   </mat-sidenav>
 
   <!-- Main Content -->
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="main-toolbar">
       <div class="toolbar-left">
-        <button
-          mat-icon-button
-          (click)="toggleSidebar()"
-          aria-label="Toggle sidebar"
-        >
+        <button mat-icon-button (click)="toggleSidebar()" aria-label="Toggle sidebar">
           <mat-icon>menu</mat-icon>
         </button>
-        <span class="user-name">Hello, {{ name }} 👋</span>
+        <span class="user-name">Hello, {{ userName }} 👋</span>
       </div>
 
       <div class="toolbar-right">
@@ -50,11 +62,7 @@
           <mat-icon>notifications</mat-icon>
         </button>
 
-        <button
-          mat-icon-button
-          [matMenuTriggerFor]="profileMenu"
-          aria-label="User profile menu"
-        >
+        <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User profile menu">
           <mat-icon>account_circle</mat-icon>
         </button>
 
@@ -71,8 +79,7 @@
       </div>
     </mat-toolbar>
 
-    <!-- Main router view or buttons -->
-    <app-event-button></app-event-button>
+    <!-- Event Button / Router Outlet -->
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>

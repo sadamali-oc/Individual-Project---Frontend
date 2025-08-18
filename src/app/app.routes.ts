@@ -76,7 +76,7 @@ export const routes: Routes = [
     component: NormalUserDashboardComponent,
     children: [
       { path: 'dashboard', component: NewuserComponent },
-      { path: 'enrolledEvents', component: EnrollEventsComponent },
+      { path: 'viewEvents', component: EnrollEventsComponent },
     ],
   },
 ];

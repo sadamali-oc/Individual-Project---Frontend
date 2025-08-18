@@ -1,1 +1,73 @@
-<h1>hello</h1>
+<mat-card class="event-list-card">
+  <mat-card-header>
+    <div class="header-actions">
+      <mat-form-field appearance="outline" class="event-filter-input">
+        <mat-label>Search Events</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter by name or location" />
+        <mat-icon matSuffix>search</mat-icon>
+        <button mat-icon-button *ngIf="dataSource?.filter" matSuffix aria-label="Clear" (click)="clearFilter()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="mat-elevation-z2 event-table-container" *ngIf="dataSource?.data">
+      <table mat-table [dataSource]="dataSource" matSort class="full-width-table">
+
+        <ng-container matColumnDef="audience_type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Audience Type</th>
+          <td mat-cell *matCellDef="let element">{{ element.audience_type }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="event_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Event Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.event_name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="event_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+          <td mat-cell *matCellDef="let element">{{ element.event_date | date:'mediumDate' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-cell-center">Status</th>
+          <td mat-cell *matCellDef="let element" class="mat-cell-center">
+            <mat-slide-toggle
+              [checked]="element.isEnrolled"
+              (change)="onToggleEnrol(element, $event.checked)"
+            
+            >
+              {{ element.isEnrolled ? 'Enrolled' : 'Enrol' }}
+            </mat-slide-toggle>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="mat-header-cell-center">Actions</th>
+          <td mat-cell *matCellDef="let element" class="mat-cell-center">
+            <button mat-icon-button aria-label="View" (click)="viewDetails(element)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            No events found matching the filter "{{ dataSource.filter }}"
+          </td>
+        </tr>
+      </table>
+
+      <mat-paginator
+        [length]="dataSource?.data?.length || 0"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>
