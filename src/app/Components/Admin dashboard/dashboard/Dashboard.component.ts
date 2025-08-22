@@ -15,6 +15,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule, DatePipe } from '@angular/common';
+import { CalendarComponent } from '../../calendar/calendar.component';
 
 export interface Event {
   id: string;
@@ -42,6 +43,7 @@ export interface Event {
     MatNativeDateModule,
     MatTooltipModule,
     MatToolbarModule,
+    CalendarComponent
   ],
   providers: [DatePipe],
   templateUrl: './dashboard.component.html',

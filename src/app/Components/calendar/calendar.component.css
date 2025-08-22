@@ -1,0 +1,119 @@
+/* Card container */
+.calendar-card {
+    max-width: 1000px;
+    margin: 16px auto;
+    padding: 16px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    font-family: Arial, sans-serif;
+}
+
+/* Heading */
+.calendar-card h2 {
+    text-align: center;
+    margin-bottom: 16px;
+    font-size: 20px;
+
+    text-shadow: 0 2px 6px rgba(1, 42, 108, 0.1);
+    color: #012a6c;
+}
+
+/* Weekday headers */
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 4px;
+    color: #555;
+}
+
+/* Month grid */
+.month-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+/* Responsive for mobile */
+@media (max-width: 600px) {
+    .month-grid {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    }
+}
+
+/* Each day cell */
+.day {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    min-height: 100px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #f9f9f9;
+}
+
+.day.today {
+    border: 2px solid #ffcc00;
+}
+
+.day .date {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+/* Events list inside each day */
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 4px;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.event-pill {
+    background-color: #012a6c;
+    color: #fff;
+    padding: 4px 6px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.event-pill:hover {
+    opacity: 0.9;
+    transform: scale(1.03);
+}
+
+/* Hover popup styling */
+.hover-popup {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    color: #000;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 12px;
+    z-index: 10;
+    max-width: 220px;
+    margin-top: 4px;
+}
+
+.hover-popup .popup-event {
+    margin-bottom: 4px;
+}
+
+.hover-popup .popup-event:last-child {
+    margin-bottom: 0;
+}

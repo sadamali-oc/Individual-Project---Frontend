@@ -9,7 +9,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
-import { EventButtonComponent } from '../../../components/event-button/event-button.component';
 
 @Component({
   selector: 'app-normal-user-dashboard',
@@ -24,7 +23,7 @@ import { EventButtonComponent } from '../../../components/event-button/event-but
     MatButtonModule,
     MatMenuModule,
     MatCardModule,
-    EventButtonComponent,
+
   ],
   templateUrl: './normal-user-dashboard.component.html',
   styleUrls: ['./normal-user-dashboard.component.css'],

@@ -2,12 +2,10 @@ import { Component, Inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
-  MatDialogActions,
   MatDialogContent,
 } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatChipListbox } from '@angular/material/chips';
+
 import { MatIcon } from '@angular/material/icon';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
@@ -16,12 +14,11 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   templateUrl: './event-details-dialog.component.html',
   styleUrls: ['./event-details-dialog.component.css'],
   imports: [
-    MatDialogActions,
+ 
     MatDialogContent,
     CommonModule,
     MatIcon,
-    MatProgressSpinner,
-    MatChipListbox,
+  
   ],
   standalone: true,
 })

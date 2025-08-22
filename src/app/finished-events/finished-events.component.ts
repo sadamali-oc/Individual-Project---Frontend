@@ -10,7 +10,6 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EventDetailsDialogComponent } from '../components/event-details-dialog/event-details-dialog.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
-import { MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
 import { FormsModule } from '@angular/forms';
@@ -28,7 +27,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatIconModule,
     MatDialogModule,
     MatInputModule,
-    MatOption,
+  
     MatSelectModule,
     FormsModule,
     MatSlideToggleModule,

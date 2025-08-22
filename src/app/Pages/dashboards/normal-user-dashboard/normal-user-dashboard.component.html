@@ -10,37 +10,46 @@
 
     <ng-container *ngIf="userId">
       <mat-nav-list>
-     <!-- Dashboard -->
-<a mat-list-item 
-   routerLink="/user/{{ userId }}/dashboard" 
-   routerLinkActive="active">
-  <mat-icon>dashboard</mat-icon>
-  Dashboard
-</a>
+<ng-container *ngIf="userId">
+  <mat-nav-list>
+    <!-- Dashboard -->
+    <a mat-list-item routerLink="/user/{{ userId }}/dashboard" routerLinkActive="active">
+      <mat-icon>dashboard</mat-icon>
+      Dashboard
+    </a>
 
-<!-- Enrolled Events -->
-<a mat-list-item 
-   routerLink="/user/{{ userId }}/viewEvents" 
-   routerLinkActive="active">
-  <mat-icon>event</mat-icon>
-  View all Events
-</a>
+    <!-- View all Events -->
+    <a mat-list-item routerLink="/user/{{ userId }}/viewEvents" routerLinkActive="active">
+      <mat-icon>calendar_month</mat-icon>
+      View all Events
+    </a>
 
+    <!-- Enrolled Events -->
+    <a mat-list-item routerLink="/user/{{ userId }}/enrolledEvents" routerLinkActive="active">
+      <mat-icon>check_circle</mat-icon>
+      Enrolled Events
+    </a>
 
-<a mat-list-item 
-   routerLink="/user/{{ userId }}/enrolledEvents" 
-   routerLinkActive="active">
-  <mat-icon>event</mat-icon>
-  Enrolled Events
-</a>
+    <!-- Profile -->
+    <a mat-list-item routerLink="/user/profile/{{ userId }}" routerLinkActive="active">
+      <mat-icon>account_circle</mat-icon>
+      Profile
+    </a>
 
-<!-- Profile -->
- <mat-list-item 
-   routerLink="/user/profile/{{ userId }}" 
-   routerLinkActive="active">
-  <mat-icon>account_circle</mat-icon>
-  Profile
-</mat-list-item>
+    <!-- Settings -->
+    <a mat-list-item routerLink="/user/settings/{{ userId }}" routerLinkActive="active">
+      <mat-icon>settings</mat-icon>
+      Settings
+    </a>
+
+    <!-- Logout -->
+    <a mat-list-item (click)="handleLogout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </a>
+  </mat-nav-list>
+</ng-container>
+
 
 
       </mat-nav-list>
@@ -52,23 +61,23 @@
     <mat-toolbar color="primary" class="main-toolbar">
       <div class="toolbar-left">
         <button mat-icon-button (click)="toggleSidebar()" aria-label="Toggle sidebar">
-          <mat-icon>menu</mat-icon>
+          <mat-icon class="menu-icon">menu</mat-icon>
         </button>
         <span class="user-name">Hello, {{ userName }} 👋</span>
       </div>
 
       <div class="toolbar-right">
         <button mat-icon-button aria-label="Notifications">
-          <mat-icon>notifications</mat-icon>
+          <mat-icon class="notification-icon">notifications</mat-icon>
         </button>
 
         <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User profile menu">
-          <mat-icon>account_circle</mat-icon>
+          <mat-icon class="profile-icon">account_circle</mat-icon>
         </button>
 
         <mat-menu #profileMenu="matMenu">
           <button mat-menu-item (click)="viewProfile()">
-            <mat-icon>person</mat-icon>
+            <mat-icon class="profile-icon">person</mat-icon>
             <span>Profile</span>
           </button>
           <button mat-menu-item (click)="handleLogout()">

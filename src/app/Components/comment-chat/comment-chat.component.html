@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Chat for "{{ data.event_name }}"</h2>
+
+<div class="chat-container">
+  <div class="messages" #messagesContainer>
+    <div
+      *ngFor="let msg of messages"
+      [ngClass]="{
+        'my-message': msg.user_id === data.user_id,
+        'other-message': msg.user_id !== data.user_id
+      }"
+      class="message"
+    >
+      <strong>{{ msg.user_name }}:</strong>
+      <span>{{ msg.message }}</span>
+    </div>
+  </div>
+
+  <div class="input-container">
+    <mat-form-field class="input-field" appearance="outline">
+      <input
+        matInput
+        placeholder="Type a message"
+        [(ngModel)]="newMessage"
+        (keyup.enter)="sendMessage()"
+      />
+    </mat-form-field>
+    <button mat-raised-button class="send-button" (click)="sendMessage()">Send</button>
+    <button mat-button (click)="close()" class="close-button">Close</button>
+  </div>
+</div>

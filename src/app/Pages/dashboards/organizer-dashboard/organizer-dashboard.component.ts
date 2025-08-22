@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -42,12 +42,12 @@ interface Event {
     MatChipsModule,
     MatDividerModule,
     CanvasJSAngularChartsModule,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './organizer-dashboard.component.html',
   styleUrls: ['./organizer-dashboard.component.css'],
 })
-export class OrganizerDashboardComponent implements OnInit {
+export class OrganizerDashboardComponent implements OnInit, AfterViewInit {
   userId: string | null = null;
   name: string = 'Guest';
   userName: string = 'Guest';
@@ -58,7 +58,8 @@ export class OrganizerDashboardComponent implements OnInit {
   // Bar chart options
   chartOptions = {
     animationEnabled: true,
-    // title: { text: 'Event Status Overview' },
+    responsive: true,
+    maintainAspectRatio: false,
     data: [
       {
         type: 'column',
@@ -77,7 +78,8 @@ export class OrganizerDashboardComponent implements OnInit {
   // Pie chart options
   pieChartOptions = {
     animationEnabled: true,
-    // title: { text: 'Event Status Distribution' },
+    responsive: true,
+    maintainAspectRatio: false,
     data: [
       {
         type: 'pie',
@@ -167,6 +169,16 @@ export class OrganizerDashboardComponent implements OnInit {
       },
       error: (err) => console.error('Error fetching events:', err),
     });
+  }
+
+  ngAfterViewInit() {
+    // Force resize so CanvasJS fits cards correctly
+    setTimeout(() => window.dispatchEvent(new Event('resize')), 300);
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    // CanvasJS automatically adjusts when resize event is fired
   }
 
   toggleSidebar() {

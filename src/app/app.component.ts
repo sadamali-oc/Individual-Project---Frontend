@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterOutlet } from '@angular/router';
-import { FullCalendarModule } from '@fullcalendar/angular';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideStorage, getStorage } from '@angular/fire/storage';
@@ -11,8 +10,7 @@ import { environment } from '../environments/environment';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, MatButtonModule, 
-    
-    FullCalendarModule],
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })

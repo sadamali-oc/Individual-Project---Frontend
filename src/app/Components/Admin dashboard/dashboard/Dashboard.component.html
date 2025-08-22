@@ -1,7 +1,9 @@
 <div class="dashboard-section summary-cards-section">
   <div class="dashboard-cards">
+
     <mat-card class="card summary-card primary-bg">
-      <mat-card-header>
+      <mat-card-header class="summary-header">
+        <mat-icon class="summary-icon">event</mat-icon>
         <mat-card-title>Total Events</mat-card-title>
       </mat-card-header>
       <mat-card-content>
@@ -9,9 +11,9 @@
       </mat-card-content>
     </mat-card>
 
-
     <mat-card class="card summary-card info-bg">
-      <mat-card-header>
+      <mat-card-header class="summary-header">
+        <mat-icon class="summary-icon">groups</mat-icon>
         <mat-card-title>Total Organizers</mat-card-title>
       </mat-card-header>
       <mat-card-content>
@@ -20,12 +22,16 @@
     </mat-card>
 
     <mat-card class="card summary-card accent-bg">
-      <mat-card-header>
+      <mat-card-header class="summary-header">
+        <mat-icon class="summary-icon">person</mat-icon>
         <mat-card-title>Total Users</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <p class="summary-value">{{ totalUsers }}</p>
       </mat-card-content>
     </mat-card>
+
   </div>
 </div>
+
+<app-calendar></app-calendar>

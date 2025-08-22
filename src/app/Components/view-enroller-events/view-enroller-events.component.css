@@ -27,7 +27,7 @@
     margin: 10px;
     box-sizing: border-box;
     padding: 10px;
-    
+
 }
 
 /* Header actions */
@@ -92,7 +92,7 @@
 }
 
 
-mat-icon{
+mat-icon {
 
     color: #012a6c;
 }
@@ -202,5 +202,3 @@ mat-icon{
         text-align: left;
     }
 }
-
-

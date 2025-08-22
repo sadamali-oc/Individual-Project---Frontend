@@ -4,7 +4,6 @@
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
   background-color: #fdfdfb;
-  /* light neutral background */
   color: #012a6c;
   /* primary text color */
 }
@@ -25,12 +24,13 @@
 
 /* ===== Toolbar ===== */
 mat-toolbar {
-  background: linear-gradient(135deg, rgba(42, 67, 157, 0.289) 0%, rgba(28, 117, 168, 0.118) 100%);
-  color: #012a6c;
+  background: #012a6c;
+  color: #f8fafd;
   min-height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* centers items vertically */
   padding: 0 16px;
   font-weight: 600;
   border-top-left-radius: 8px;
@@ -44,26 +44,31 @@ mat-toolbar {
 .toolbar-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  /* fix alignment */
+  gap: 12px;
+  /* more spacing */
 }
 
 .toolbar-left .user-name {
   font-size: 16px;
   font-weight: 600;
-  color: #012a6c;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  /* ensures vertical centering */
 }
 
 /* ===== Navigation list ===== */
 .mat-nav-list {
   padding-top: 0;
   background-color: #f6f7fc;
-  color: #012a6c;
+  color: #ffffff;
 }
 
 /* Normal tabs */
 .mat-list-item,
 .mat-mdc-list-item {
-  color: #012a6c;
+  color: #ffffff;
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
@@ -78,6 +83,7 @@ mat-toolbar {
 /* Icons for normal tabs */
 .mat-list-item mat-icon,
 .mat-mdc-list-item mat-icon {
+  font-family: 'Material Icons' !important;
   color: #012a6c !important;
   font-size: 20px !important;
   height: 20px !important;
@@ -100,7 +106,6 @@ mat-toolbar {
 .mat-list-item:hover,
 .mat-mdc-list-item:hover {
   background-color: #fffde0;
-  /* light yellow hover */
   color: #012a6c;
 }
 
@@ -122,6 +127,22 @@ mat-toolbar {
   color: #012a6c !important;
 }
 
+/* ===== Topbar icons ===== */
+.menu-icon,
+.notification-icon,
+.profile-icon {
+  font-family: 'Material Icons' !important;
+  color: #fbfdfe;
+  /* White */
+  font-size: 28px !important;
+  /* bigger for visibility */
+  line-height: 1 !important;
+  /* prevents clipping */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ===== Profile section ===== */
 .profile-section {
   display: flex;
@@ -129,12 +150,13 @@ mat-toolbar {
   cursor: pointer;
   padding: 8px 12px;
   border-radius: 24px;
+  background-color: #f6f7fc;
   transition: background-color 0.2s ease;
   margin-left: 16px;
 }
 
 .profile-section:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #ffffff;
 }
 
 .profile-section .user-name {

@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:3000/api',
+  baseUrl: 'http://localhost:3000',
   firebaseConfig: {
     apiKey: "AIzaSyD7e9BC0MK4uYgTvF7RX7VXM_LE0HUa5bA",
     authDomain: "imageuploaddb-d99cf.firebaseapp.com",

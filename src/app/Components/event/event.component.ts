@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -9,12 +9,28 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
-import { MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatBadgeModule } from '@angular/material/badge';
+import { BehaviorSubject } from 'rxjs';
 import { EventDetailsDialogComponent } from '../event-details-dialog/event-details-dialog.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { AttendeesDialogComponent } from '../attendees-dialog/attendees-dialog.component';
+import { CommentChatComponent } from '../comment-chat/comment-chat.component';
+import { CommentService } from '../../services/comment/comment.service'; // import the service
+
+interface Event {
+  event_id: number;
+  event_name: string;
+  event_date: string;
+  start_time: string;
+  end_time: string;
+  flyer_image?: string;
+  status: string;
+  event_status: string;
+  unreadMessages?: number;
+}
 
 @Component({
   selector: 'app-event',
@@ -28,42 +44,63 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
     MatIconModule,
     MatDialogModule,
     MatInputModule,
-    MatOption,
     MatSelectModule,
     FormsModule,
     MatSlideToggleModule,
+    MatBadgeModule,
   ],
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.css'],
 })
 export class EventComponent implements OnInit {
-  events: any[] = [];
+  events: Event[] = [];
   isLoading = true;
   userId: string | null = null;
-  selectedStatus: any;
+  currentUserId!: number;
+  selectedStatus: string = '';
   searchTerm: string = '';
+
+  // Map of unread message counts per event
+  unreadCounts = new Map<number, BehaviorSubject<number>>();
 
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef,
+    private commentService: CommentService // inject CommentService
   ) {}
 
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe((params) => {
       this.userId = params.get('userId');
       if (this.userId) {
+        this.currentUserId = Number(this.userId);
         this.fetchEvents(this.userId);
       }
+    });
+
+    // Subscribe to new comment notifications
+    this.commentService.newComment$.subscribe(({ event_id }) => {
+      const currentCount = this.unreadCounts.get(event_id)?.value || 0;
+      this.updateUnreadCount(event_id, currentCount + 1);
     });
   }
 
   fetchEvents(userId: string): void {
-    this.http.get<any[]>(`http://localhost:3000/event/${userId}`).subscribe({
+    this.http.get<Event[]>(`http://localhost:3000/event/${userId}`).subscribe({
       next: (data) => {
-        // Only show events that are not completed
-        this.events = data.filter((e) => e.event_status !== 'completed');
+        this.events = data;
+
+        // Initialize BehaviorSubjects for unread counts
+        this.events.forEach((e) => {
+          this.unreadCounts.set(
+            e.event_id,
+            new BehaviorSubject(e.unreadMessages || 0)
+          );
+        });
+
         this.isLoading = false;
       },
       error: (err) => {
@@ -73,9 +110,41 @@ export class EventComponent implements OnInit {
     });
   }
 
-  onToggleChange(eventItem: any, isChecked: boolean) {
-    const newStatus = isChecked ? 'completed' : 'upcoming';
+  getUnreadCountObservable(event: Event) {
+    return this.unreadCounts.get(event.event_id)?.asObservable();
+  }
 
+  updateUnreadCount(eventId: number, newCount: number) {
+    const subject = this.unreadCounts.get(eventId);
+    if (subject) {
+      subject.next(newCount);
+      this.cdr.detectChanges();
+    }
+  }
+
+  viewAttendees(event: Event) {
+    this.dialog.open(AttendeesDialogComponent, {
+      width: '600px',
+      data: { event_id: event.event_id, event_name: event.event_name },
+    });
+  }
+
+  openChat(event: Event) {
+    this.dialog.open(CommentChatComponent, {
+      width: '700px',
+      data: {
+        event_id: event.event_id,
+        event_name: event.event_name,
+        user_id: this.currentUserId,
+      },
+    });
+
+    // Reset unread count when opening chat
+    this.updateUnreadCount(event.event_id, 0);
+  }
+
+  onToggleChange(eventItem: Event, isChecked: boolean) {
+    const newStatus = isChecked ? 'completed' : 'upcoming';
     this.http
       .put(`http://localhost:3000/events/${eventItem.event_id}/progress`, {
         event_status: newStatus,
@@ -83,18 +152,8 @@ export class EventComponent implements OnInit {
       .subscribe({
         next: () => {
           eventItem.event_status = newStatus;
-
-          // Remove the event from this page if marked as completed
-          if (newStatus === 'completed') {
-            this.events = this.events.filter(
-              (e) => e.event_id !== eventItem.event_id
-            );
-          }
-
           this.snackBar.open(`Event marked as ${newStatus}`, 'Close', {
             duration: 3000,
-            verticalPosition: 'top',
-            horizontalPosition: 'center',
           });
         },
         error: (err) => {
@@ -109,40 +168,33 @@ export class EventComponent implements OnInit {
   getStatusColor(status: string): string {
     switch (status?.toLowerCase()) {
       case 'active':
-        return '#1976d2'; // blue
+        return '#1976d2';
       case 'pending':
-        return '#ffcc00'; // yellow
+        return '#ffcc00';
       case 'completed':
-        return '#388e3c'; // green
+        return '#388e3c';
       default:
         return '#888';
     }
   }
 
   get filteredEvents() {
-    return this.events
-      .filter((event) => {
-        return this.selectedStatus
-          ? event.status === this.selectedStatus
-          : true;
-      })
-      .filter((event) => {
-        return this.searchTerm
-          ? event.event_name
-              .toLowerCase()
-              .includes(this.searchTerm.toLowerCase())
-          : true;
-      });
+    const term = this.searchTerm.toLowerCase();
+    return this.events.filter(
+      (e) =>
+        (!this.selectedStatus || e.status === this.selectedStatus) &&
+        (!term || e.event_name.toLowerCase().includes(term))
+    );
   }
 
-  viewDetails(event: any): void {
+  viewDetails(event: Event) {
     this.dialog.open(EventDetailsDialogComponent, {
       width: '700px',
       data: event,
     });
   }
 
-  deleteEvent(event: any): void {
+  deleteEvent(event: Event) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         message: `Are you sure you want to delete "${event.event_name}"?`,
@@ -155,14 +207,11 @@ export class EventComponent implements OnInit {
           .delete(`http://localhost:3000/events/${event.event_id}`)
           .subscribe({
             next: () => {
-              this.snackBar.open('Event deleted', 'Close', {
-                duration: 3000,
-                verticalPosition: 'top',
-                horizontalPosition: 'center',
-              });
+              this.snackBar.open('Event deleted', 'Close', { duration: 3000 });
               this.events = this.events.filter(
                 (e) => e.event_id !== event.event_id
               );
+              this.unreadCounts.delete(event.event_id);
             },
             error: () => {
               this.snackBar.open('Failed to delete event', 'Close', {

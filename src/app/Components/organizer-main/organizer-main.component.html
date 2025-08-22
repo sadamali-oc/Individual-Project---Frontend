@@ -20,12 +20,7 @@
       <a mat-list-item [routerLink]="['/organizer', userId, 'finish-events']" routerLinkActive="active">
         <mat-icon>check_circle</mat-icon> Finished Events
       </a>
-      <a mat-list-item [routerLink]="['/organizer', userId, 'attendees']" routerLinkActive="active">
-        <mat-icon>groups</mat-icon> Attendees
-      </a>
-      <a mat-list-item [routerLink]="['/organizer', userId, 'chat']" routerLinkActive="active">
-        <mat-icon>chat</mat-icon> Chat
-      </a>
+   
       <a mat-list-item [routerLink]="['/organizer', userId, 'settings']" routerLinkActive="active">
         <mat-icon>settings</mat-icon> Settings
       </a>
@@ -40,16 +35,16 @@
     <mat-toolbar color="primary" class="main-toolbar">
       <div class="toolbar-left">
         <button mat-icon-button (click)="toggleSidebar()">
-          <mat-icon>menu</mat-icon>
+          <mat-icon class="menu-icon">menu</mat-icon>
         </button>
         <span class="user-name">Hello, {{ userName }} 👋</span>
       </div>
       <div class="toolbar-right">
         <button mat-icon-button aria-label="Notifications">
-          <mat-icon>notifications</mat-icon>
+          <mat-icon class="notification-icon">notifications</mat-icon>
         </button>
         <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User profile menu">
-          <mat-icon>account_circle</mat-icon>
+          <mat-icon class="profile-icon">account_circle</mat-icon>
         </button>
         <mat-menu #profileMenu="matMenu">
           <button mat-menu-item (click)="viewProfile()">

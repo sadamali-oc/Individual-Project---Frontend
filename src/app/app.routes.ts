@@ -1,3 +1,4 @@
+// src/app/app.routes.ts
 import { Routes } from '@angular/router';
 
 // Auth pages
@@ -11,10 +12,11 @@ import { LandingComponent } from './pages/Website/landing/landing.component';
 
 // User profile
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { UserResolver } from '../app/resolvers/user.resolver';
 
 // Admin dashboard components
 import { AdminComponent } from './pages/dashboards/admin/admin.component';
-import { DashboardComponent } from './components/Admin dashboard/dashboard/Dashboard.component';
+import { DashboardComponent } from './components/Admin dashboard/dashboard/dashboard.component';
 import { ReportComponent } from './components/Admin dashboard/report/report.component';
 import { EventListComponent } from './components/profile/event-list/event-list.component';
 import { UserComponent } from './components/Admin dashboard/user/user.component';
@@ -31,6 +33,7 @@ import { FinishedEventsComponent } from './finished-events/finished-events.compo
 import { NormalUserDashboardComponent } from './pages/dashboards/normal-user-dashboard/normal-user-dashboard.component';
 import { NewuserComponent } from './components/newuser/newuser.component';
 import { EnrollEventsComponent } from './pages/enroll-events/enroll-events.component';
+import { ViewEnrollerEventsComponent } from './components/view-enroller-events/view-enroller-events.component';
 
 export const routes: Routes = [
   // Landing page
@@ -42,8 +45,12 @@ export const routes: Routes = [
   { path: 'auth/forgot-password', component: ForgotPasswordComponent },
   { path: 'auth/reset-password', component: ResetPasswordComponent },
 
-  // User profile
-  { path: 'user/profile/:userId', component: UserProfileComponent },
+  // User profile (with resolver like React loader)
+  {
+    path: 'user/profile/:userId',
+    component: UserProfileComponent,
+  
+  },
 
   // Admin dashboard
   {
@@ -77,6 +84,7 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: NewuserComponent },
       { path: 'viewEvents', component: EnrollEventsComponent },
+      { path: 'enrolledEvents', component: ViewEnrollerEventsComponent },
     ],
   },
 ];

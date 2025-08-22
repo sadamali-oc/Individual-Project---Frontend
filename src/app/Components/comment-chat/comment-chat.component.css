@@ -1,0 +1,112 @@
+/* Chat container */
+
+h2{
+    padding: 10px;
+}
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 450px;
+    /* Set fixed height */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fafafa;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+}
+
+/* Messages area */
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scroll-behavior: smooth;
+    /* Smooth scroll for new messages */
+}
+
+/* Individual message bubble */
+.message {
+    padding: 10px 14px;
+    border-radius: 18px;
+    max-width: 70%;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.4;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+    opacity: 0;
+    animation: fadeIn 0.3s forwards;
+}
+
+/* Messages from current user (right side) */
+.my-message {
+    background-color: #d0f0fd;
+    align-self: flex-end;
+    text-align: right;
+}
+
+/* Messages from other users (left side) */
+.other-message {
+    background-color: #f1f1f1;
+    align-self: flex-start;
+    text-align: left;
+}
+
+/* Input area */
+.input-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    border-top: 1px solid #ddd;
+    background-color: #fff;
+}
+
+/* Input field stretches */
+.input-field {
+    flex: 1;
+}
+
+
+.send-button {
+    margin: 10px;
+    background-color:#012a6c!important;
+    /* force override */
+    color: white !important;
+    transition: background-color 0.2s ease;
+}
+
+.send-button:hover {
+    background-color:#ffcc00!important;
+}
+
+
+.close-button {
+    margin: 10px;
+    background-color: #981313 !important;
+    /* force override */
+    color: white !important;
+    transition: background-color 0.2s ease;
+}
+
+.close-button:hover {
+    background-color: #ffcc00 !important;
+}
+
+
+/* Fade-in animation for messages */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Optional: mat-icon badge styling */
+mat-icon {
+    vertical-align: middle;
+    margin-left: 8px;
+}

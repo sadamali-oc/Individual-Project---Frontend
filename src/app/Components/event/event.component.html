@@ -1,11 +1,8 @@
-<div
-  class="search-filter-container"
-  style="display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap"
->
-  <mat-form-field
-    appearance="outline"
-    style="flex: 1 1 300px; min-width: 250px"
-  >
+<!-- ========================
+     Search & Filter
+======================== -->
+<div class="search-filter-container">
+  <mat-form-field appearance="outline" style="flex: 1 1 300px; min-width: 250px">
     <mat-label>Search Events</mat-label>
     <mat-icon matPrefix>search</mat-icon>
     <input matInput [(ngModel)]="searchTerm" placeholder="Enter event name" />
@@ -25,39 +22,37 @@
     <mat-select [(value)]="selectedStatus">
       <mat-option value="">All</mat-option>
       <mat-option value="pending">Pending</mat-option>
-      <mat-option value="approved">Active</mat-option>
+      <mat-option value="active">Active</mat-option>
+      <mat-option value="completed">Completed</mat-option>
       <mat-option value="rejected">Rejected</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 
-<!-- Events List -->
-<div
-  class="event-cards-container"
-  *ngIf="filteredEvents.length > 0; else noEvents"
->
+<!-- ========================
+     Event Cards
+======================== -->
+<div class="event-cards-container" *ngIf="filteredEvents.length > 0; else noEvents">
   <mat-card class="event-card" *ngFor="let event of filteredEvents">
     <mat-card-header>
       <mat-card-title>{{ event.event_name }}</mat-card-title>
     </mat-card-header>
 
-    <img
-      *ngIf="event.flyer_image"
-      mat-card-image
-      [src]="event.flyer_image"
-      alt="Event Flyer"
-    />
+    <img *ngIf="event.flyer_image" mat-card-image [src]="event.flyer_image" alt="Event Flyer" />
 
     <mat-card-content>
-      <p><strong>Date:</strong> {{ event.event_date | date : "fullDate" }}</p>
+      <p><strong>Date:</strong> {{ event.event_date | date: 'fullDate' }}</p>
       <p><strong>Start Time:</strong> {{ event.start_time }}</p>
       <p><strong>End Time:</strong> {{ event.end_time }}</p>
+
+      <!-- Status Chip -->
       <mat-chip-listbox>
         <mat-chip
           selected
-          [ngStyle]="{
-            'background-color': getStatusColor(event.status),
-            color: getStatusColor(event.status)
+          [ngClass]="{
+            'chip-active': event.status === 'active',
+            'chip-pending': event.status === 'pending',
+            'chip-completed': event.status === 'completed'
           }"
         >
           {{ event.status | titlecase }}
@@ -65,39 +60,45 @@
       </mat-chip-listbox>
     </mat-card-content>
 
-
-
     <mat-card-actions>
-      <button
-        mat-button
-        class="view-details-button"
-        (click)="viewDetails(event)"
-      >
+      <button mat-button class="view-details-button" (click)="viewDetails(event)">
         <mat-icon>visibility</mat-icon> View Details
       </button>
 
-         <!-- Slide Toggle for Event Progress -->
+      <button mat-button color="primary" (click)="viewAttendees(event)">
+        <mat-icon>groups</mat-icon> Attendees
+      </button>
+
+      <!-- Chat button without badge -->
+      <button
+        mat-button
+        color="accent"
+        (click)="openChat(event)"
+        aria-label="Chat"
+      >
+        <mat-icon>chat</mat-icon> Chat
+      </button>
+
+      <!-- Event Progress -->
       <mat-slide-toggle
         [checked]="event.event_status === 'completed'"
         (change)="onToggleChange(event, $event.checked)"
       >
         {{ event.event_status === 'completed' ? 'Done' : 'Upcoming' }}
       </mat-slide-toggle>
- 
-      <button
-        mat-icon-button
-        aria-label="Delete event"
-        (click)="deleteEvent(event)"
-      >
+
+      <button mat-icon-button aria-label="Delete event" (click)="deleteEvent(event)">
         <mat-icon>delete</mat-icon>
       </button>
     </mat-card-actions>
   </mat-card>
 </div>
 
-<!-- No Events Template -->
+<!-- ========================
+     No Events Template
+======================== -->
 <ng-template #noEvents>
   <div class="no-events-container">
-    <p>No events to display for the selected status.</p>
+    <p class="no-events-text">No events to display for the selected status.</p>
   </div>
 </ng-template>

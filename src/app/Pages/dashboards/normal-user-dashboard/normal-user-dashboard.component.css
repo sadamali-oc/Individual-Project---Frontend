@@ -5,6 +5,7 @@
     font-family: 'Inter', sans-serif;
     background-color: #fdfdfb;
     color: #012a6c;
+    /* primary text color */
 }
 
 /* ===== Sidenav container ===== */
@@ -23,24 +24,19 @@
 
 /* ===== Toolbar ===== */
 mat-toolbar {
-    background-color: #ffffff;
-    color: #012a6c;
+    background: #012a6c;
+    color: #f8fafd;
     min-height: 64px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* centers items vertically */
     padding: 0 16px;
     font-weight: 600;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #e0e0e0;
-    /* Original: background-color: #9fbaca38; */
-
-    /* Gradient version */
-    background: linear-gradient(135deg,
-            rgba(42, 67, 157, 0.289) 0%,
-            rgba(28, 117, 168, 0.118) 100%);
 }
 
 /* Toolbar left & right */
@@ -48,35 +44,36 @@ mat-toolbar {
 .toolbar-right {
     display: flex;
     align-items: center;
-    gap: 8px;
+    /* fix alignment */
+    gap: 12px;
+    /* more spacing */
 }
 
 .toolbar-left .user-name {
     font-size: 16px;
     font-weight: 600;
-    color: #012a6c;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    /* ensures vertical centering */
 }
 
 /* ===== Navigation list ===== */
 .mat-nav-list {
     padding-top: 0;
     background-color: #f6f7fc;
-    color: #012a6c;
+    color: #ffffff;
 }
 
 /* Normal tabs */
 .mat-list-item,
 .mat-mdc-list-item {
-    color: #012a6c;
-    /* dark blue text */
-    background-color: transparent;
-    /* no background */
+    color: #ffffff;
     display: flex !important;
     align-items: center !important;
     gap: 8px !important;
-    margin: 4px 4px;
+    margin: 4px 8px;
     padding: 8px 12px;
-    padding-left: 12px;
     border-radius: 8px;
     font-weight: 500;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -86,8 +83,8 @@ mat-toolbar {
 /* Icons for normal tabs */
 .mat-list-item mat-icon,
 .mat-mdc-list-item mat-icon {
-    color: #012a6c;
-    /* same as text */
+    font-family: 'Material Icons' !important;
+    color: #012a6c !important;
     font-size: 20px !important;
     height: 20px !important;
     width: 20px !important;
@@ -98,11 +95,17 @@ mat-toolbar {
     vertical-align: middle !important;
 }
 
+/* Ensure text aligns with icon */
+.mat-list-item span,
+.mat-mdc-list-item span {
+    display: inline-block;
+    line-height: 20px;
+}
+
 /* Hover effect */
 .mat-list-item:hover,
 .mat-mdc-list-item:hover {
     background-color: #fffde0;
-    /* light yellow */
     color: #012a6c;
 }
 
@@ -115,7 +118,6 @@ mat-toolbar {
 .mat-list-item.active,
 .mat-mdc-list-item.active {
     background-color: #ffcc00 !important;
-    /* width: 200px; */
     /* golden yellow */
     color: #012a6c !important;
 }
@@ -123,6 +125,139 @@ mat-toolbar {
 .mat-list-item.active mat-icon,
 .mat-mdc-list-item.active mat-icon {
     color: #012a6c !important;
+}
+
+/* ===== Topbar icons ===== */
+.menu-icon,
+.notification-icon,
+.profile-icon {
+    font-family: 'Material Icons' !important;
+    color: #fbfdfe;
+    /* White */
+    font-size: 28px !important;
+    /* bigger for visibility */
+    line-height: 1 !important;
+    /* prevents clipping */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== Profile section ===== */
+.profile-section {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 24px;
+    background-color: #f6f7fc;
+    transition: background-color 0.2s ease;
+    margin-left: 16px;
+}
+
+.profile-section:hover {
+    background-color: #ffffff;
+}
+
+.profile-section .user-name {
+    color: #012a6c;
+    font-weight: 500;
+    display: none;
+}
+
+@media (min-width: 600px) {
+    .profile-section .user-name {
+        display: inline-block;
+    }
+}
+
+/* ===== Dashboard cards ===== */
+.dashboard-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.card {
+    flex: 1 1 320px;
+    max-width: 350px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    background-color: #f8f8f8;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card .mat-card-header {
+    background-color: #012a6c;
+    color: #fff;
+    padding: 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.card .mat-card-title {
+    font-weight: 600;
+}
+
+.card .mat-card-content p {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #012a6c;
+    margin: 0;
+}
+
+/* ===== Table ===== */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+table th {
+    background-color: #012a6c;
+    color: #fff;
+    padding: 12px 10px;
+    text-align: left;
+}
+
+table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #fffde0;
+}
+
+/* ===== Status badges ===== */
+.status-confirmed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
 /* ===== Responsive adjustments ===== */

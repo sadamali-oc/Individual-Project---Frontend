@@ -13,8 +13,6 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { DecisionButtonsComponent } from '../../decision-buttons/decision-buttons.component';
-import { EventCardComponent } from '../../event-card/event-card.component';
 import { EventDetailsDialogComponent } from '../../event-details-dialog/event-details-dialog.component';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 
@@ -44,8 +42,7 @@ export interface Event {
     MatTooltipModule,
     HttpClientModule,
     MatSnackBarModule,
-    DecisionButtonsComponent,
-    EventCardComponent,
+  
   ],
   providers: [DatePipe],
   templateUrl: './event-list.component.html',

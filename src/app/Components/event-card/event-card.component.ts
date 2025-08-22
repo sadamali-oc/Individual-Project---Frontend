@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-event-card',
@@ -10,7 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
   imports:[
     MatButtonModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    CommonModule
   ]
 })
 export class EventCardComponent {
