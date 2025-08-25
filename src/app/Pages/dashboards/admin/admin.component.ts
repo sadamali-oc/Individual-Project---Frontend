@@ -34,6 +34,7 @@ import { MatMenuModule } from '@angular/material/menu';
   ]
 })
 export class AdminComponent implements OnInit, AfterViewInit {
+
   @ViewChild('sidenav') sidenav!: MatSidenav;
   isSidebarOpen: boolean = true;
   userId: string | null = null;
@@ -71,6 +72,11 @@ export class AdminComponent implements OnInit, AfterViewInit {
   viewProfile(): void {
     console.log('Navigating to user profile with ID:', this.userId);
     this.router.navigate(['/user/profile/:userid']);
+  }
+
+  viewSettings(): void {
+    console.log('Navigating to user settings with ID:', this.userId);
+    this.router.navigate(['settings']);
   }
 
   handleLogout(): void {

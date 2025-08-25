@@ -87,7 +87,7 @@
         <mat-option value="poster_session">Poster Session</mat-option>
         <mat-option value="thesis_defense">Thesis Defense</mat-option>
         <mat-option value="open_day">Open Day / Campus Tour</mat-option>
-        <mat-option value="student_performance">Student Performance (Music/Drama/Dance)</mat-option>
+        <mat-option value="student_performance">Student Performance</mat-option>
         <mat-option value="counseling_session">Counseling Session</mat-option>
         <mat-option value="fundraiser">Fundraiser / Gala</mat-option>
         <mat-option value="health_wellness_fair">Health & Wellness Fair</mat-option>
@@ -120,7 +120,7 @@
       ></textarea>
     </mat-form-field>
 
-    <!-- New: Event Mode -->
+    <!-- Event Mode -->
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Event Mode</mat-label>
       <mat-select [(ngModel)]="eventMode" name="eventMode" required>
@@ -130,8 +130,12 @@
       </mat-select>
     </mat-form-field>
 
-    <!-- New: Location (show only if physical or hybrid) -->
-    <mat-form-field appearance="fill" class="full-width" *ngIf="eventMode === 'physical' || eventMode === 'hybrid'">
+    <!-- Location (only if physical/hybrid) -->
+    <mat-form-field
+      appearance="fill"
+      class="full-width"
+      *ngIf="eventMode === 'physical' || eventMode === 'hybrid'"
+    >
       <mat-label>Location</mat-label>
       <input
         matInput
@@ -143,18 +147,18 @@
       />
     </mat-form-field>
 
-    <!-- New: Audience Type -->
+    <!-- Audience Type -->
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Audience Type</mat-label>
       <mat-select [(ngModel)]="audienceType" name="audienceType" required>
         <mat-option value="open">Open to All</mat-option>
         <mat-option value="club_members">Club Members</mat-option>
         <mat-option value="private">Private</mat-option>
-        <mat-option value="faculty only">Faculty Only</mat-option>
-
+        <mat-option value="faculty_only">Faculty Only</mat-option>
       </mat-select>
     </mat-form-field>
 
+    <!-- File Upload -->
     <div class="custom-file-upload">
       <label for="fileInput" class="upload-label">
         <mat-icon>cloud_upload</mat-icon> Choose File
@@ -169,6 +173,7 @@
       <span class="file-name">{{ fileName || "No file chosen" }}</span>
     </div>
 
+    <!-- Buttons -->
     <div class="form-actions">
       <button class="purple-btn" (click)="submitForm()">Submit</button>
       <button class="purple-btn-reset" (click)="resetForm()">Reset</button>

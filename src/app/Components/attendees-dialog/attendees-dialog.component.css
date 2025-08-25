@@ -1,0 +1,112 @@
+/* Dialog title */
+h2[mat-dialog-title] {
+    font-size: 20px;
+    font-weight: 600;
+    color: #012a6c;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* Dialog content */
+.attendees-dialog-content {
+    max-height: 400px;
+    /* scrollable if many attendees */
+    overflow-y: auto;
+    padding: 0 24px 16px 24px;
+}
+
+/* Table container scroll */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Material table styling */
+table.mat-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+/* Header row */
+th.mat-header-cell {
+    background-color: #f5f5f5;
+    color: #012a6c;
+    font-weight: 600;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+/* Data rows */
+td.mat-cell {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+}
+
+/* Hover effect for rows */
+tr.mat-row:hover {
+    background-color: #f0f0f0;
+    cursor: default;
+}
+
+/* Empty state */
+.empty-state {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Dialog actions button */
+mat-dialog-actions {
+    padding: 8px 24px;
+}
+
+mat-dialog-actions button {
+    background-color: #ffcc00;
+    color: #012a6c;
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 6px 16px;
+    transition: background-color 0.3s ease;
+}
+
+
+
+.close-button{
+    background-color: #ffcc00;
+    color: #012a6c;
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 6px 16px;
+    transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+    background-color:#012a6c;
+    color: #fff;
+}
+
+mat-dialog-actions button:hover {
+    background-color: #012a6c;
+    color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+
+    table.mat-table th.mat-header-cell,
+    table.mat-table td.mat-cell {
+        padding: 6px 8px;
+        font-size: 13px;
+    }
+
+    .attendees-dialog-content {
+        padding: 0 12px 12px 12px;
+    }
+
+    h2[mat-dialog-title] {
+        font-size: 18px;
+    }
+}

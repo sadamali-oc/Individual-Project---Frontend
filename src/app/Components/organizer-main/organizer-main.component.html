@@ -8,23 +8,49 @@
   >
     <mat-toolbar color="primary">Organizer Panel</mat-toolbar>
     <mat-nav-list class="content">
-      <a mat-list-item [routerLink]="['/organizer', userId, 'dashboard']" routerLinkActive="active">
+      <a
+        mat-list-item
+        [routerLink]="['/organizer', userId, 'dashboard']"
+        routerLinkActive="active"
+      >
         <mat-icon>dashboard</mat-icon> Dashboard
       </a>
-      <a mat-list-item [routerLink]="['/organizer', userId, 'event']" routerLinkActive="active">
+
+      <a mat-list-item (click)="openEventCalendar()" routerLinkActive="active">
+        <mat-icon>event</mat-icon> Event Calendar
+      </a>
+
+      <a
+        mat-list-item
+        [routerLink]="['/organizer', userId, 'event']"
+        routerLinkActive="active"
+      >
         <mat-icon>event</mat-icon> Create Event
       </a>
-      <a mat-list-item [routerLink]="['/organizer', userId, 'events']" routerLinkActive="active">
+      <a
+        mat-list-item
+        [routerLink]="['/organizer', userId, 'events']"
+        routerLinkActive="active"
+      >
         <mat-icon>event_note</mat-icon> View Events
       </a>
-      <a mat-list-item [routerLink]="['/organizer', userId, 'finish-events']" routerLinkActive="active">
+      <a
+        mat-list-item
+        [routerLink]="['/organizer', userId, 'finish-events']"
+        routerLinkActive="active"
+      >
         <mat-icon>check_circle</mat-icon> Finished Events
       </a>
-   
-      <a mat-list-item [routerLink]="['/organizer', userId, 'settings']" routerLinkActive="active">
-        <mat-icon>settings</mat-icon> Settings
+      <a mat-list-item (click)="viewSettings()" routerLinkActive="active">
+        <mat-icon>settings</mat-icon>
+        Settings
       </a>
-      <a mat-list-item [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a
+        mat-list-item
+        [routerLink]="['/']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <mat-icon>home</mat-icon> Go to Home
       </a>
     </mat-nav-list>
@@ -39,11 +65,41 @@
         </button>
         <span class="user-name">Hello, {{ userName }} 👋</span>
       </div>
+
       <div class="toolbar-right">
-        <button mat-icon-button aria-label="Notifications">
+        <!-- Notifications -->
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="notifMenu"
+          matBadge="{{ unreadCount }}"
+          matBadgeColor="warn"
+          aria-label="Notifications"
+        >
           <mat-icon class="notification-icon">notifications</mat-icon>
         </button>
-        <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User profile menu">
+        <mat-menu #notifMenu="matMenu">
+          <ng-container *ngIf="notifications.length > 0; else noNotifications">
+            <button
+              mat-menu-item
+              *ngFor="let n of notifications"
+              (click)="markAsRead(n)"
+            >
+              <span [class.unread]="!n.is_read">{{ n.message }}</span>
+              <small class="notif-time">{{
+                n.created_at | date : "short"
+              }}</small>
+            </button>
+          </ng-container>
+          <ng-template #noNotifications>
+            <button mat-menu-item disabled>No notifications</button>
+          </ng-template>
+        </mat-menu>
+
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="profileMenu"
+          aria-label="User profile menu"
+        >
           <mat-icon class="profile-icon">account_circle</mat-icon>
         </button>
         <mat-menu #profileMenu="matMenu">
@@ -57,13 +113,7 @@
       </div>
     </mat-toolbar>
 
-
-
-
     <div class="main-content">
-      <!-- Event Status Chart -->
-  
-      <!-- Routed content -->
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

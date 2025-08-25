@@ -142,7 +142,9 @@ mat-toolbar {
   align-items: center;
   justify-content: center;
 }
-
+.unread {
+  font-weight: bold;
+}
 /* ===== Profile section ===== */
 .profile-section {
   display: flex;

@@ -34,6 +34,9 @@ import { NormalUserDashboardComponent } from './pages/dashboards/normal-user-das
 import { NewuserComponent } from './components/newuser/newuser.component';
 import { EnrollEventsComponent } from './pages/enroll-events/enroll-events.component';
 import { ViewEnrollerEventsComponent } from './components/view-enroller-events/view-enroller-events.component';
+import { SettingComponent } from './components/setting/setting.component';
+
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 export const routes: Routes = [
   // Landing page
@@ -49,8 +52,11 @@ export const routes: Routes = [
   {
     path: 'user/profile/:userId',
     component: UserProfileComponent,
-  
   },
+
+  { path: 'settings', component: SettingComponent },
+
+  { path: 'eventCalendar', component: CalendarComponent },
 
   // Admin dashboard
   {

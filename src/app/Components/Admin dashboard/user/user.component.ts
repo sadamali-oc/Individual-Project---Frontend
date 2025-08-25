@@ -1,12 +1,19 @@
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  OnInit,
+  AfterViewInit,
+  Inject,
+  PLATFORM_ID,
+  OnDestroy,
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { interval, Subscription } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
@@ -16,8 +23,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
-import { UserDetailsDialogComponent } from '../../user-details-dialog/user-details-dialog.component'
+import { UserDetailsDialogComponent } from '../../user-details-dialog/user-details-dialog.component';
+import {
+  NotificationService,
+  Notification,
+} from '../../../services/notification/notification.service';
 
 export type UserStatus = 'Pending' | 'Accepted' | 'Rejected';
 
@@ -26,6 +41,9 @@ export interface PeriodicElement {
   name: string;
   email: string;
   status: UserStatus;
+  phone_number?: string;
+  gender?: string;
+  role?: string;
 }
 
 @Component({
@@ -45,25 +63,55 @@ export interface PeriodicElement {
     MatIconModule,
     MatProgressSpinnerModule,
     MatSelectModule,
-    MatDialogModule, // ✅ added dialog module
+    MatDialogModule,
+    MatMenuModule,
+    MatBadgeModule,
+    MatToolbarModule,
+    MatSidenavModule,
   ],
 })
-export class UserComponent implements OnInit, AfterViewInit {
+export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = ['id', 'name', 'email', 'status', 'actions'];
   dataSource = new MatTableDataSource<PeriodicElement>([]);
   isLoading = true;
-  searchTerm = '';
 
   statusOptions: UserStatus[] = ['Pending', 'Accepted', 'Rejected'];
   statusFilter: string = '';
 
-  constructor(private http: HttpClient, private dialog: MatDialog) {}
+  // Notifications
+  notifications: Notification[] = [];
+  private notificationPolling?: Subscription;
+
+  userId: string = '';
+  userName: string = 'User';
+  isSidebarOpen: boolean = true;
+
+  constructor(
+    private http: HttpClient,
+    private dialog: MatDialog,
+    private notificationService: NotificationService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
-    this.loadUsers();
+    if (isPlatformBrowser(this.platformId)) {
+      const storedUserId = localStorage.getItem('user_id');
+      if (storedUserId) {
+        this.userId = storedUserId;
+        this.fetchUserName(this.userId);
+        this.loadUsers();
+        this.loadNotifications(this.userId);
 
+        // Poll notifications every 10 seconds
+        this.notificationPolling = interval(10000).subscribe(() => {
+          this.loadNotifications(this.userId);
+        });
+      }
+    }
+
+    // Table filter
     this.dataSource.filterPredicate = (
       data: PeriodicElement,
       filter: string
@@ -81,17 +129,11 @@ export class UserComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  applyStatusFilter(status: string) {
-    this.statusFilter = status;
-    this.dataSource.filter =
-      (document.querySelector('.search-input input') as HTMLInputElement)?.value
-        .trim()
-        .toLowerCase() || '';
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  ngOnDestroy(): void {
+    this.notificationPolling?.unsubscribe();
   }
 
+  // --- Users ---
   loadUsers(): void {
     this.isLoading = true;
     this.http.get<any[]>('http://localhost:3000/all/users').subscribe({
@@ -119,7 +161,6 @@ export class UserComponent implements OnInit, AfterViewInit {
             role: user.role,
           };
         });
-
         this.dataSource.data = mappedUsers;
         this.isLoading = false;
       },
@@ -133,10 +174,16 @@ export class UserComponent implements OnInit, AfterViewInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) this.dataSource.paginator.firstPage();
+  }
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  applyStatusFilter(status: string): void {
+    this.statusFilter = status;
+    this.dataSource.filter =
+      (document.querySelector('.search-input input') as HTMLInputElement)?.value
+        .trim()
+        .toLowerCase() || '';
+    if (this.dataSource.paginator) this.dataSource.paginator.firstPage();
   }
 
   changeStatus(user: PeriodicElement, newStatus: UserStatus): void {
@@ -160,13 +207,15 @@ export class UserComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: () => {
           user.status = newStatus;
+
+          // Reload notifications if status affects logged-in user
+          if (user.id === +this.userId) this.loadNotifications(this.userId);
         },
         error: (err) => console.error('Error updating status:', err),
       });
   }
 
   viewUser(user: PeriodicElement): void {
-    console.log(user);
     const dialogRef = this.dialog.open(UserDetailsDialogComponent, {
       width: '700px',
       data: { ...user },
@@ -179,9 +228,57 @@ export class UserComponent implements OnInit, AfterViewInit {
         );
         if (index !== -1) {
           this.dataSource.data[index] = updatedUser;
-          this.dataSource._updateChangeSubscription(); // refresh table display
+          this.dataSource._updateChangeSubscription();
         }
       }
     });
+  }
+
+  // --- Notifications ---
+  loadNotifications(userId: string) {
+    this.notificationService.getNotifications(+userId).subscribe({
+      next: (res: Notification[]) => (this.notifications = res),
+      error: (err: any) => console.error('Failed to load notifications', err),
+    });
+  }
+
+  markAsRead(notification: Notification) {
+    this.notificationService
+      .markAsRead(notification.notification_id)
+      .subscribe({
+        next: () => (notification.is_read = true),
+        error: (err) =>
+          console.error('Failed to mark notification as read', err),
+      });
+  }
+
+  get unreadCount(): number {
+    return this.notifications.filter((n) => !n.is_read).length;
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  fetchUserName(userId: string): void {
+    this.http
+      .get<any>(`http://localhost:3000/user/profile/${userId}`)
+      .subscribe({
+        next: (res) => {
+          this.userName = res?.name ?? 'User';
+          localStorage.setItem(`user_${userId}`, JSON.stringify(res));
+        },
+        error: () => (this.userName = 'User'),
+      });
+  }
+
+  handleLogout(): void {
+    localStorage.removeItem('user_id');
+    localStorage.removeItem(`user_${this.userId}`);
+    window.location.href = '/auth/login';
+  }
+
+  viewProfile(): void {
+    window.location.href = `/user/profile/${this.userId}`;
   }
 }

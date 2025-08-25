@@ -8,87 +8,119 @@
   >
     <mat-toolbar color="primary" class="dashname">User Dashboard</mat-toolbar>
 
-    <ng-container *ngIf="userId">
-      <mat-nav-list>
-<ng-container *ngIf="userId">
-  <mat-nav-list>
-    <!-- Dashboard -->
-    <a mat-list-item routerLink="/user/{{ userId }}/dashboard" routerLinkActive="active">
-      <mat-icon>dashboard</mat-icon>
-      Dashboard
-    </a>
+    <mat-nav-list *ngIf="userId">
+      <a
+        mat-list-item
+        routerLink="/user/{{ userId }}/dashboard"
+        routerLinkActive="active"
+      >
+        <mat-icon>dashboard</mat-icon> Dashboard
+      </a>
 
-    <!-- View all Events -->
-    <a mat-list-item routerLink="/user/{{ userId }}/viewEvents" routerLinkActive="active">
-      <mat-icon>calendar_month</mat-icon>
-      View all Events
-    </a>
+      <!-- Event Calendar item using a method -->
+      <a mat-list-item (click)="openEventCalendar()" routerLinkActive="active">
+        <mat-icon>event</mat-icon> Event Calendar
+      </a>
 
-    <!-- Enrolled Events -->
-    <a mat-list-item routerLink="/user/{{ userId }}/enrolledEvents" routerLinkActive="active">
-      <mat-icon>check_circle</mat-icon>
-      Enrolled Events
-    </a>
+      <a
+        mat-list-item
+        routerLink="/user/{{ userId }}/viewEvents"
+        routerLinkActive="active"
+      >
+        <mat-icon>calendar_month</mat-icon> View all Events
+      </a>
 
-    <!-- Profile -->
-    <a mat-list-item routerLink="/user/profile/{{ userId }}" routerLinkActive="active">
-      <mat-icon>account_circle</mat-icon>
-      Profile
-    </a>
+      <a
+        mat-list-item
+        routerLink="/user/{{ userId }}/enrolledEvents"
+        routerLinkActive="active"
+      >
+        <mat-icon>check_circle</mat-icon> Enrolled Events
+      </a>
 
-    <!-- Settings -->
-    <a mat-list-item routerLink="/user/settings/{{ userId }}" routerLinkActive="active">
-      <mat-icon>settings</mat-icon>
-      Settings
-    </a>
+      <a
+        mat-list-item
+        routerLink="/user/profile/{{ userId }}"
+        routerLinkActive="active"
+      >
+        <mat-icon>account_circle</mat-icon> Profile
+      </a>
+      <a mat-list-item (click)="viewSettings()" routerLinkActive="active">
+        <mat-icon>settings</mat-icon>
+        Settings
+      </a>
 
-    <!-- Logout -->
-    <a mat-list-item (click)="handleLogout()">
-      <mat-icon>logout</mat-icon>
-      Logout
-    </a>
-  </mat-nav-list>
-</ng-container>
-
-
-
-      </mat-nav-list>
-    </ng-container>
+      <a mat-list-item (click)="handleLogout()">
+        <mat-icon>logout</mat-icon> Logout
+      </a>
+    </mat-nav-list>
   </mat-sidenav>
 
   <!-- Main Content -->
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="main-toolbar">
       <div class="toolbar-left">
-        <button mat-icon-button (click)="toggleSidebar()" aria-label="Toggle sidebar">
+        <button
+          mat-icon-button
+          (click)="toggleSidebar()"
+          aria-label="Toggle sidebar"
+        >
           <mat-icon class="menu-icon">menu</mat-icon>
         </button>
         <span class="user-name">Hello, {{ userName }} 👋</span>
       </div>
 
       <div class="toolbar-right">
-        <button mat-icon-button aria-label="Notifications">
+        <!-- Notifications with badge -->
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="notifMenu"
+          [matBadge]="unreadCount"
+          matBadgeColor="warn"
+          aria-label="Notifications"
+        >
           <mat-icon class="notification-icon">notifications</mat-icon>
         </button>
 
-        <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User profile menu">
+        <mat-menu #notifMenu="matMenu">
+          <ng-container *ngIf="notifications.length > 0; else noNotifications">
+            <button
+              mat-menu-item
+              *ngFor="let n of notifications"
+              (click)="markAsRead(n)"
+            >
+              <span [class.unread]="!n.is_read">{{ n.message }}</span>
+              <small class="notif-time">{{
+                n.created_at | date : "short"
+              }}</small>
+            </button>
+          </ng-container>
+          <ng-template #noNotifications>
+            <button mat-menu-item disabled>No notifications</button>
+          </ng-template>
+        </mat-menu>
+
+        <!-- Profile -->
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="profileMenu"
+          aria-label="User profile menu"
+        >
           <mat-icon class="profile-icon">account_circle</mat-icon>
         </button>
 
         <mat-menu #profileMenu="matMenu">
           <button mat-menu-item (click)="viewProfile()">
-            <mat-icon class="profile-icon">person</mat-icon>
-            <span>Profile</span>
+            <mat-icon>person</mat-icon> Profile
           </button>
           <button mat-menu-item (click)="handleLogout()">
-            <mat-icon>logout</mat-icon>
-            <span>Logout</span>
+            <mat-icon>logout</mat-icon> Logout
           </button>
         </mat-menu>
       </div>
     </mat-toolbar>
 
-    <!-- Event Button / Router Outlet -->
+    <!-- Router outlet for page content -->
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>

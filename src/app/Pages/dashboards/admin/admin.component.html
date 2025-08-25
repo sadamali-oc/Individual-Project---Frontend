@@ -31,7 +31,7 @@
       </a>
 
     <!-- Settings -->
-    <a mat-list-item routerLink="/user/settings/{{ userId }}" routerLinkActive="active">
+    <a mat-list-item (click)="viewSettings()" routerLinkActive="active">
       <mat-icon>settings</mat-icon>
       Settings
     </a>
