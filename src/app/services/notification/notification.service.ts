@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// src/app/services/notification/notification.service.ts
+
 export interface Notification {
   notification_id: number;
   user_id: number;
   event_id: number | null;
-  message: string;    // <-- must match backend column
+  message: string;   
   is_read: boolean;
   created_at: string;
 }
@@ -18,7 +18,7 @@ export interface Notification {
   providedIn: 'root',
 })
 export class NotificationService {
-  private apiUrl = 'http://localhost:3000/notifications'; // backend endpoint
+  private apiUrl = 'http://localhost:3000/notifications';
 
   constructor(private http: HttpClient) {}
 

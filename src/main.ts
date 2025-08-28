@@ -8,6 +8,6 @@ bootstrapApplication(AppComponent, {
   ...appConfig,
   providers: [
     ...(appConfig.providers || []),
-    importProvidersFrom(FullCalendarModule), // ✅ makes <full-calendar> known
+    importProvidersFrom(FullCalendarModule), 
   ],
 }).catch((err) => console.error(err));

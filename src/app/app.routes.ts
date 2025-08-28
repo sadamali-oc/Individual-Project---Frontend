@@ -12,7 +12,7 @@ import { LandingComponent } from './pages/Website/landing/landing.component';
 
 // User profile
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
-import { UserResolver } from '../app/resolvers/user.resolver';
+//
 
 // Admin dashboard components
 import { AdminComponent } from './pages/dashboards/admin/admin.component';
@@ -48,7 +48,6 @@ export const routes: Routes = [
   { path: 'auth/forgot-password', component: ForgotPasswordComponent },
   { path: 'auth/reset-password', component: ResetPasswordComponent },
 
-  // User profile (with resolver like React loader)
   {
     path: 'user/profile/:userId',
     component: UserProfileComponent,

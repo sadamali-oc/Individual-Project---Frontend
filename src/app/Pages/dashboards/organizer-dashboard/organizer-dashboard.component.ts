@@ -15,6 +15,8 @@ import { RouterModule, ActivatedRoute } from '@angular/router';
 import { UserService } from './user.service';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { FormsModule } from '@angular/forms';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, PLATFORM_ID } from '@angular/core';
 
 interface Event {
   name: string;
@@ -100,7 +102,8 @@ export class OrganizerDashboardComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   // Event counts
@@ -172,8 +175,9 @@ export class OrganizerDashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // Force resize so CanvasJS fits cards correctly
-    setTimeout(() => window.dispatchEvent(new Event('resize')), 300);
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 300);
+    }
   }
 
   @HostListener('window:resize')

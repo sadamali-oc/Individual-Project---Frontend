@@ -10,7 +10,6 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { FullCalendarModule } from '@fullcalendar/angular';
 
-
 // Firebase and AngularFire modules
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
@@ -26,6 +25,6 @@ export const appConfig: ApplicationConfig = {
 
     // Firebase initialization with forRoot
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
   ],
 };

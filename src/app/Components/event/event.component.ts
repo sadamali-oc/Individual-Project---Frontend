@@ -182,6 +182,7 @@ export class EventComponent implements OnInit {
     const term = this.searchTerm.toLowerCase();
     return this.events.filter(
       (e) =>
+        e.event_status !== 'completed' && // 👈 exclude completed
         (!this.selectedStatus || e.status === this.selectedStatus) &&
         (!term || e.event_name.toLowerCase().includes(term))
     );
