@@ -56,7 +56,6 @@ export class ViewEnrollerEventsComponent implements OnInit, AfterViewInit {
   currentUserId!: number;
 
   searchTerm: string = '';
-  // In your parent component (e.g., ViewEnrollerEventsComponent)
   newMessageMap: { [eventId: number]: boolean } = {};
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -158,7 +157,7 @@ export class ViewEnrollerEventsComponent implements OnInit, AfterViewInit {
       data: {
         event_id: event.event_id,
         event_name: event.event_name,
-        user_id: this.currentUserId, // <- use currentUserId
+        user_id: this.currentUserId,
       },
     });
   }

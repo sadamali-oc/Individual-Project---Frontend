@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog'; // Import MatDialog
+import { MatDialog, MatDialogModule } from '@angular/material/dialog'; 
 import { EventDetailsDialogComponent } from '../event-details-dialog/event-details-dialog.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';`
@@ -25,7 +25,7 @@ isParticipating: any;
   selector: 'app-event-button',
   standalone: true,
   imports: [MatCardModule, CommonModule, MatIconModule, MatDialogModule,
-  MatSlideToggleModule, MatButtonModule,   ], // Add MatDialogModule here
+  MatSlideToggleModule, MatButtonModule,   ], 
   templateUrl: './event-button.component.html',
   styleUrls: ['./event-button.component.css'],
 })
@@ -50,7 +50,6 @@ export class EventButtonComponent implements OnInit {
     );
   }
 
-  // Fix: method signature typo and added return type void
   viewEvent(event: Event): void {
     this.dialog.open(EventDetailsDialogComponent, {
       width: '700px',

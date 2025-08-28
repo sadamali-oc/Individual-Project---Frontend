@@ -182,7 +182,7 @@ export class OrganizerDashboardComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize')
   onResize() {
-    // CanvasJS automatically adjusts when resize event is fired
+
   }
 
   toggleSidebar() {

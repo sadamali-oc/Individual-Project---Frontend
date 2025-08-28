@@ -5,7 +5,6 @@ import {
   PLATFORM_ID,
   OnDestroy,
 } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -17,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatCardModule } from '@angular/material/card';
 import { interval, Subscription } from 'rxjs';
+import { UserService, UserProfile } from '../../../services/user/user.service';
 import {
   NotificationService,
   Notification,
@@ -50,7 +50,7 @@ export class NormalUserDashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private http: HttpClient,
+    private userService: UserService,
     private notificationService: NotificationService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -73,33 +73,28 @@ export class NormalUserDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  viewSettings(): void {
-    console.log('Navigating to user settings with ID:', this.userId);
-    this.router.navigate(['settings']);
-  }
-
-  openEventCalendar() {
-    // For example, navigate programmatically
-    this.router.navigate([`eventCalendar`]);
-
-    // Or open a dialog/calendar component
-    // this.dialog.open(EventCalendarComponent, { width: '800px', data: { userId: this.userId } });
-  }
-
   ngOnDestroy(): void {
     this.notificationPolling?.unsubscribe();
   }
 
+  // --- User ---
   fetchUserName(userId: string): void {
-    this.http
-      .get<any>(`http://localhost:3000/user/profile/${userId}`)
-      .subscribe({
-        next: (res) => {
-          this.userName = res?.name ?? 'User';
-          localStorage.setItem(`user_${userId}`, JSON.stringify(res));
-        },
-        error: () => (this.userName = 'User'),
-      });
+    this.userService.getUserById(userId).subscribe({
+      next: (res: UserProfile) => {
+        this.userName = res?.name ?? 'User';
+        localStorage.setItem(`user_${userId}`, JSON.stringify(res));
+      },
+      error: () => (this.userName = 'User'),
+    });
+  }
+
+  // --- Navigation ---
+  viewSettings(): void {
+    this.router.navigate(['settings']);
+  }
+
+  openEventCalendar(): void {
+    this.router.navigate([`eventCalendar`]);
   }
 
   toggleSidebar(): void {
@@ -107,21 +102,16 @@ export class NormalUserDashboardComponent implements OnInit, OnDestroy {
   }
 
   viewProfile(): void {
-    if (this.userId) {
-      this.router.navigate(['/user/profile', this.userId]);
-    }
+    if (this.userId) this.router.navigate(['/user/profile', this.userId]);
   }
 
   navigateToDashboard(): void {
-    if (this.userId) {
-      this.router.navigate(['/user', this.userId, 'dashboard']);
-    }
+    if (this.userId) this.router.navigate(['/user', this.userId, 'dashboard']);
   }
 
   navigateToEnrolledEvents(): void {
-    if (this.userId) {
+    if (this.userId)
       this.router.navigate(['/user', this.userId, 'enrolledEvents']);
-    }
   }
 
   handleLogout(): void {
@@ -133,14 +123,14 @@ export class NormalUserDashboardComponent implements OnInit, OnDestroy {
   }
 
   // --- Notifications ---
-  loadNotifications(userId: string) {
+  loadNotifications(userId: string): void {
     this.notificationService.getNotifications(+userId).subscribe({
       next: (res: Notification[]) => (this.notifications = res),
-      error: (err: any) => console.error('Failed to load notifications', err),
+      error: (err) => console.error('Failed to load notifications', err),
     });
   }
 
-  markAsRead(notification: Notification) {
+  markAsRead(notification: Notification): void {
     this.notificationService
       .markAsRead(notification.notification_id)
       .subscribe({

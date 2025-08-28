@@ -89,7 +89,7 @@ export class OrganizerMainComponent implements OnInit, OnDestroy {
     // Or open a dialog/calendar component
     // this.dialog.open(EventCalendarComponent, { width: '800px', data: { userId: this.userId } });
   }
-  
+
   viewSettings(): void {
     console.log('Navigating to user settings with ID:', this.userId);
     this.router.navigate(['settings']);

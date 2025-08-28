@@ -16,10 +16,10 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
 
 // Admin dashboard components
 import { AdminComponent } from './pages/dashboards/admin/admin.component';
-import { DashboardComponent } from './components/Admin dashboard/dashboard/dashboard.component';
-import { ReportComponent } from './components/Admin dashboard/report/report.component';
+import { DashboardComponent } from './components//admin components/dashboard/dashboard.component';
+import { ReportComponent } from './components/admin components/report/report.component';
 import { EventListComponent } from './components/profile/event-list/event-list.component';
-import { UserComponent } from './components/Admin dashboard/user/user.component';
+import { UserComponent } from './components/admin components/user/user.component';
 import { OrganizerComponent } from './organizer/organizer.component';
 
 // Organizer dashboard components
