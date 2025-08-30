@@ -37,7 +37,7 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private http: HttpClient,
-    private snackBar: MatSnackBar // <-- Inject MatSnackBar here
+    private snackBar: MatSnackBar
   ) {}
 
   get f() {
@@ -49,7 +49,7 @@ export class SignUpComponent implements OnInit {
     this.http.get<any[]>('http://localhost:3000/clubs').subscribe({
       next: (clubs) => {
         this.universityClubs = clubs.map((c) => ({
-          value: c.club_id, // club_id as value
+          value: c.club_id,
           display: c.display_name,
         }));
         console.log(this.universityClubs);
@@ -72,7 +72,7 @@ export class SignUpComponent implements OnInit {
         confirmPassword: ['', Validators.required],
         role: ['', Validators.required],
         gender: ['', Validators.required],
-        universityClub: [''], // Initially no validator
+        universityClub: [''],
       },
       {
         validator: MustMatch(
@@ -96,19 +96,21 @@ export class SignUpComponent implements OnInit {
     });
   }
 
+  private showSnackBar(message: string, duration: number = 3000) {
+    this.snackBar.open(message, 'Close', {
+      duration,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
+
   onPost() {
     this.status = { statusCode: 0, message: 'Please wait...' };
 
     if (this.frm.invalid) {
-      // You can optionally notify user to fix validation errors here
+      this.showSnackBar('Please fill all required fields correctly.');
       return;
     }
-
-    this.snackBar.open('Signup successful!', 'Close', {
-      duration: 3000,
-      horizontalPosition:'center',
-      verticalPosition:'top'
-    });
 
     // Map universityClub to club_id (number) for backend
     const payload = {
@@ -125,15 +127,30 @@ export class SignUpComponent implements OnInit {
           statusCode: 1,
           message: 'Signup successful! Redirecting...',
         };
+
+        // ✅ Success snackbar
+        this.showSnackBar('Signup successful! Redirecting...');
+
         this.frm.reset();
         setTimeout(() => this.router.navigate(['/auth/login']), 2000);
       },
       error: (err: any) => {
         console.error(err);
-        this.status = {
-          statusCode: -1,
-          message: 'Error: Email already exists or server error.',
-        };
+
+        const backendMsg = err.error?.message;
+
+        if (backendMsg === 'This club already has an assigned Organizer') {
+          // ✅ Special case snackbar
+          this.showSnackBar(backendMsg, 4000);
+          this.status = { statusCode: -1, message: backendMsg };
+        } else {
+          this.showSnackBar(backendMsg || 'Signup failed! Try again.', 4000);
+          this.status = {
+            statusCode: -1,
+            message:
+              backendMsg || 'Error: Email already exists or server error.',
+          };
+        }
       },
     });
 
