@@ -10,7 +10,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatNativeDateModule } from '@angular/material/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import {
@@ -42,7 +42,7 @@ import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
     MatCardContent,
     MatCardTitle,
     MatSnackBarModule,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.css'],
@@ -74,7 +74,8 @@ export class CreateEventComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private storage: Storage,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -103,6 +104,7 @@ export class CreateEventComponent implements OnInit {
     if (this.isSubmitting) return;
     this.isSubmitting = true;
 
+    // Validate required fields
     if (
       !this.eventName.trim() ||
       !this.eventCategory ||
@@ -125,6 +127,7 @@ export class CreateEventComponent implements OnInit {
     }
 
     try {
+      // Upload flyer if exists
       if (this.eventFile) {
         const filePath = `event_flyers/${Date.now()}_${this.eventFile.name}`;
         const storageRef = ref(this.storage, filePath);
@@ -145,7 +148,6 @@ export class CreateEventComponent implements OnInit {
       formData.append('additional_notes', this.eventNotes);
       formData.append('user_id', this.userId || '');
       formData.append('event_form_link', this.eventFormLink);
-
 
       if (this.downloadURL) {
         formData.append('flyer_image', this.downloadURL);
@@ -168,6 +170,9 @@ export class CreateEventComponent implements OnInit {
 
       this.showSuccess('Event created successfully!');
       this.resetForm();
+
+      // Navigate to organizer events page after success
+      this.router.navigate([`/organizer/${this.userId}/events`]);
     } catch (err) {
       console.error('Error creating event', err);
 
