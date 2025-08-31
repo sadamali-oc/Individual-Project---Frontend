@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { UserDetailsDialogComponent } from '../components/user-details-dialog/user-details-dialog.component';
 
@@ -47,6 +48,7 @@ export interface PeriodicElement {
     MatButtonModule,
     MatChipsModule,
     MatSelectModule,
+    MatSnackBarModule,
   ],
   templateUrl: './organizer.component.html',
   styleUrls: ['./organizer.component.css'],
@@ -59,7 +61,11 @@ export class OrganizerComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private http: HttpClient, public dialog: MatDialog) {}
+  constructor(
+    private http: HttpClient,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.dataSource.filterPredicate = (
@@ -83,11 +89,13 @@ export class OrganizerComponent implements OnInit {
       .get<PeriodicElement[]>('http://localhost:3000/all/organizers')
       .subscribe({
         next: (data) => {
-          const normalizedData = data.map((user) => ({
-            ...user,
-            id: user.user_id,
-            status: this.normalizeStatus(user.status),
-          }));
+          const normalizedData = data
+            .map((user) => ({
+              ...user,
+              id: user.user_id,
+              status: this.normalizeStatus(user.status),
+            }))
+            .filter((u) => u.status === 'Pending'); // Only pending users shown
           this.dataSource = new MatTableDataSource(normalizedData);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -100,26 +108,20 @@ export class OrganizerComponent implements OnInit {
       });
   }
 
-  /**
-   * Normalize API status → UI status
-   */
   normalizeStatus(status: string): string {
     if (!status) return 'Pending';
     switch (status.toLowerCase()) {
       case 'pending':
         return 'Pending';
       case 'active':
-        return 'Accepted'; // map backend "active" → UI "Accepted"
+        return 'Accepted';
       case 'inactive':
-        return 'Rejected'; // map backend "inactive" → UI "Rejected"
+        return 'Rejected';
       default:
         return this.capitalize(status);
     }
   }
 
-  /**
-   * UI status → API status
-   */
   toApiStatus(uiStatus: string): string {
     switch (uiStatus) {
       case 'Accepted':
@@ -135,19 +137,6 @@ export class OrganizerComponent implements OnInit {
 
   capitalize(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-  }
-
-  getStatusColor(status: string): string {
-    switch (status) {
-      case 'Accepted':
-        return '#0a1f44'; // dark blue
-      case 'Rejected':
-        return '#d32f2f'; // red
-      case 'Pending':
-        return '#ffa000'; // amber
-      default:
-        return '#9e9e9e';
-    }
   }
 
   applyFilter(event: Event): void {
@@ -169,6 +158,19 @@ export class OrganizerComponent implements OnInit {
     });
   }
 
+  /** --- Accept / Reject users --- */
+  acceptUser(user: PeriodicElement) {
+    this.changeStatus(user, 'Accepted');
+    this.dataSource.data = this.dataSource.data.filter((u) => u.id !== user.id);
+    this.showSuccess(`${user.name} accepted successfully`);
+  }
+
+  rejectUser(user: PeriodicElement) {
+    this.changeStatus(user, 'Rejected');
+    this.dataSource.data = this.dataSource.data.filter((u) => u.id !== user.id);
+    this.showSuccess(`${user.name} rejected successfully`);
+  }
+
   changeStatus(user: PeriodicElement, newStatus: string): void {
     if (user.status === newStatus) return;
 
@@ -181,9 +183,27 @@ export class OrganizerComponent implements OnInit {
       .subscribe({
         next: () => {
           user.status = newStatus;
-          this.dataSource.data = [...this.dataSource.data]; // refresh UI
         },
         error: (err) => console.error('Failed to update status', err),
       });
+  }
+
+  /** --- Snackbar --- */
+  showSuccess(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar'],
+    });
+  }
+
+  showError(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['error-snackbar'],
+    });
   }
 }

@@ -139,29 +139,33 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isLoading = true;
     this.http.get<any[]>('http://localhost:3000/all/users').subscribe({
       next: (users) => {
-        const mappedUsers: PeriodicElement[] = users.map((user) => {
-          let status: UserStatus = 'Pending';
-          switch (user.status?.toLowerCase()) {
-            case 'active':
-              status = 'Accepted';
-              break;
-            case 'inactive':
-              status = 'Rejected';
-              break;
-            case 'pending':
-              status = 'Pending';
-              break;
-          }
-          return {
-            id: user.user_id,
-            name: user.name,
-            email: user.email,
-            status,
-            phone_number: user.phone_number,
-            gender: user.gender,
-            role: user.role,
-          };
-        });
+        const mappedUsers: PeriodicElement[] = users
+          .map((user) => {
+            let status: UserStatus = 'Pending';
+            switch (user.status?.toLowerCase()) {
+              case 'active':
+                status = 'Accepted';
+                break;
+              case 'inactive':
+                status = 'Rejected';
+                break;
+              case 'pending':
+                status = 'Pending';
+                break;
+            }
+            return {
+              id: user.user_id,
+              name: user.name,
+              email: user.email,
+              status,
+              phone_number: user.phone_number,
+              gender: user.gender,
+              role: user.role,
+            };
+          })
+          // Only show pending users
+          .filter((u) => u.status === 'Pending');
+
         this.dataSource.data = mappedUsers;
         this.isLoading = false;
       },
@@ -208,7 +212,6 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
       })
       .subscribe({
         next: () => {
-          user.status = newStatus;
           this.showSuccess(`Status for ${user.name} updated to ${newStatus}`);
           if (user.id === +this.userId) this.loadNotifications(this.userId);
         },
@@ -217,6 +220,17 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
           this.showError(`Failed to update status for ${user.name}`);
         },
       });
+  }
+
+  /** --- Accept / Reject helpers --- */
+  acceptUser(user: PeriodicElement) {
+    this.changeStatus(user, 'Accepted');
+    this.dataSource.data = this.dataSource.data.filter((u) => u.id !== user.id);
+  }
+
+  rejectUser(user: PeriodicElement) {
+    this.changeStatus(user, 'Rejected');
+    this.dataSource.data = this.dataSource.data.filter((u) => u.id !== user.id);
   }
 
   viewUser(user: PeriodicElement): void {
@@ -306,10 +320,5 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
       verticalPosition: 'top',
       panelClass: ['error-snackbar'],
     });
-  }
-
-  /** --- Test Snackbar --- */
-  testSnackbar() {
-    this.showSuccess('Snackbar is working!');
   }
 }
