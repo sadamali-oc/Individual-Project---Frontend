@@ -1,4 +1,4 @@
-<div class="page-center-wrapper">
+ <div class="page-center-wrapper">
   <mat-card class="user-list-card">
     <mat-card-content class="main-card">
       <div class="filter-row">
@@ -7,7 +7,7 @@
           <input
             matInput
             (keyup)="applyFilter($event)"
-            placeholder="Search by ID, name or email"
+            placeholder="Search by ID, name, email, or club"
           />
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
@@ -25,6 +25,7 @@
 
       <div class="user-table-container">
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+          
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
             <td mat-cell *matCellDef="let user">{{ user.id }}</td>
@@ -38,6 +39,12 @@
           <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
             <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+          </ng-container>
+
+          <!-- Club column added -->
+          <ng-container matColumnDef="club_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Club</th>
+            <td mat-cell *matCellDef="let user">{{ user.club_name }}</td>
           </ng-container>
 
           <ng-container matColumnDef="status">

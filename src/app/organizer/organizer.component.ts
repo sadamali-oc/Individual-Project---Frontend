@@ -27,6 +27,7 @@ export interface PeriodicElement {
   phone_number?: string;
   gender?: string;
   role?: string;
+  club_name: string;
 }
 
 @Component({
@@ -54,7 +55,14 @@ export interface PeriodicElement {
   styleUrls: ['./organizer.component.css'],
 })
 export class OrganizerComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'email', 'status', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'email',
+    'club_name',
+    'status',
+    'actions',
+  ];
   dataSource = new MatTableDataSource<PeriodicElement>([]);
   isLoading = true;
 
@@ -77,7 +85,8 @@ export class OrganizerComponent implements OnInit {
         data.id.toString().includes(filterValue) ||
         data.name.toLowerCase().includes(filterValue) ||
         data.email.toLowerCase().includes(filterValue) ||
-        data.status.toLowerCase().includes(filterValue)
+        data.status.toLowerCase().includes(filterValue) ||
+        data.club_name.toLowerCase().includes(filterValue)
       );
     };
     this.fetchData();
@@ -89,13 +98,17 @@ export class OrganizerComponent implements OnInit {
       .get<PeriodicElement[]>('http://localhost:3000/all/organizers')
       .subscribe({
         next: (data) => {
-          const normalizedData = data
+          // Normalize the data, ensure club_name is string
+          const normalizedData: PeriodicElement[] = data
             .map((user) => ({
               ...user,
               id: user.user_id,
               status: this.normalizeStatus(user.status),
+              club_name: user.club_name || 'N/A',
             }))
-            .filter((u) => u.status === 'Pending'); // Only pending users shown
+            // Only show Pending users in table
+            .filter((user) => user.status === 'Pending');
+
           this.dataSource = new MatTableDataSource(normalizedData);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -161,14 +174,22 @@ export class OrganizerComponent implements OnInit {
   /** --- Accept / Reject users --- */
   acceptUser(user: PeriodicElement) {
     this.changeStatus(user, 'Accepted');
-    this.dataSource.data = this.dataSource.data.filter((u) => u.id !== user.id);
+    this.removeUserFromTable(user);
     this.showSuccess(`${user.name} accepted successfully`);
   }
 
   rejectUser(user: PeriodicElement) {
     this.changeStatus(user, 'Rejected');
-    this.dataSource.data = this.dataSource.data.filter((u) => u.id !== user.id);
+    this.removeUserFromTable(user);
     this.showSuccess(`${user.name} rejected successfully`);
+  }
+
+  private removeUserFromTable(user: PeriodicElement) {
+    const index = this.dataSource.data.findIndex((u) => u.id === user.id);
+    if (index !== -1) {
+      this.dataSource.data.splice(index, 1);
+      this.dataSource._updateChangeSubscription();
+    }
   }
 
   changeStatus(user: PeriodicElement, newStatus: string): void {
