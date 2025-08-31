@@ -13,10 +13,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
 import { FormsModule } from '@angular/forms';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
-  selector: 'app-event',
+  selector: 'app-finished-events',
   standalone: true,
   imports: [
     CommonModule,
@@ -27,10 +26,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatIconModule,
     MatDialogModule,
     MatInputModule,
-  
     MatSelectModule,
     FormsModule,
-    MatSlideToggleModule,
   ],
   templateUrl: './finished-events.component.html',
   styleUrls: ['./finished-events.component.css'],
@@ -39,8 +36,7 @@ export class FinishedEventsComponent implements OnInit {
   events: any[] = [];
   isLoading = true;
   userId: string | null = null;
-  selectedStatus: any;
-  searchTerm: any;
+  searchTerm: string = '';
 
   constructor(
     private http: HttpClient,
@@ -53,22 +49,24 @@ export class FinishedEventsComponent implements OnInit {
     this.route.parent?.paramMap.subscribe((params) => {
       this.userId = params.get('userId');
       if (this.userId) {
-        this.fetchEvents(this.userId);
+        this.fetchFinishedEvents(this.userId);
       }
     });
   }
 
-  fetchEvents(userId: string): void {
-    this.http.get<any[]>(`http://localhost:3000/event/${userId}`).subscribe({
-      next: (data) => {
-        this.events = data;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching events:', err);
-        this.isLoading = false;
-      },
-    });
+  fetchFinishedEvents(userId: string): void {
+    this.http
+      .get<any[]>(`http://localhost:3000/events/finished/${userId}`)
+      .subscribe({
+        next: (data) => {
+          this.events = data;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Error fetching finished events:', err);
+          this.isLoading = false;
+        },
+      });
   }
 
   viewDetails(event: any): void {
@@ -77,53 +75,27 @@ export class FinishedEventsComponent implements OnInit {
       data: event,
     });
   }
-  onToggleChange(eventItem: any, isChecked: boolean) {
-    const newStatus = isChecked ? 'completed' : 'upcoming';
-
-    this.http
-      .put(`http://localhost:3000/events/${eventItem.event_id}/progress`, {
-        event_status: newStatus,
-      })
-      .subscribe({
-        next: (res: any) => {
-          eventItem.event_status = newStatus; // update UI immediately
-          this.snackBar.open(`Event marked as ${newStatus}`, 'Close', {
-            duration: 3000,
-            verticalPosition: 'top',
-            horizontalPosition: 'center',
-          });
-        },
-        error: (err) => {
-          console.error('Error updating status:', err);
-          this.snackBar.open('Failed to update status', 'Close', {
-            duration: 3000,
-          });
-        },
-      });
-  }
 
   getStatusColor(status: string): string {
     switch (status?.toLowerCase()) {
       case 'active':
-        return '#1976d2'; // blue
+        return '#1976d2';
       case 'pending':
-        return '#ffcc00'; // yellow
+        return '#ffcc00';
       case 'completed':
-        return '#388e3c'; // green
+        return '#388e3c';
       default:
         return '#888';
     }
   }
 
   get filteredEvents() {
-    return this.events
-      .filter((event) => event.event_status === 'completed') // show only done events
-      .filter((event) => {
-        if (!this.searchTerm) return true;
-        return event.event_name
-          .toLowerCase()
-          .includes(this.searchTerm.toLowerCase());
-      });
+    return this.events.filter((event) => {
+      if (!this.searchTerm) return true;
+      return event.event_name
+        .toLowerCase()
+        .includes(this.searchTerm.toLowerCase());
+    });
   }
 
   deleteEvent(event: any): void {
