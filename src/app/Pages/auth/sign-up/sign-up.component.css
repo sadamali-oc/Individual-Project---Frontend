@@ -3,29 +3,16 @@ body,
 html {
   height: 100%;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(to right, #012a6c 0%, #ffcc00 100%);
   color: #012a6c;
   box-sizing: border-box;
-  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* 📥 Input Base */
-input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1em;
-  background-color: #f9f9f9c4;
-  color: #012a6c;
-}
-
-/* 🧩 Section Layout */
+/* 🧩 Form Section */
 .form-section {
   display: flex;
   justify-content: center;
@@ -33,33 +20,29 @@ input {
   width: 100%;
   min-height: 100vh;
   padding: 20px;
-  overflow-y: auto;
 }
 
 /* 📦 Form Container */
 .container {
   display: flex;
-  background-color: #ffffff;
+  max-width: 900px;
+  width: 95%;
+  background-color: #fff;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(1, 42, 108, 0.15);
-  max-width: 800px;
-  width: 90%;
-  height: 80%;
-  margin: 1px auto;
-  align-items: stretch;
   overflow: hidden;
   transition: all 0.3s ease;
 }
 
-/* 🖼️ Image Display */
+/* 🖼️ Image */
 .image-container {
   flex: 1;
+  min-width: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
   background-color: #fff;
-  min-width: 200px;
+  padding: 20px;
 }
 
 .responsive-image {
@@ -67,7 +50,6 @@ input {
   max-height: 100%;
   object-fit: contain;
   border-radius: 10px;
-  display: block;
 }
 
 /* 📝 Signup Box */
@@ -103,10 +85,6 @@ input {
   text-align: left;
 }
 
-.form-group.full-width {
-  grid-column: 1 / -1;
-}
-
 .form-group label {
   display: block;
   margin-bottom: 6px;
@@ -123,7 +101,6 @@ input {
   font-size: 1em;
   color: #012a6c;
   background-color: #f5f5f5;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .ele:focus {
@@ -133,18 +110,17 @@ input {
   background-color: #fff;
 }
 
-/* ❗ Error Message */
+/* ❗ Error Messages */
 .msg.error {
   color: #ff4c4c;
   font-size: 0.85em;
   margin-top: 5px;
-  text-align: left;
 }
 
 /* ✅ Submit Button */
 .clkbtn {
-  background-color:#012a6c;
-  color:#f2b800;
+  background-color: #012a6c;
+  color: #f2b800;
   padding: 14px 25px;
   border: none;
   border-radius: 8px;
@@ -154,44 +130,26 @@ input {
   width: 100%;
   max-width: 400px;
   margin-top: 20px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 15px rgba(1, 42, 108, 0.1);
-  -webkit-tap-highlight-color: transparent;
+  transition: all 0.3s ease;
 }
 
 .clkbtn:hover:not(:disabled) {
-  background-color:#012a6c;
   transform: translateY(-2px);
 }
 
 .clkbtn:disabled {
   background-color: #e9e5d8cb;
   cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
   border: 1px solid #012a6c;
 }
 
-/* 💬 Light Alert */
-.msg-light {
-  margin-top: 20px;
-  font-size: 0.9em;
-  color: #012a6c;
-  background-color: #fff9d5;
-  padding: 10px 15px;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 500px;
-}
-
-/* 🔗 Link Styling */
+/* 🔗 Links */
 .link {
   display: block;
   margin-top: 25px;
   color: #012a6c;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease;
 }
 
 .link:hover {
@@ -199,25 +157,40 @@ input {
   text-decoration: underline;
 }
 
-/* 📱 Responsive Layouts */
+/* ✅ Checkbox Group in columns */
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkbox-item:hover {
+  background-color: #fffbe0;
+  border-color: #ffcc00;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+/* 📱 Responsive */
 @media (max-width: 900px) {
   .container {
     flex-direction: column;
-    max-width: 95%;
-  }
-
-  .image-container {
-    padding: 20px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .signup-box {
-    padding: 25px;
-  }
-
-  .signup-box h2 {
-    font-size: 2em;
-    margin-bottom: 15px;
   }
 
   .form-fields {
@@ -234,22 +207,12 @@ input {
     font-size: 1.6em;
   }
 
-  .form-group label {
-    font-size: 0.9em;
-  }
-
   .ele {
     padding: 10px 12px;
-    font-size: 0.95em;
   }
 
   .clkbtn {
     padding: 12px 20px;
     font-size: 1em;
-  }
-
-  .msg-light {
-    font-size: 0.85em;
-    padding: 8px 12px;
   }
 }

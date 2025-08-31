@@ -1,93 +1,137 @@
+/* Container and overall form layout */
 .form-section {
   display: flex;
   justify-content: center;
-  padding: 40px;
-}
-
-.signup-box .topic-image {
-  width: 200px;
-  height: auto;
-  object-fit: contain;
-  margin-bottom: 24px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 20px;
 }
 
 .container {
   width: 100%;
-  max-width: 600px;
+  max-width: 900px;
   background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Header and image styling */
 .signup-box h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   color: #012a6c;
-  font-size: 2.4rem;
-  /* increased from 2rem */
+  font-size: 1.8rem;
 }
 
+.signup-box .topic-image {
+  width: 190px;
+  height: auto;
+  margin: 0 auto 16px;
+  display: block;
+}
+
+/* Form field styling */
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .form-group label {
   display: block;
   font-weight: 500;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   color: #012a6c;
-  font-size: 1.9rem;
-  /* increased from default */
+  font-size: 1.4rem;
 }
 
+/* Input and select element styling */
 input,
 select {
   width: 100%;
-  padding: 14px;
-  /* increased from 12px */
+  padding: 8px;
   border: 1px solid #012a6c;
-  border-radius: 6px;
-  font-size: 1.8rem;
-  /* increased from 1.1rem */
+  border-radius: 4px;
+  font-size: 1.2rem;
   color: #1e293b;
   background-color: #fefefe;
-  transition: border-color 0.3s ease;
 }
 
 input:focus,
 select:focus {
   outline: none;
+  border-color: #ffcc00;
 }
 
+/* Error and readonly states */
 .error {
   color: #ef4444;
-  font-size: 1.6rem;
-  /* increased from 1rem */
-  margin-top: 4px;
+  font-size: 1.1rem;
+  margin-top: 2px;
 }
 
+.readonly {
+  color: #929191;
+  cursor: not-allowed;
+}
+
+/* Checkbox group styling (polished) */
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  font-size: 1.2rem;
+}
+
+.checkbox-item:hover {
+  background-color: #f3f4f6;
+  border-color: #ffcc00;
+}
+
+.checkbox-item input {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.checkbox-item label {
+  cursor: pointer;
+  margin: 0;
+}
+
+/* Button styling */
 button {
-  padding: 12px 24px;
-  /* increased */
-  margin-right: 10px;
+  padding: 8px 16px;
+  margin-right: 6px;
   border: none;
   background-color: #ffcc00;
   color: #012a6c;
   font-weight: 700;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1.2rem;
-  /* increased */
-  transition: background-color 0.3s ease;
+  font-size: 1rem;
 }
 
 button:hover:not(:disabled) {
   background-color: #004080;
   color: #ffffff;
+}
+
+button.submit-btn {
+  color: #f8f7f1;
+  background-color: #012a6c;
+}
+
+button.submit-btn:hover:not(:disabled) {
+  background-color: #004080;
 }
 
 button.cancel {
@@ -103,77 +147,4 @@ button:disabled {
   background-color: #d5dae1;
   color: #004080;
   cursor: not-allowed;
-}
-
-
-
-.readonly {
-  /* light gray */
-  color: #929191;
-  /* dark blue text */
-  cursor: not-allowed;
-  /* indicate non-editable */
-}
-
-.msg {
-  margin-top: 16px;
-  font-weight: bold;
-  color: #012a6c;
-  text-align: center;
-  font-size: 1.3rem;
-  /* increased */
-}
-
-.password-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.password-input-wrapper input {
-  flex: 1;
-  padding-right: 44px;
-  border: 1px solid #012a6c;
-  border-radius: 6px;
-  font-size: 1.2rem;
-  /* match increased input size */
-  color: #1e293b;
-  transition: border-color 0.3s ease;
-}
-
-.password-input-wrapper input:focus {
-  border-color: #ffcc00;
-  outline: none;
-}
-
-
-.submit-btn {
-  color: #f8f7f1;
-background-color: #012a6c;
-}
-
-
-.toggle-btn {
-  position: absolute;
-  right: 8px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  color: #012a6c;
-  transition: color 0.3s ease;
-}
-
-.toggle-btn:hover {
-  color: #ffcc00;
-}
-
-.toggle-btn mat-icon {
-  font-size: 26px;
-  /* slightly increased */
-  color: inherit;
 }

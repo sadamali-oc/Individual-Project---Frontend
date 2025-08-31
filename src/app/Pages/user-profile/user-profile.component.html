@@ -11,16 +11,10 @@
         />
 
         <div class="form-fields">
-
           <!-- Name -->
           <div class="form-group">
             <label for="name">Name</label>
-            <input
-              id="name"
-              type="text"
-              formControlName="name"
-              placeholder="Enter your name"
-            />
+            <input id="name" type="text" formControlName="name" placeholder="Enter your name" />
             <div *ngIf="f['name'].invalid && (f['name'].touched || f['name'].dirty)" class="error">
               Name is required
             </div>
@@ -29,14 +23,7 @@
           <!-- Email (readonly) -->
           <div class="form-group">
             <label for="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              formControlName="email"
-              placeholder="Enter your email"
-              class="readonly"
-              
-            />
+            <input id="email" type="email" formControlName="email" placeholder="Enter your email" readonly class="readonly" />
           </div>
 
           <!-- Gender -->
@@ -56,15 +43,9 @@
           <!-- Phone Number -->
           <div class="form-group">
             <label for="phone_number">Phone Number</label>
-            <input
-              id="phone_number"
-              type="text"
-              formControlName="phone_number"
-              placeholder="Phone number"
-            />
+            <input id="phone_number" type="text" formControlName="phone_number" placeholder="Phone number" />
             <div *ngIf="f['phone_number'].invalid && (f['phone_number'].touched || f['phone_number'].dirty)" class="error">
-              <span *ngIf="f['phone_number'].errors?.['required']">Phone number is required</span>
-              <span *ngIf="f['phone_number'].errors?.['pattern']">Only numbers are allowed</span>
+              Phone number is required
             </div>
           </div>
 
@@ -77,15 +58,37 @@
               <option value="admin">Admin</option>
               <option value="organizer">Organizer</option>
             </select>
-            <div *ngIf="f['role'].invalid && (f['role'].touched || f['role'].dirty)" class="error">
-              Role is required
+          </div>
+
+          <!-- Organizer Club -->
+          <div class="form-group" *ngIf="f['role'].value === 'organizer'">
+            <label for="universityClub">University Club</label>
+            <select id="universityClub" formControlName="universityClub">
+              <option value="" disabled>Select your club</option>
+              <option *ngFor="let club of universityClubs" [value]="club.value">{{ club.display }}</option>
+            </select>
+          </div>
+
+          <!-- User Clubs (checkboxes) -->
+          <div class="form-group" *ngIf="f['role'].value === 'user'">
+            <label>University Clubs</label>
+            <div class="checkbox-group">
+              <div *ngFor="let club of universityClubs" class="checkbox-item">
+                <input
+                  type="checkbox"
+                  [checked]="userClubsArray.value.includes(club.value)"
+                  (change)="onUserClubChange($event, club.value)"
+                  id="club{{club.value}}"
+                />
+                <label for="club{{club.value}}">{{ club.display }}</label>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Buttons -->
-        <button type="submit"  class="submit-btn" [disabled]="frm.invalid">Save Changes</button>
-        <button type="button" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="submit-btn" [disabled]="frm.invalid">Save Changes</button>
+        <button type="button" class="cancel" (click)="onCancel()">Cancel</button>
       </div>
     </form>
   </div>

@@ -3,8 +3,8 @@ import { SignupService } from '../../../services/signup.service';
 import {
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
+  ReactiveFormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { validPattern } from '../../../helpers/pattern-mact.validator';
@@ -45,14 +45,13 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Load clubs from backend and map to {value, display}
+    // Load clubs from backend
     this.http.get<any[]>('http://localhost:3000/clubs').subscribe({
       next: (clubs) => {
         this.universityClubs = clubs.map((c) => ({
           value: c.club_id,
           display: c.display_name,
         }));
-        console.log(this.universityClubs);
       },
       error: (err) => {
         console.error('Failed to load clubs:', err);
@@ -73,6 +72,7 @@ export class SignUpComponent implements OnInit {
         role: ['', Validators.required],
         gender: ['', Validators.required],
         universityClub: [''],
+        userClubs: [[], Validators.required], // for multiple clubs
       },
       {
         validator: MustMatch(
@@ -83,17 +83,44 @@ export class SignUpComponent implements OnInit {
       }
     );
 
-    // Dynamic validator: universityClub required only if role === 'organizer'
+    // Dynamic validator
     this.frm.get('role')?.valueChanges.subscribe((roleValue) => {
       const clubControl = this.frm.get('universityClub');
+      const userClubsControl = this.frm.get('userClubs');
+
       if (roleValue === 'organizer') {
         clubControl?.setValidators([Validators.required]);
+        userClubsControl?.clearValidators();
+        userClubsControl?.setValue([]);
+      } else if (roleValue === 'user') {
+        userClubsControl?.setValidators([Validators.required]);
+        clubControl?.clearValidators();
+        clubControl?.setValue('');
       } else {
         clubControl?.clearValidators();
         clubControl?.setValue('');
+        userClubsControl?.clearValidators();
+        userClubsControl?.setValue([]);
       }
+
       clubControl?.updateValueAndValidity();
+      userClubsControl?.updateValueAndValidity();
     });
+  }
+
+  onUserClubChange(event: any) {
+    const userClubs = this.frm.get('userClubs');
+    const selectedClubs = userClubs?.value || [];
+
+    if (event.target.checked) {
+      selectedClubs.push(event.target.value);
+    } else {
+      const index = selectedClubs.indexOf(event.target.value);
+      if (index > -1) selectedClubs.splice(index, 1);
+    }
+
+    userClubs?.setValue(selectedClubs);
+    userClubs?.updateValueAndValidity();
   }
 
   private showSnackBar(message: string, duration: number = 3000) {
@@ -112,14 +139,18 @@ export class SignUpComponent implements OnInit {
       return;
     }
 
-    // Map universityClub to club_id (number) for backend
-    const payload = {
-      ...this.frm.value,
-      club_id: this.frm.value.universityClub
+    const payload: any = { ...this.frm.value };
+
+    // Map clubs correctly
+    if (this.frm.value.role === 'user') {
+      payload.club_ids = this.frm.value.userClubs.map((id: any) => Number(id));
+      delete payload.userClubs;
+    } else if (this.frm.value.role === 'organizer') {
+      payload.club_id = this.frm.value.universityClub
         ? Number(this.frm.value.universityClub)
-        : null,
-    };
-    delete payload.universityClub;
+        : null;
+      delete payload.universityClub;
+    }
 
     this.signupService.signup(payload).subscribe({
       next: (res) => {
@@ -127,33 +158,19 @@ export class SignUpComponent implements OnInit {
           statusCode: 1,
           message: 'Signup successful! Redirecting...',
         };
-
-        // ✅ Success snackbar
         this.showSnackBar('Signup successful! Redirecting...');
-
         this.frm.reset();
         setTimeout(() => this.router.navigate(['/auth/login']), 2000);
       },
       error: (err: any) => {
         console.error(err);
-
         const backendMsg = err.error?.message;
-
-        if (backendMsg === 'This club already has an assigned Organizer') {
-          // ✅ Special case snackbar
-          this.showSnackBar(backendMsg, 4000);
-          this.status = { statusCode: -1, message: backendMsg };
-        } else {
-          this.showSnackBar(backendMsg || 'Signup failed! Try again.', 4000);
-          this.status = {
-            statusCode: -1,
-            message:
-              backendMsg || 'Error: Email already exists or server error.',
-          };
-        }
+        this.showSnackBar(backendMsg || 'Signup failed! Try again.', 4000);
+        this.status = {
+          statusCode: -1,
+          message: backendMsg || 'Error occurred.',
+        };
       },
     });
-
-    console.log(payload);
   }
 }
