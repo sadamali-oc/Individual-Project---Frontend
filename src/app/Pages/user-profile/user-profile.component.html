@@ -26,7 +26,7 @@
             </div>
           </div>
 
-          <!-- Email -->
+          <!-- Email (readonly) -->
           <div class="form-group">
             <label for="email">Email</label>
             <input
@@ -34,11 +34,9 @@
               type="email"
               formControlName="email"
               placeholder="Enter your email"
+              class="readonly"
+              
             />
-            <div *ngIf="f['email'].invalid && (f['email'].touched || f['email'].dirty)" class="error">
-              <span *ngIf="f['email'].errors?.['required']">Email is required</span>
-              <span *ngIf="f['email'].errors?.['email']">Invalid email format</span>
-            </div>
           </div>
 
           <!-- Gender -->
@@ -70,48 +68,6 @@
             </div>
           </div>
 
-          <!-- Password -->
-          <div class="form-group">
-            <label for="password">Password</label>
-            <div class="password-input-wrapper">
-              <input
-                [type]="hidePassword ? 'password' : 'text'"
-                id="password"
-                formControlName="password"
-                placeholder="Password"
-              />
-              <button type="button" class="toggle-btn" (click)="togglePasswordVisibility()">
-                <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-              </button>
-            </div>
-            <div *ngIf="f['password'].invalid && (f['password'].touched || f['password'].dirty)" class="error">
-              <span *ngIf="f['password'].errors?.['required']">Password is required</span>
-              <span *ngIf="f['password'].errors?.['pattern']">
-                Must include uppercase, lowercase, number & special character (6+ characters)
-              </span>
-            </div>
-          </div>
-
-          <!-- Confirm Password -->
-          <div class="form-group">
-            <label for="confirmPassword">Confirm Password</label>
-            <div class="password-input-wrapper">
-              <input
-                [type]="hideConfirmPassword ? 'password' : 'text'"
-                id="confirmPassword"
-                formControlName="confirmPassword"
-                placeholder="Confirm password"
-              />
-              <button type="button" class="toggle-btn" (click)="toggleConfirmPasswordVisibility()">
-                <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-              </button>
-            </div>
-            <div *ngIf="f['confirmPassword'].invalid && (f['confirmPassword'].touched || f['confirmPassword'].dirty)" class="error">
-              <span *ngIf="f['confirmPassword'].errors?.['required']">Confirm Password is required</span>
-              <span *ngIf="f['confirmPassword'].errors?.['mustMatch']">Passwords must match</span>
-            </div>
-          </div>
-
           <!-- Role -->
           <div class="form-group">
             <label for="role">Role</label>
@@ -128,7 +84,7 @@
         </div>
 
         <!-- Buttons -->
-        <button type="submit" [disabled]="frm.invalid">Save Changes</button>
+        <button type="submit"  class="submit-btn" [disabled]="frm.invalid">Save Changes</button>
         <button type="button" (click)="onCancel()">Cancel</button>
       </div>
     </form>

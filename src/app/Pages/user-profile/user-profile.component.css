@@ -105,6 +105,16 @@ button:disabled {
   cursor: not-allowed;
 }
 
+
+
+.readonly {
+  /* light gray */
+  color: #929191;
+  /* dark blue text */
+  cursor: not-allowed;
+  /* indicate non-editable */
+}
+
 .msg {
   margin-top: 16px;
   font-weight: bold;
@@ -135,6 +145,13 @@ button:disabled {
   border-color: #ffcc00;
   outline: none;
 }
+
+
+.submit-btn {
+  color: #f8f7f1;
+background-color: #012a6c;
+}
+
 
 .toggle-btn {
   position: absolute;

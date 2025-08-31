@@ -61,19 +61,12 @@ export class UserProfileComponent implements OnInit {
           '',
           [Validators.required, Validators.pattern('^[0-9]+$')],
         ],
-        password: ['', [Validators.required, validPattern(patternRegex)]],
-        confirmPassword: ['', Validators.required],
+   
         role: ['', Validators.required],
         gender: ['', Validators.required],
         status: ['', Validators.required],
       },
-      {
-        validator: MustMatch(
-          'password',
-          'confirmPassword',
-          'Passwords must match'
-        ),
-      }
+      
     );
   }
 
