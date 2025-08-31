@@ -27,6 +27,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { UserDetailsDialogComponent } from '../../user-details-dialog/user-details-dialog.component';
 import {
@@ -68,6 +69,7 @@ export interface PeriodicElement {
     MatBadgeModule,
     MatToolbarModule,
     MatSidenavModule,
+    MatSnackBarModule,
   ],
 })
 export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -80,7 +82,6 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
   statusOptions: UserStatus[] = ['Pending', 'Accepted', 'Rejected'];
   statusFilter: string = '';
 
-  // Notifications
   notifications: Notification[] = [];
   private notificationPolling?: Subscription;
 
@@ -92,6 +93,7 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
     private http: HttpClient,
     private dialog: MatDialog,
     private notificationService: NotificationService,
+    private snackBar: MatSnackBar,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -104,14 +106,13 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loadUsers();
         this.loadNotifications(this.userId);
 
-        // Poll notifications every 10 seconds
+        // Poll notifications every 10s
         this.notificationPolling = interval(10000).subscribe(() => {
           this.loadNotifications(this.userId);
         });
       }
     }
 
-    // Table filter
     this.dataSource.filterPredicate = (
       data: PeriodicElement,
       filter: string
@@ -133,7 +134,7 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
     this.notificationPolling?.unsubscribe();
   }
 
-  // --- Users ---
+  /** --- Users --- */
   loadUsers(): void {
     this.isLoading = true;
     this.http.get<any[]>('http://localhost:3000/all/users').subscribe({
@@ -167,6 +168,7 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
       error: (err) => {
         console.error('Error loading users:', err);
         this.isLoading = false;
+        this.showError('Failed to load users');
       },
     });
   }
@@ -174,7 +176,7 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) this.dataSource.paginator.firstPage();
+    this.dataSource.paginator?.firstPage();
   }
 
   applyStatusFilter(status: string): void {
@@ -183,7 +185,7 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
       (document.querySelector('.search-input input') as HTMLInputElement)?.value
         .trim()
         .toLowerCase() || '';
-    if (this.dataSource.paginator) this.dataSource.paginator.firstPage();
+    this.dataSource.paginator?.firstPage();
   }
 
   changeStatus(user: PeriodicElement, newStatus: UserStatus): void {
@@ -207,11 +209,13 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe({
         next: () => {
           user.status = newStatus;
-
-          // Reload notifications if status affects logged-in user
+          this.showSuccess(`Status for ${user.name} updated to ${newStatus}`);
           if (user.id === +this.userId) this.loadNotifications(this.userId);
         },
-        error: (err) => console.error('Error updating status:', err),
+        error: (err) => {
+          console.error('Error updating status:', err);
+          this.showError(`Failed to update status for ${user.name}`);
+        },
       });
   }
 
@@ -229,12 +233,13 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
         if (index !== -1) {
           this.dataSource.data[index] = updatedUser;
           this.dataSource._updateChangeSubscription();
+          this.showSuccess(`User ${updatedUser.name} updated successfully`);
         }
       }
     });
   }
 
-  // --- Notifications ---
+  /** --- Notifications --- */
   loadNotifications(userId: string) {
     this.notificationService.getNotifications(+userId).subscribe({
       next: (res: Notification[]) => (this.notifications = res),
@@ -275,10 +280,36 @@ export class UserComponent implements OnInit, AfterViewInit, OnDestroy {
   handleLogout(): void {
     localStorage.removeItem('user_id');
     localStorage.removeItem(`user_${this.userId}`);
+    this.showSuccess('Logged out successfully');
     window.location.href = '/auth/login';
   }
 
   viewProfile(): void {
+    this.showSuccess('Redirecting to your profile...');
     window.location.href = `/user/profile/${this.userId}`;
+  }
+
+  /** --- Snackbar helpers --- */
+  showSuccess(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar'],
+    });
+  }
+
+  showError(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['error-snackbar'],
+    });
+  }
+
+  /** --- Test Snackbar --- */
+  testSnackbar() {
+    this.showSuccess('Snackbar is working!');
   }
 }
