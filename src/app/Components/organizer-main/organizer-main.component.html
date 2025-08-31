@@ -45,7 +45,13 @@
       <mat-icon>info</mat-icon>
       System Info
     </a>
-
+      <a
+        mat-list-item
+        routerLink="/user/profile/{{ userId }}"
+        routerLinkActive="active"
+      >
+        <mat-icon>account_circle</mat-icon> Profile
+      </a>
       <a
         mat-list-item
         [routerLink]="['/']"

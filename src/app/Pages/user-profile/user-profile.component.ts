@@ -115,7 +115,13 @@ export class UserProfileComponent implements OnInit {
             });
           }
 
-          this.frm.get('role')?.disable(); // prevent role change
+          // Disable role and club if organizer
+          if (res.role === 'organizer') {
+            this.frm.get('role')?.disable();
+            this.frm.get('universityClub')?.disable();
+          } else {
+            this.frm.get('role')?.disable(); // role stays disabled for others too
+          }
         },
         error: (err) => {
           console.error(err);
