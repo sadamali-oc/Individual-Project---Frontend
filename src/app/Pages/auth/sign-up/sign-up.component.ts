@@ -30,7 +30,11 @@ export class SignUpComponent implements OnInit {
   frm!: FormGroup;
   status: Status = { statusCode: 0, message: '' };
 
-  universityClubs: { value: string | number; display: string }[] = [];
+  universityClubs: {
+    value: string | number;
+    display: string;
+    disabled: boolean;
+  }[] = [];
 
   constructor(
     @Inject(SignupService) private signupService: SignupService,
@@ -48,10 +52,29 @@ export class SignUpComponent implements OnInit {
     // Load clubs from backend
     this.http.get<any[]>('http://localhost:3000/clubs').subscribe({
       next: (clubs) => {
+        // Initialize clubs
         this.universityClubs = clubs.map((c) => ({
           value: c.club_id,
           display: c.display_name,
+          disabled: false,
         }));
+
+        // Fetch existing organizers to disable occupied clubs
+        this.http
+          .get<any[]>('http://localhost:3000/users/organizers')
+          .subscribe({
+            next: (organizers) => {
+              const occupiedClubIds = organizers
+                .filter((o) => o.club_id) // only organizers with club
+                .map((o) => o.club_id);
+
+              this.universityClubs = this.universityClubs.map((club) => ({
+                ...club,
+                disabled: occupiedClubIds.includes(club.value),
+              }));
+            },
+            error: (err) => console.error('Failed to load organizers:', err),
+          });
       },
       error: (err) => {
         console.error('Failed to load clubs:', err);
@@ -83,7 +106,7 @@ export class SignUpComponent implements OnInit {
       }
     );
 
-    // Dynamic validator
+    // Dynamic validator based on role
     this.frm.get('role')?.valueChanges.subscribe((roleValue) => {
       const clubControl = this.frm.get('universityClub');
       const userClubsControl = this.frm.get('userClubs');
@@ -143,13 +166,13 @@ export class SignUpComponent implements OnInit {
 
     // Map clubs correctly
     if (this.frm.value.role === 'user') {
-      payload.club_ids = this.frm.value.userClubs.map((id: any) => Number(id));
-      delete payload.userClubs;
+      payload.userClubs = this.frm.value.userClubs.map((id: any) => Number(id));
+      delete payload.universityClub;
     } else if (this.frm.value.role === 'organizer') {
       payload.club_id = this.frm.value.universityClub
         ? Number(this.frm.value.universityClub)
         : null;
-      delete payload.universityClub;
+      delete payload.userClubs;
     }
 
     this.signupService.signup(payload).subscribe({
