@@ -77,14 +77,6 @@
         <mat-icon>chat</mat-icon> Chat
       </button>
 
-      <!-- Event Progress -->
-      <mat-slide-toggle
-        [checked]="event.event_status === 'completed'"
-        (change)="onToggleChange(event, $event.checked)"
-      >
-        {{ event.event_status === 'completed' ? 'Done' : 'Upcoming' }}
-      </mat-slide-toggle>
-
       <button mat-icon-button aria-label="Delete event" (click)="deleteEvent(event)">
         <mat-icon>delete</mat-icon>
       </button>
