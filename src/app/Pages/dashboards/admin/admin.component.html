@@ -54,9 +54,34 @@
         <span class="user-name">Hello, Mora Fusion Admin 👋</span>
       </div>
       <div class="toolbar-right">
-        <button mat-icon-button aria-label="Notifications">
-          <mat-icon class="notification-icon  ">notifications</mat-icon>
+        <!-- Notifications with badge -->
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="notifMenu"
+          [matBadge]="unreadCount"
+          matBadgeColor="warn"
+          aria-label="Notifications"
+        >
+          <mat-icon class="notification-icon">notifications</mat-icon>
         </button>
+
+        <mat-menu #notifMenu="matMenu">
+          <ng-container *ngIf="notifications.length > 0; else noNotifications">
+            <button
+              mat-menu-item
+              *ngFor="let n of notifications"
+              (click)="markAsRead(n)"
+            >
+              <span [class.unread]="!n.is_read">{{ n.message }}</span>
+              <small class="notif-time">{{
+                n.created_at | date : "short"
+              }}</small>
+            </button>
+          </ng-container>
+          <ng-template #noNotifications>
+            <button mat-menu-item disabled>No notifications</button>
+          </ng-template>
+        </mat-menu>
         <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User profile menu">
           <mat-icon class="profile-icon">account_circle</mat-icon>
 

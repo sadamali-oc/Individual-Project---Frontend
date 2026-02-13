@@ -3,12 +3,15 @@ import {
   ViewChild,
   AfterViewInit,
   OnInit,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  Inject,
+  PLATFORM_ID,
+  OnDestroy,
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -16,6 +19,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
+import { interval, Subscription } from 'rxjs';
+import {
+  NotificationService,
+  Notification,
+} from '../../../services/notification/notification.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -30,25 +39,40 @@ import { MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     MatListModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatBadgeModule
   ]
 })
-export class AdminComponent implements OnInit, AfterViewInit {
+export class AdminComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('sidenav') sidenav!: MatSidenav;
   isSidebarOpen: boolean = true;
   userId: string | null = null;
+  notifications: Notification[] = [];
+  private notificationPolling?: Subscription;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private breakpointObserver: BreakpointObserver,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private notificationService: NotificationService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.paramMap.get('userId');
     console.log('User ID:', this.userId);
+
+    if (isPlatformBrowser(this.platformId) && this.userId) {
+      this.loadNotifications(this.userId);
+
+      // Poll notifications every 10 seconds
+      this.notificationPolling = interval(10000).subscribe(() => {
+        this.loadNotifications(this.userId!);
+      });
+    }
+
     this.cdr.detectChanges(); // 🔁 Fixes ExpressionChangedAfterItHasBeenCheckedError
   }
 
@@ -87,7 +111,29 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/events', eventId]);
   }
 
-  logRoute(routeName: string): void {
-    console.log(`Navigated to: ${routeName}`);
+  ngOnDestroy(): void {
+    this.notificationPolling?.unsubscribe();
   }
-}
+
+  // --- Notifications ---
+  loadNotifications(userId: string): void {
+    this.notificationService.getNotifications(+userId).subscribe({
+      next: (res: Notification[]) => (this.notifications = res),
+      error: (err) => console.error('Failed to load notifications', err),
+    });
+  }
+
+  markAsRead(notification: Notification): void {
+    this.notificationService
+      .markAsRead(notification.notification_id)
+      .subscribe({
+        next: () => (notification.is_read = true),
+        error: (err) =>
+          console.error('Failed to mark notification as read', err),
+      });
+  }
+
+    get unreadCount(): number {
+      return this.notifications.filter((n) => !n.is_read).length;
+    }
+  }
