@@ -1,0 +1,71 @@
+<div class="parent">
+  <div class="container">
+    <div class="form-container" id="login-form">
+      <div class="logo">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/Copilot_20250801_220120.png?alt=media&token=db7068a3-bcfc-47a3-b89b-8bc03d39e338"
+          alt="Logo"
+          id="logo"
+        />
+      </div>
+
+      <h1>Mora Fusion</h1>
+
+      <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+        <label for="username">Email</label>
+        <input
+          type="text"
+          id="username"
+          placeholder="Enter your email"
+          [(ngModel)]="loginObj.username"
+          name="username"
+          required
+          email
+          #username="ngModel"
+        />
+        <div class="msg error" *ngIf="username.touched && username.invalid">
+          Valid email is required
+        </div>
+
+        <label for="password">Password</label>
+        <div class="input-icon-wrapper">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            placeholder="Enter your password"
+            [(ngModel)]="loginObj.password"
+            name="password"
+            required
+            #password="ngModel"
+          />
+
+          <button
+            type="button"
+            class="input-icon-right"
+            (click)="togglePasswordVisibility()"
+            tabindex="-1"
+            aria-label="Toggle password visibility"
+          >
+            <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </div>
+        <div class="msg error" *ngIf="password.touched && password.invalid">
+          Password is required
+        </div>
+
+        <div class="forgot-password">
+          <a (click)="gotoForgetPassword()">Forgot Password?</a>
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid">Login</button>
+      </form>
+
+      <p>
+        Don't have an account?
+        <button type="button" (click)="gotoSignUp()" class="signup">
+          Sign up
+        </button>
+      </p>
+    </div>
+  </div>
+</div>

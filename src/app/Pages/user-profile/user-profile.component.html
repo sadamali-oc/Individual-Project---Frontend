@@ -1,0 +1,136 @@
+<div class="form-section">
+  <div class="container">
+    <form [formGroup]="frm" (ngSubmit)="onPost()">
+      <div class="signup-box">
+        <h2>My Profile</h2>
+
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/imageuploaddb-d99cf.appspot.com/o/Copilot_20250803_154030.png?alt=media&token=4b11cb5d-5f3d-4fa7-9b82-b058ff03e451"
+          alt="Topic Image"
+          class="topic-image"
+        />
+
+        <div class="form-fields">
+          <!-- Name -->
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              id="name"
+              type="text"
+              formControlName="name"
+              placeholder="Enter your name"
+            />
+            <div
+              *ngIf="
+                f['name'].invalid && (f['name'].touched || f['name'].dirty)
+              "
+              class="error"
+            >
+              Name is required
+            </div>
+          </div>
+
+          <!-- Email (readonly) -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="Enter your email"
+              readonly
+              class="readonly"
+            />
+          </div>
+
+          <!-- Gender -->
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" formControlName="gender">
+              <option value="" disabled>Select your gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+            <div
+              *ngIf="
+                f['gender'].invalid &&
+                (f['gender'].touched || f['gender'].dirty)
+              "
+              class="error"
+            >
+              Gender is required
+            </div>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="form-group">
+            <label for="phone_number">Phone Number</label>
+            <input
+              id="phone_number"
+              type="text"
+              formControlName="phone_number"
+              placeholder="Phone number"
+            />
+            <div
+              *ngIf="
+                f['phone_number'].invalid &&
+                (f['phone_number'].touched || f['phone_number'].dirty)
+              "
+              class="error"
+            >
+              Phone number is required
+            </div>
+          </div>
+
+          <!-- Role -->
+          <div class="form-group">
+            <label for="role">Role</label>
+            <select id="role" formControlName="role">
+              <option value="" disabled>Select your role</option>
+              <option value="user" disabled>User</option>
+              <option value="admin" disabled>Admin</option>
+              <option value="organizer" disabled>Organizer</option>
+            </select>
+          </div>
+
+          <!-- Organizer Club -->
+     <div class="form-group" *ngIf="f['role'].value === 'organizer'">
+  <label for="universityClub">University Club</label>
+  <select id="universityClub" formControlName="universityClub" [disabled]="true">
+    <option value="" disabled>Select your club</option>
+    <option *ngFor="let club of universityClubs" [value]="club.value" 
+            [selected]="club.value === f['universityClub'].value">
+      {{ club.display }}
+    </option>
+  </select>
+</div>
+
+          <!-- User Clubs (checkboxes) -->
+          <div class="form-group" *ngIf="f['role'].value === 'user'">
+            <label>University Clubs</label>
+            <div class="checkbox-group">
+              <div *ngFor="let club of universityClubs" class="checkbox-item">
+                <input
+                  type="checkbox"
+                  [checked]="userClubsArray.value.includes(club.value)"
+                  (change)="onUserClubChange($event, club.value)"
+                  id="club{{ club.value }}"
+                />
+                <label for="club{{ club.value }}">{{ club.display }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <button type="submit" class="submit-btn" [disabled]="frm.invalid">
+          Save Changes
+        </button>
+        <button type="button" class="cancel" (click)="onCancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<mat-sidenav-container class="sidenav-container">
+
+  <!-- Sidebar -->
+  <mat-sidenav
+    #sidenav
+    [mode]="isSidebarOpen ? 'side' : 'over'"
+    [opened]="isSidebarOpen"
+    class="mat-sidenav"
+  >
+    <mat-toolbar class="sidebar-toolbar">Event Admin</mat-toolbar>
+    <mat-nav-list class="content">
+      <a mat-list-item [routerLink]="['/admin', userId, 'dashboard']" routerLinkActive="active">
+        <mat-icon>event</mat-icon> Dashboard
+      </a>
+      <a mat-list-item [routerLink]="['/admin', userId, 'reports']" routerLinkActive="active">
+        <mat-icon>bar_chart</mat-icon> Reports
+      </a>
+      <a mat-list-item [routerLink]="['/admin', userId, 'events']" routerLinkActive="active">
+        <mat-icon>calendar_today</mat-icon> Manage Events
+      </a>
+      <a mat-list-item [routerLink]="['/admin', userId, 'attendees']" routerLinkActive="active">
+        <mat-icon>groups</mat-icon> Users
+      </a>
+      <a mat-list-item [routerLink]="['/admin', userId, 'organizers']" routerLinkActive="active">
+        <mat-icon>manage_accounts</mat-icon> Organizers
+      </a>
+
+      <a mat-list-item (click)="viewProfile()" routerLinkActive="active">
+        <mat-icon>account_circle</mat-icon>
+        Profile
+      </a>
+
+    <!-- System Info -->
+    <a mat-list-item (click)="viewSettings()" routerLinkActive="active">
+      <mat-icon>info</mat-icon>
+      System Info
+    </a>
+
+    <!-- Logout -->
+    <a mat-list-item (click)="handleLogout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main content -->
+  <mat-sidenav-content>
+    <mat-toolbar class="main-toolbar">
+      <div class="toolbar-left">
+        <button mat-icon-button (click)="toggleSidebar()">
+          <mat-icon  class="menu-icon">menu</mat-icon>
+        </button>
+        <span class="user-name">Hello, Mora Fusion Admin 👋</span>
+      </div>
+      <div class="toolbar-right">
+        <button mat-icon-button aria-label="Notifications">
+          <mat-icon class="notification-icon  ">notifications</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User profile menu">
+          <mat-icon class="profile-icon">account_circle</mat-icon>
+
+        </button>
+        <mat-menu #profileMenu="matMenu">
+          <button mat-menu-item (click)="viewProfile()">
+            <mat-icon>person</mat-icon> Profile
+          </button>
+          <button mat-menu-item (click)="handleLogout()">
+            <mat-icon>logout</mat-icon> Logout
+          </button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

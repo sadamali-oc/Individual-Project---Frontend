@@ -1,0 +1,109 @@
+/* ===== Dashboard Cards Container ===== */
+.dashboard-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 10px;
+  justify-content: center;
+}
+
+/* ===== Card Header ===== */
+.summary-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ===== Circle Badge Icon ===== */
+.summary-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  color: #fff;
+  background: #012a6c;
+  /* dark blue for contrast */
+  border-radius: 50%;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 4px 8px rgba(1, 42, 108, 0.25);
+  transition: transform 0.3s ease;
+}
+
+/* ===== Card Base (reduced height) ===== */
+.card {
+  flex: 1 1 200px;
+  max-width: 400px;
+  background-color: #fff9d5;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(1, 42, 108, 0.1);
+  color: #012a6c;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  /* instead of center */
+
+  padding: 15px 20px;
+  /* reduced padding */
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* ===== Circle Badge Icon (slightly smaller) ===== */
+.summary-icon {
+  font-size: 28px;
+  /* was 32px */
+  margin-bottom: 8px;
+  /* reduced spacing */
+  color: #fff;
+  background: #012a6c;
+  border-radius: 50%;
+  padding: 5px;
+  width: 45px;
+  /* was 50px */
+  height: 45px;
+  /* was 50px */
+  box-shadow: 0 4px 8px rgba(1, 42, 108, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .summary-icon {
+  transform: scale(1.1);
+}
+/* ===== Card Title ===== */
+.card .mat-card-title {
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  margin-bottom: 10px;
+}
+
+/* ===== Card Value ===== */
+.summary-value {
+  font-weight: 800;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1;
+  margin: 0;
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 1024px) {
+  .card {
+    flex: 1 1 45%;
+    padding: 25px 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    flex: 1 1 90%;
+    padding: 20px 15px;
+  }
+}

@@ -1,0 +1,43 @@
+<div class="dashboard-container">
+
+  <!-- LEFT COLUMN -->
+  <div class="left-column">
+
+    <!-- Stats Cards -->
+    <div class="stats-container">
+      <mat-card class="stat-card">
+        <mat-card-title>
+          <mat-icon>event_available</mat-icon> Upcoming Events
+        </mat-card-title>
+        <p class="stat-count">{{ upcomingEventsCount }}</p>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-card-title>
+          <mat-icon>event_busy</mat-icon> Completed Events
+        </mat-card-title>
+        <p class="stat-count">{{ completedEventsCount }}</p>
+      </mat-card>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-row">
+      <div class="chart-container">
+        <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
+      </div>
+
+      <div class="pie-chart-container">
+        <canvasjs-chart [options]="pieChartOptions"></canvasjs-chart>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="right-column">
+    <!-- Add widgets here -->
+  </div>
+
+</div>
+
+<router-outlet></router-outlet>

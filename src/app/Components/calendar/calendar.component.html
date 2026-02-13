@@ -1,0 +1,37 @@
+<div class="calendar-card">
+  <h2>Event Overview - {{ currentMonth.format('MMMM YYYY') }}</h2>
+
+  <!-- Weekday headers -->
+  <div class="weekdays">
+    <div *ngFor="let day of weekdays">{{ day }}</div>
+  </div>
+
+  <!-- Month grid -->
+  <div class="month-grid">
+    <div
+      class="day"
+      *ngFor="let day of daysInMonth"
+      [class.today]="day.date === today"
+      (mouseenter)="hoverDay = day"
+      (mouseleave)="hoverDay = null"
+    >
+      <!-- Day number -->
+      <div class="date" *ngIf="day.date">{{ dayjs(day.date).format('D') }}</div>
+
+      <!-- Event pills -->
+      <div class="events-list" *ngIf="day.date">
+        <div class="event-pill" *ngFor="let ev of day.events" (click)="viewEvent(ev)">
+          <strong>{{ ev.event_name }}</strong><br />
+          <span>{{ ev.location }}</span>
+        </div>
+      </div>
+
+      <!-- Hover popup showing all events -->
+      <div class="hover-popup" *ngIf="hoverDay === day && day.events.length > 0">
+        <div *ngFor="let ev of day.events" class="popup-event">
+          <strong>{{ ev.event_name }}</strong> — {{ ev.location }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

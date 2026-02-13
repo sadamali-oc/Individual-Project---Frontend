@@ -1,0 +1,9 @@
+.button-container {
+  display: flex;
+  gap: 12px;
+  padding: 8px;
+}
+
+button mat-icon {
+  margin-right: 4px;
+}

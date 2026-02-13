@@ -1,0 +1,99 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon aria-hidden="true" style="vertical-align: middle">event</mat-icon>
+  {{ data.event_name }}
+</h2>
+<button
+  mat-icon-button
+  class="dialog-close-btn"
+  (click)="onClose()"
+  aria-label="Close dialog"
+>
+  <mat-icon>close</mat-icon>
+</button>
+
+<mat-dialog-content class="dialog-content">
+  <!-- Flyer -->
+  <img
+    *ngIf="data.flyer_image"
+    [src]="data.flyer_image"
+    alt="Flyer for {{ data.event_name }}"
+    class="event-flyer"
+    role="img"
+    [attr.aria-label]="'Flyer for ' + data.event_name"
+  />
+
+  <!-- Info Rows -->
+  <div class="info-group">
+    <div class="info-row" *ngIf="data.event_category">
+      <span class="label">Category</span>
+      <span class="value">{{ data.event_category }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">Event Date</span>
+      <span class="value">{{ data.event_date | date : "fullDate" }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">Start Time</span>
+      <span class="value">{{ data.start_time }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">End Time</span>
+      <span class="value">{{ data.end_time }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">Description</span>
+      <span class="value">{{ data.description || "N/A" }}</span>
+    </div>
+
+<div class="info-row">
+  <span class="label">Registration Link</span>
+  <span class="value">
+    <a
+      *ngIf="safeEventFormLink"
+      [href]="safeEventFormLink"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {{ data.event_form_link }}
+    </a>
+    <span *ngIf="!safeEventFormLink">N/A</span>
+  </span>
+</div>
+
+ <div class="info-row" *ngIf="data.event_mode">
+    <span class="label">Event Mode</span>
+    <span class="value">{{ data.event_mode }}</span>
+  </div>
+
+  <div class="info-row" *ngIf="data.location">
+    <span class="label">Location</span>
+    <span class="value">{{ data.location }}</span>
+  </div>
+
+  <div class="info-row" *ngIf="data.audience_type">
+    <span class="label">Audience Type</span>
+    <span class="value">{{ data.audience_type }}</span>
+  </div>
+
+  <div class="info-row" *ngIf="!data.user_id">
+    <span class="label" style="color: red; font-weight: bold;">
+      Warning
+    </span>
+    <span class="value" style="color: red;">
+      User ID is missing!
+    </span>
+  </div>
+</div>
+
+
+  <!-- Status Chip -->
+  <div class="status-chip">
+    <mat-chip [ngClass]="data.status.toLowerCase()">
+      {{ data.status | titlecase }}
+    </mat-chip>
+  </div>
+</mat-dialog-content>

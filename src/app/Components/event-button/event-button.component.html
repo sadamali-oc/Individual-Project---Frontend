@@ -1,0 +1,55 @@
+<section class="section features-section" id="gallery" aria-label="Upcoming Events">
+  <h1 class="heading">
+    <mat-icon>event</mat-icon>
+    <span>Upcoming Events for the Month</span>
+  </h1>
+
+  <!-- Events available -->
+  <div class="box-container" *ngIf="events.length > 0; else noEvents">
+    <div
+      class="box"
+      *ngFor="let event of events"
+      tabindex="0"
+      [attr.aria-label]="'Event: ' + event.event_name"
+      role="article"
+    >
+      <img
+        class="event-image"
+        [src]="event.flyer_image || 'assets/default-event.jpg'"
+        [alt]="event.event_name + ' flyer'"
+        loading="lazy"
+      />
+
+      <div class="event-details">
+        <h3 class="event-title">
+          <mat-icon>event_note</mat-icon>
+          {{ event.event_name }}
+        </h3>
+
+        <p class="event-description">
+          <mat-icon>description</mat-icon>
+          {{ event.description || 'No description available.' }}
+        </p>
+
+        <button
+          mat-raised-button
+          color="primary"
+          class="view-more-btn"
+          (click)="viewEvent(event)"
+          [attr.aria-label]="'View more about ' + event.event_name"
+        >
+          <mat-icon>visibility</mat-icon>
+          View More
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No events fallback -->
+  <ng-template #noEvents>
+    <p class="no-events-message" aria-live="polite">
+      <mat-icon>event_busy</mat-icon>
+      No events available for this month.
+    </p>
+  </ng-template>
+</section>

@@ -1,0 +1,210 @@
+/* Full width for all form fields */
+.full-width {
+  width: 100%;
+
+}
+
+/* Main form card styling */
+.form-section {
+  max-width: 800px;
+  /* compact width */
+  margin: 30px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  background: #ffffff;
+}
+
+/* Styling inside mat-card */
+mat-card-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  padding-left: 8px;
+  color: #012a6c;
+  /* Deep blue */
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* === Compact form field styles === */
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  height: 40px;
+  /* reduce height */
+  padding: 0 8px !important;
+  /* tighter padding */
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-infix {
+  padding: 0 !important;
+  border-top: 0 !important;
+}
+
+::ng-deep .mat-input-element {
+  height: 24px !important;
+  /* smaller input */
+  padding: 4px 0 !important;
+  font-size: 14px;
+  /* compact font */
+}
+
+/* Smaller labels */
+::ng-deep .mat-form-field-label {
+  font-size: 13px !important;
+}
+
+/* Compact select field */
+::ng-deep .mat-select-trigger {
+  height: 24px !important;
+  padding: 4px 0 !important;
+  font-size: 14px;
+}
+
+/* Compact textarea */
+::ng-deep textarea.mat-input-element {
+  min-height: 60px !important;
+  /* smaller text area */
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* File upload custom style */
+.custom-file-upload {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.upload-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #ffcc00;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+}
+
+.upload-label:hover {
+  background-color: #012a6c;
+}
+
+.file-upload {
+  display: none;
+}
+
+.file-name {
+  font-style: italic;
+  color: #555;
+  font-size: 13px;
+}
+
+/* Buttons */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.success-snackbar {
+  background-color: #43a047;
+  color: white;
+}
+
+.error-snackbar {
+  background-color: #e53935;
+  color: white;
+}
+
+.purple-btn {
+  background-color: #ffcc00;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.purple-btn:hover {
+  background-color: #012a6c;
+}
+
+.purple-btn-reset {
+  background-color: #d5d1c5;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.purple-btn-reset:hover {
+  background-color: #012a6c;
+  color: #fff;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+  .form-section {
+    margin: 20px;
+    padding: 16px;
+    max-width: 100%;
+    /* full width on small screens */
+  }
+
+  mat-card-title {
+    font-size: 20px;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .purple-btn,
+  .purple-btn-reset {
+    width: 100%;
+  }
+
+  .upload-label {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .custom-file-upload {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .file-name {
+    width: 100%;
+    text-align: left;
+    margin-top: 8px;
+  }
+}
+
+/* Disabled button style */
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

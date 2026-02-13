@@ -1,0 +1,27 @@
+.form-section {
+    max-width: 700px;
+    margin: 70px auto;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+mat-card-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #012a6c;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.role-guidance ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    color: #333;
+    font-size: 14px;
+}
+
+.role-guidance li {
+    margin-bottom: 8px;
+}

@@ -1,0 +1,173 @@
+/* Global reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Home section container */
+.home-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: #ffffff;
+}
+
+/* Left side: Text content */
+.home-content {
+  flex: 1 1 400px;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s forwards ease-out;
+  animation-delay: 0.3s;
+}
+
+/* Main heading */
+.home-content h1.organic {
+  font-family: 'Cursive', sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 6vw, 3.5rem);
+  color: #012a6c;
+  /* Deep blue */
+}
+
+.home-content h1.organic span {
+  color: #ffcc00;
+  /* Bright yellow */
+}
+
+/* Secondary heading */
+.home-content h1:nth-of-type(2) {
+  font-size: clamp(2.5rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #012a6c;
+}
+
+.home-content h1:nth-of-type(2) span {
+  color: #ffcc00;
+}
+
+/* Description paragraph */
+.home-content p {
+  font-size: 1.5rem;
+  color: #4a4a4a;
+  margin-bottom: 1.75rem;
+}
+
+/* Button styling */
+.btn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #012a6c;
+  border: 2px solid  #ffcc00;
+  /* Explicitly define the border */
+  border-radius: 30px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: fit-content;
+}
+
+.btn:hover {
+  background-color: #0055b8;
+  transform: scale(1.05);
+}
+
+
+.home-description {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s forwards ease-out;
+  animation-delay: 0.6s;
+  /* appears after headings */
+}
+
+/* Right side: Background image */
+.home-image-side {
+  flex: 1 1 400px;
+  min-height: 400px;
+  background-image: url('../../../assets/100.png');
+  /* Adjust path as needed */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s forwards ease-out;
+  animation-delay: 0.5s;
+}
+
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px;
+  /* space for the icon */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #012a6c;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Animation */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .home-section {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .home-content,
+  .home-image-side {
+    flex: 1 1 100%;
+    max-width: 100%;
+    min-height: 300px;
+  }
+
+  .home-content h1.organic {
+    font-size: clamp(2.5rem, 7vw, 3rem);
+  }
+
+  .home-content h1:nth-of-type(2) {
+    font-size: clamp(2.2rem, 6vw, 2.5rem);
+  }
+
+  .home-content p {
+    font-size: 1.3rem;
+  }
+}

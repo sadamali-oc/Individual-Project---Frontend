@@ -1,0 +1,21 @@
+.event-card {
+  max-width: 800px;
+  max-height: 800px;
+  margin: 20px auto;
+}
+
+.event-avatar {
+  background-image: url('https://material.angular.dev/assets/img/examples/shiba1.jpg'); /* Use event-related image */
+  background-size: cover;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+.event-details {
+  margin-top: 16px;
+  background-color: #eef2f7;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 14px;
+}
