@@ -86,7 +86,19 @@ export class CreateEventComponent implements OnInit {
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input?.files?.length) {
-      this.eventFile = input.files[0];
+      const file = input.files[0];
+
+      // R4: Validate file type and size
+      if (!file.type.startsWith('image/')) {
+        this.showError('Only image files are allowed');
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        this.showError('File size cannot exceed 5 MB');
+        return;
+      }
+
+      this.eventFile = file;
       this.fileName = this.eventFile.name;
       console.log('Selected file:', this.fileName);
     }
@@ -104,9 +116,15 @@ export class CreateEventComponent implements OnInit {
     if (this.isSubmitting) return;
     this.isSubmitting = true;
 
+    // Trim inputs for safety
+    this.eventName = this.eventName.trim();
+    this.eventDescription = this.eventDescription.trim();
+    this.location = this.location.trim();
+    this.eventNotes = this.eventNotes.trim();
+
     // Validate required fields
     if (
-      !this.eventName.trim() ||
+      !this.eventName ||
       !this.eventCategory ||
       !this.startTime.trim() ||
       !this.endTime.trim() ||
@@ -119,9 +137,24 @@ export class CreateEventComponent implements OnInit {
 
     if (
       (this.eventMode === 'physical' || this.eventMode === 'hybrid') &&
-      !this.location.trim()
+      !this.location
     ) {
       this.showError('Location is required for physical or hybrid events');
+      this.isSubmitting = false;
+      return;
+    }
+
+    // R4: Validate enum fields
+    const validModes: ('online' | 'physical' | 'hybrid')[] = ['online', 'physical', 'hybrid'];
+    const validAudiences: ('open' | 'club_members' | 'private')[] = ['open', 'club_members', 'private'];
+
+    if (!validModes.includes(this.eventMode)) {
+      this.showError('Invalid event mode');
+      this.isSubmitting = false;
+      return;
+    }
+    if (!validAudiences.includes(this.audienceType)) {
+      this.showError('Invalid audience type');
       this.isSubmitting = false;
       return;
     }
@@ -171,7 +204,6 @@ export class CreateEventComponent implements OnInit {
       this.showSuccess('Event created successfully!');
       this.resetForm();
 
-      // Navigate to organizer events page after success
       this.router.navigate([`/organizer/${this.userId}/events`]);
     } catch (err) {
       console.error('Error creating event', err);

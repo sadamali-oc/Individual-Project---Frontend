@@ -26,6 +26,7 @@
     "@angular/router": "^19.0.0",
     "@angular/ssr": "^19.0.6",
     "@canvasjs/angular-charts": "^1.2.0",
+    "@canvasjs/charts": "^3.15.5",
     "@fullcalendar/angular": "^6.1.19",
     "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.19",

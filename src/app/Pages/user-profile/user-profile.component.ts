@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { PLATFORM_ID } from '@angular/core';
+import { PLATFORM_ID, SecurityContext } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-user-profile',
@@ -24,7 +25,8 @@ export class UserProfileComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private snackBar: MatSnackBar,
-    @Inject(PLATFORM_ID) private platformId: any
+    @Inject(PLATFORM_ID) private platformId: any,
+    private sanitizer: DomSanitizer
   ) {}
 
   get f() {
@@ -162,17 +164,32 @@ export class UserProfileComponent implements OnInit {
       return;
     }
 
-    const payload: any = { ...this.frm.value };
+    // Sanitize inputs to prevent XSS (R4)
+    const payload: any = {
+      name: this.sanitizer.sanitize(
+        SecurityContext.HTML,
+        this.frm.value.name
+      )?.trim(),
+      email: this.sanitizer.sanitize(
+        SecurityContext.HTML,
+        this.frm.value.email
+      )?.trim(),
+      phone_number: this.sanitizer.sanitize(
+        SecurityContext.HTML,
+        this.frm.value.phone_number
+      )?.trim(),
+      role: this.frm.value.role,
+      gender: this.frm.value.gender,
+      status: this.frm.value.status,
+    };
 
+    // Handle clubs safely
     if (this.frm.value.role === 'user') {
-      payload.userClubs = this.userClubsArray.value;
-      delete payload.universityClub;
+      payload.userClubs = this.userClubsArray.value.map(Number); // ensure numeric IDs
     } else if (this.frm.value.role === 'organizer') {
       payload.club_id = payload.universityClub
-        ? Number(payload.universityClub)
+        ? Number(this.frm.value.universityClub)
         : null;
-      delete payload.userClubs;
-      delete payload.universityClub;
     }
 
     this.http
